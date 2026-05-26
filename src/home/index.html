@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="hero">
+
+            <h2>Bienvenido</h2>
+
+            <p>
+                Plataforma educativa moderna.
+            </p>
+
+        </section>
+        <section class="courses-section">
+
+            <h2>Cursos Disponibles</h2>
+
+            <div class="courses-container" id="coursesContainer">
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- MODAL SQUAD -->
+    <div class="modal" id="squadModal">
+        <div class="modal-content">
+            <span class="close" id="closeSquadModal">
+                &times;
+            </span>
+            <div id="squadContent"></div>
+        </div>
+    </div>
+    <!-- MODAL CONTENT -->
+    <div class="modal" id="contentModal">
+        <div class="modal-content">
+            <span class="close" id="closeContentModal">
+                &times;
+            </span>
+            <div id="contentData"></div>
+        </div>
+    </div>
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+    <script src="../components/app.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Asesor</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+
+            <h2>Panel Asesor</h2>
+
+            <form id="studentForm">
+
+                <input type="text" id="studentName" placeholder="Nombre Alumno" required>
+
+                <input type="email" id="studentEmail" placeholder="Correo" required>
+
+                <select id="studentCourse" required>
+
+                    <option value="">
+                        Seleccionar Curso
+                    </option>
+
+                    <option value="Matemáticas">
+                        Matemáticas
+                    </option>
+
+                    <option value="Programación">
+                        Programación
+                    </option>
+
+                    <option value="Inglés">
+                        Inglés
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Inscribir Alumno
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="register.js"></script>
+
+</body>
+
+</html>
