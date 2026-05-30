@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    min-height: 100vh;
+    background: white;
+    overflow: hidden;
+}
+
+/* HEADER */
+
+.info-section .header {
+    text-align: center;
+    padding: 30px 20px 10px;
+}
+
+.info-section .logo {
+    width: 320px;
+    max-width: 90%;
+}
+
+/* HERO */
+
+.info-section .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+/* LEFT */
+
+.info-section .hero-left {
+    flex: 1;
+    min-width: 320px;
+}
+
+.info-section .hero-left h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.info-section .hero-left h1 {
+    font-size: 70px;
+    line-height: 1;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.info-section .subtitle {
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* CAREERS */
+
+.info-section .careers {
+    list-style: none;
+}
+
+.info-section .careers li {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.info-section .highlight {
+    color: #ff3d3d;
+}
+
+/* VISIT */
+
+.info-section .visit {
+    margin-top: 40px;
+}
+
+.info-section .visit h3 {
+    color: #f4a000;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.info-section .address {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.info-section .address-icon {
+    font-size: 50px;
+}
+
+.info-section .address-text {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+/* RIGHT */
+
+.info-section .hero-right {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    justify-content: center;
+}
+
+.info-section .student-image {
+    width: 100%;
+    max-width: 550px;
+    border-radius: 40px;
+    object-fit: cover;
+}
+
+/* FOOTER */
+
+.info-section .footer {
+    background: #08295a;
+    padding: 30px;
+    border-top-left-radius: 120px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.info-section .whatsapp {
+    color: #f4a000;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px) {
+
+    .info-section .hero {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .info-section .hero-left h1 {
+        font-size: 48px;
+    }
+
+    .info-section .subtitle {
+        font-size: 30px;
+    }
+
+    .info-section .careers li {
+        font-size: 20px;
+    }
+
+    .info-section .visit h3 {
+        font-size: 38px;
+    }
+
+    .info-section .whatsapp {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .info-section .footer {
+        justify-content: center;
+        border-top-left-radius: 60px;
+    }
+
+}
