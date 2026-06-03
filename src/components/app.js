@@ -60,19 +60,19 @@ function initializeLoginModal() {
 
     loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const nickname = document.getElementById("nickname").value;
+        const nick_name = document.getElementById("nickname").value;
         const password = document.getElementById("password").value;
 
         try {
             const response = await fetch(
-                "http://localhost:3000/api/user/login",
+                "http://localhost:3000/api/users/login",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        nickname,
+                        nick_name,
                         password
                     })
                 }

@@ -1,6 +1,6 @@
 async function loadCourses() {
     try {
-        const response = await fetch("http://localhost:3000/api/course");
+        const response = await fetch("http://localhost:3000/api/courses");
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
@@ -15,7 +15,6 @@ async function loadCourses() {
                     class="course-image">
                 <div class="course-body">
                     <h3>${course.name}</h3>
-                    <p>${course.squad_name}</p>
                     <p>${course.description}</p>
                     <p>${course.date_init} - ${course.date_end}</p>
                     <p>$ ${course.cost}</p>
@@ -24,7 +23,7 @@ async function loadCourses() {
                         <button 
                             class="info-btn content-btn"
                             data-content="${course.content_id}">
-                            Temario
+                            Detalles
                         </button>
                     </div>
                 </div>
@@ -44,32 +43,6 @@ loadCourses();
 document.addEventListener("click", async (event) => {
     const button = event.target;
 
-    /* ===================== SQUAD ===================== */
-
-    if (button.classList.contains("squad-btn")) {
-        const squadId = button.dataset.squad;
-
-        try {
-            const response = await fetch(
-                `http://localhost:3000/api/squad/${squadId}`
-            );
-
-            const data = await response.json();
-
-            document.getElementById("squadContent").innerHTML = `
-                <div class="school-info">
-                    <img src="${data.logo}" class="school-logo">
-                    <h2>${data.name}</h2>
-                </div>
-            `;
-
-            document.getElementById("squadModal").style.display = "flex";
-
-        } catch (error) {
-            console.error("Error loading squad:", error);
-        }
-    }
-
     /* ===================== CONTENT ===================== */
 
     if (button.classList.contains("content-btn")) {
@@ -77,12 +50,12 @@ document.addEventListener("click", async (event) => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/content/${contentId}`
+                `http://localhost:3000/api/contents?id=${contentId}`
             );
 
             const data = await response.json();
 
-            const modules = data.modules.map(module => {
+            const modules = data[0].modules.map(module => {
                 const topics = module.topics.map(topic => `
                     <li>${topic.name}</li>
                 `)
