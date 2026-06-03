@@ -55,6 +55,16 @@ function initializeLoginModal() {
         loginModal.style.display = "none";
     });
 
+    // BOTÓN REGISTRO
+    const registerBtn = document.getElementById("registerBtn");
+
+    if (registerBtn) {
+        registerBtn.addEventListener("click", () => {
+            window.location.href = "../home/register.html";
+        });
+    }
+
+
     /* ========================= LOGIN ========================= */
     const loginForm = document.getElementById("loginForm");
 
