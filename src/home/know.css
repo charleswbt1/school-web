@@ -29,37 +29,34 @@
 
 .info-section .hero {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 40px;
+    gap: 50px;
     padding: 40px;
-    flex-wrap: wrap;
+
 }
 
 /* LEFT */
 
-.info-section .hero-left {
-    flex: 1;
-    min-width: 320px;
-}
-
-.info-section .hero-left h2 {
-    font-size: 28px;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.info-section .hero-left h1 {
-    font-size: 70px;
-    line-height: 1;
+.info-section .hero-left h1{
+    font-size: 5.5rem;
+    line-height: 0.95;
+    color: #08295a;
     font-weight: 900;
-    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
-.info-section .subtitle {
-    font-size: 42px;
-    font-weight: bold;
-    margin-bottom: 30px;
+.info-section .subtitle{
+    font-size: 3rem;
+    color: #08295a;
+    font-weight: 800;
+}
+
+.info-section .hero-left h2{
+    text-align: center;
+    color: #08295a;
+    font-size: 2.3rem;
+    margin-bottom: 40px;
 }
 
 /* CAREERS */
@@ -110,17 +107,18 @@
 /* RIGHT */
 
 .info-section .hero-right {
-    flex: 1;
-    min-width: 320px;
+    flex: 0 0 420px;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .info-section .student-image {
     width: 100%;
-    max-width: 550px;
-    border-radius: 40px;
+    height: 900px;
     object-fit: cover;
+    border-radius: 50px;
+    display: block;
 }
 
 /* FOOTER */
