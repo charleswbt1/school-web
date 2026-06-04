@@ -91,6 +91,14 @@ function initializeLoginModal() {
             const data = await response.json();
             loginModal.style.display = "none";
 
+            const courseid = localStorage.getItem("courseId");
+            if (courseid) {
+                localStorage.removeItem("courseId");
+                data.id , courseid
+                
+    
+            }
+
             if (data.role === "adviser") {
                 localStorage.setItem("role", data.role);
                 window.location.href = "../adviser/register.html";

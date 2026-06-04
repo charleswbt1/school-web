@@ -25,6 +25,12 @@ async function loadCourses() {
                             data-content="${course.content_id}">
                             Detalles
                         </button>
+
+                    <button 
+                        class="login-btn open-login-btn"
+                        data-content="${course.id}">
+                        regiistrate
+                    </button>
                     </div>
                 </div>
             </div>
@@ -78,6 +84,15 @@ document.addEventListener("click", async (event) => {
         } catch (error) {
             console.error("Error loading content:", error);
         }
+    }
+
+    if (button.classList.contains("open-login-btn")) {
+        const courseId = button.dataset.content;
+        localStorage.setItem("courseId", courseId);
+
+        document.getElementById("loginModal").style.display = "flex";
+
+        return;
     }
 });
 

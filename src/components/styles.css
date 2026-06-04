@@ -51,7 +51,7 @@ body {
 /* HEADER */
 
 .header {
-    height: 70px;
+    height: 180px;
     background: white;
     display: flex;
     align-items: center;
@@ -75,7 +75,20 @@ body {
     border: none;
     background: none;
     cursor: pointer;
+
+
 }
+.top-logo{
+    text-align:center;
+    margin:20px 0 40px;
+}
+
+.top-logo img{
+    width:250px;
+    max-width:90%;
+}
+
+
 
 /* HERO */
 
