@@ -93,10 +93,21 @@ function initializeLoginModal() {
 
             const courseid = localStorage.getItem("courseId");
             if (courseid) {
+                const student = await fetch(
+                    "http://localhost:3000/api/students/register",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            user_id: data.user_id,
+                            course_id: courseid
+                        })
+                    }
+                );
+                localStorage.setItem("userId", data.user_id);
                 localStorage.removeItem("courseId");
-                data.id , courseid
-                
-    
             }
 
             if (data.role === "adviser") {
@@ -105,7 +116,7 @@ function initializeLoginModal() {
             }
             if (data.role === "student") {
                 localStorage.setItem("role", data.role);
-                window.location.href = "../student/course.html";
+                window.location.href = "../student/courses.html";
             }
         } catch (error) {
             console.error(error);
@@ -121,9 +132,10 @@ function initializeLogout() {
     logoutBtn.addEventListener(
         "click",
         () => {
-            localStorage.removeItem("role");
-            localStorage.removeItem("studentId");
-            window.location.href = "../home/index.html";
+            localStorage.clear();
+            sessionStorage.clear();
+
+            window.location.replace("../home/index.html");
         }
     );
 }

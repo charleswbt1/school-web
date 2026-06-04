@@ -1,0 +1,45 @@
+.student-course-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.course-image{
+    width:100%;
+    max-width:300px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.course-info h2{
+    color:#1e3a5f;
+    margin-bottom:15px;
+}
+
+.modules-container{
+    margin-top:20px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.module-card{
+    background:#f5f7fb;
+    padding:15px;
+    border-radius:10px;
+}
+
+.module-card h4{
+    color:#1e3a5f;
+    margin-bottom:10px;
+}
+
+.module-card ul{
+    padding-left:20px;
+}
+
+.module-card li{
+    margin-bottom:10px;
+}

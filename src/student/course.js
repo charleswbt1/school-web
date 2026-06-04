@@ -1,23 +1,101 @@
-async function loadCourses() {
+async function loadStudentCourses() {
+
     try {
-        const studentId = localStorage.getItem("studentId");
-        const response = await fetch(`http://localhost:3000/api/student-dashboard/course/${studentId}`);
+
+        const response = await fetch(
+            "http://localhost:3000/api/students?id=" + localStorage.getItem("studentId")
+        );
+
         const courses = await response.json();
-        const container = document.getElementById("studentCoursesContainer");
-        container.innerHTML = "";
+
+        const infoSection = document.querySelector(".info-section");
+
+        infoSection.innerHTML = "";
+
         courses.forEach(course => {
-            const div = document.createElement("div");
-            div.className = "course-card";
-            div.innerHTML = `
-                <h3>${course.course_name}</h3>
-                <p>${course.status}</p>
-                <p>${course.percentage}</p>
+
+            const modules = course.content.modules.map(
+                (module, index) => `
+                <div class="module-card">
+                    <h4>Módulo ${index + 1}: ${module.name}</h4>
+
+                    <p>
+                        <strong>Calificación:</strong>
+                        ${module.qualification}
+                    </p>
+
+                    <ul>
+                        ${module.topics.map(topic => `
+                            <li>
+                                <strong>${topic.name}</strong><br>
+                                ${topic.description}
+                            </li>
+                        `).join("")}
+                    </ul>
+                </div>
+            `
+            ).join("");
+
+            infoSection.innerHTML += `
+                <div class="student-course-card">
+
+                    <img
+                        src="${course.image}"
+                        alt="${course.course_name}"
+                        class="course-image"
+                    >
+
+                    <div class="course-info">
+
+                        <h2>${course.course_name}</h2>
+
+                        <p>
+                            <strong>Contenido:</strong>
+                            ${course.content.name}
+                        </p>
+
+                        <p>
+                            ${course.content.description}
+                        </p>
+
+                        <p>
+                            <strong>Módulos:</strong>
+                            ${course.totalModules}
+                        </p>
+
+                        <p>
+                            <strong>Completados:</strong>
+                            ${course.modulesCompleted}
+                        </p>
+
+                        <p>
+                            <strong>Costo:</strong>
+                            $${course.totalCost}
+                        </p>
+
+                        <p>
+                            <strong>Pagado:</strong>
+                            $${course.costCompleted}
+                        </p>
+
+                        <p>
+                            <strong>Estado:</strong>
+                            ${course.state}
+                        </p>
+
+                        <div class="modules-container">
+                            ${modules}
+                        </div>
+
+                    </div>
+
+                </div>
             `;
-            container.appendChild(div);
         });
+
     } catch (error) {
         console.error(error);
     }
 }
 
-loadCourses();
+loadStudentCourses();
