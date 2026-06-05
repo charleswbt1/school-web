@@ -23,32 +23,18 @@
 
             <form id="studentForm">
 
-                <input type="text" id="studentName" placeholder="Nombre Alumno" required>
+                <input type="file" id="invoiceImage" accept="image/*,.pdf" required>
 
-                <input type="email" id="studentEmail" placeholder="Correo" required>
+                <input type="number" id="amount" placeholder="Monto" required>
 
                 <select id="studentCourse" required>
-
                     <option value="">
-                        Seleccionar Curso
+                        Seleccionar Alumno
                     </option>
-
-                    <option value="Matemáticas">
-                        Matemáticas
-                    </option>
-
-                    <option value="Programación">
-                        Programación
-                    </option>
-
-                    <option value="Inglés">
-                        Inglés
-                    </option>
-
                 </select>
-
+                
                 <button type="submit">
-                    Inscribir Alumno
+                    Crear Factura
                 </button>
 
             </form>

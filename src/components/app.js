@@ -90,6 +90,7 @@ function initializeLoginModal() {
 
             const data = await response.json();
             loginModal.style.display = "none";
+            localStorage.setItem("userId", data.user_id);
 
             const courseid = localStorage.getItem("courseId");
             if (courseid) {
@@ -106,7 +107,6 @@ function initializeLoginModal() {
                         })
                     }
                 );
-                localStorage.setItem("userId", data.user_id);
                 localStorage.removeItem("courseId");
             }
 

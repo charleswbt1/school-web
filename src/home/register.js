@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
             second_last_name: document.getElementById("second_last_name").value,
             role: "student",
             phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value
+            email: document.getElementById("email").value,
+            curp: document.getElementById("curp").value
         };
 
 

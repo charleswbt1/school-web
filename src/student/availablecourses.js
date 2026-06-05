@@ -27,7 +27,7 @@ async function loadCourses() {
                         </button>
 
                     <button 
-                        class="login-btn open-login-btn"
+                        class="info-btn register-btn"
                         data-content="${course.id}">
                         regiistrate
                     </button>
@@ -76,7 +76,7 @@ document.addEventListener("click", async (event) => {
                 .join("");
 
             document.getElementById("contentData").innerHTML = `
-            <h2>${data.name}</h2>
+            <h2>${data[0].name}</h2>
             <div class="modules-container">${modules}</div>
             `;
 
@@ -86,13 +86,23 @@ document.addEventListener("click", async (event) => {
         }
     }
 
-    if (button.classList.contains("open-login-btn")) {
+    if (button.classList.contains("register-btn")) {
+        const userId = localStorage.getItem("userId");
         const courseId = button.dataset.content;
-        localStorage.setItem("courseId", courseId);
-
-        document.getElementById("loginModal").style.display = "flex";
-
-        return;
+        const student = await fetch(
+            "http://localhost:3000/api/students/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    course_id: courseId
+                })
+            }
+        );
+        window.location.href = "../student/courses.html";
     }
 });
 
