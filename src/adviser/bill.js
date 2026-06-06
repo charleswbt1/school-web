@@ -9,7 +9,7 @@ async function loadStudents() {
         const students = await response.json();
 
         const select =
-            document.getElementById("studentCourse");
+            document.getElementById("studentId");
 
         select.innerHTML = `
             <option value="">
@@ -39,43 +39,52 @@ async function loadStudents() {
 
 loadStudents();
 
-const studentForm = document.getElementById("studentForm");
+document.getElementById("invoiceImage").addEventListener("change", (e) => {
+    const file = e.target.files[0];
 
-studentForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    try {
-        const formData = new FormData(studentForm);
-        const response = await fetch(
-            "http://localhost:3000/api/students",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
-        if (!response.ok) {
-            throw new Error("Error registering student");
-        }
-        const data = await response.json();
-        alert("Alumno inscrito correctamente");
-        studentForm.reset();
-    } catch (error) {
-        alert("Error al registrar alumno");
-    }
+    if (!file) return;
+
+    const preview =
+        document.getElementById("previewImage");
+
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+
 });
+
+document.getElementById("amount").addEventListener("keydown", (e) => {
+    const allowedKeys = [
+        "Backspace",
+        "Delete",
+        "ArrowLeft",
+        "ArrowRight",
+        "Tab"
+    ];
+
+    if (e.key === "." && e.target.value.includes(".")) {
+        e.preventDefault();
+        return;
+    }
+    if (
+        allowedKeys.includes(e.key) ||
+        /^[0-9.]$/.test(e.key)
+    ) {
+        return;
+    }
+    e.preventDefault();
+});
+
 
 document.getElementById("studentForm")
     .addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
-        const file =
-            document.getElementById("invoiceImage").files[0];
+        const file = document.getElementById("invoiceImage").files[0];
 
-        const amount =
-            document.getElementById("amount").value;
+        const amount = document.getElementById("amount").value;
 
-        const studentId =
-            document.getElementById("studentId").value;
+        const studentId = document.getElementById("studentId").value;
 
         try {
 
@@ -84,7 +93,7 @@ document.getElementById("studentForm")
             const formData = new FormData();
 
             formData.append("reqFile", file);
-            formData.append("directory", "student/payment");
+            formData.append("directory", `student/${studentId}/payment`);
 
             const uploadResponse = await fetch(
                 "http://localhost:3000/api/files",
@@ -94,9 +103,7 @@ document.getElementById("studentForm")
 
                 }
             );
-
-            const uploadData =
-                await uploadResponse.json();
+            const uploadData = await uploadResponse.json();
 
             const imageUrl = uploadData.url;
 
@@ -110,23 +117,20 @@ document.getElementById("studentForm")
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        image: imageUrl,
+                        url: imageUrl,
                         amount,
                         student_id: studentId
                     })
                 }
             );
 
-            const invoice =
-                await invoiceResponse.json();
-
-            console.log(invoice);
 
             alert("Factura creada correctamente");
+            document.getElementById("studentForm").reset();
+            document.getElementById("previewImage").style.display = "none";
 
         } catch (error) {
 
-            console.error(error);
             alert("Error al crear factura");
 
         }

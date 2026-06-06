@@ -24,15 +24,13 @@
             <form id="studentForm">
 
                 <input type="file" id="invoiceImage" accept="image/*,.pdf" required>
+                <img id="previewImage" style="max-width:300px;display:none;margin-top:10px;">
 
-                <input type="number" id="amount" placeholder="Monto" required>
+                <input type="text" id="amount" placeholder="Monto" min="0" required>
 
-                <select id="studentCourse" required>
-                    <option value="">
-                        Seleccionar Alumno
-                    </option>
-                </select>
-                
+
+                <select id="studentId" required></select>
+
                 <button type="submit">
                     Crear Factura
                 </button>
@@ -47,7 +45,7 @@
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="register.js"></script>
+    <script src="bill.js"></script>
 
 </body>
 

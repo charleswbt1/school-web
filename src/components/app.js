@@ -115,7 +115,8 @@ function initializeLoginModal() {
             }
 
             if (data.role === "adviser") {
-                window.location.href = "../adviser/register.html";
+                localStorage.setItem("role", data.role);
+                window.location.href = "../adviser/bill.html";
             }
             if (data.role === "student") {
                 window.location.href = "../student/courses.html";
