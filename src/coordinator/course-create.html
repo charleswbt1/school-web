@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+            <div class="section-header">
+                <h2>Crear Curso</h2>
+            </div>
+            <form id="studentForm">
+                <input type="text" id="name" placeholder="Nombre" required>
+                <input type="text" id="description" placeholder="Descripción" required>
+                <input type="number" id="cost" placeholder="Costo" required>
+                <input type="date" id="startDate" placeholder="Fecha Inicio" required>
+                <input type="date" id="endDate" placeholder="Fecha Fin" required>
+                <input type="text" id="rvoe" placeholder="RVOE" required>
+                <button type="submit">
+                    Crear Curso
+                </button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="courses.js"></script>
+
+</body>
+
+</html>

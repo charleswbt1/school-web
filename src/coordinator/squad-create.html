@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+            <div class="section-header">
+                <h2>Crear Escuela</h2>
+            </div>
+            <form class="info-form" id="squadForm">
+                <input type="text" id="name" placeholder="Nombre" required>
+                <input type="text" id="description" placeholder="Descripción" required>
+                <input type="text" id="cct" placeholder="CCT" required>
+                <input type="file" id="squadImage" accept="image/*,.pdf" required>
+                <button type="submit">
+                    Crear Escuela
+                </button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="squad-create.js"></script>
+
+</body>
+
+</html>

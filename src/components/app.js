@@ -9,6 +9,9 @@ async function loadComponents() {
     if (role === "adviser") {
         sidebarFile = "../components/sidebar-adviser.html";
     }
+    if (role === "coordinator") {
+        sidebarFile = "../components/sidebar-coordinator.html";
+    }
     const sidebar = await fetch(sidebarFile);
     document.getElementById("sidebar-container").innerHTML = await sidebar.text();
 
@@ -91,6 +94,7 @@ function initializeLoginModal() {
             const data = await response.json();
             loginModal.style.display = "none";
             localStorage.setItem("userId", data.user_id);
+            localStorage.setItem("role", data.role);
 
             const courseid = localStorage.getItem("courseId");
             if (courseid) {
@@ -111,12 +115,13 @@ function initializeLoginModal() {
             }
 
             if (data.role === "adviser") {
-                localStorage.setItem("role", data.role);
                 window.location.href = "../adviser/register.html";
             }
             if (data.role === "student") {
-                localStorage.setItem("role", data.role);
                 window.location.href = "../student/courses.html";
+            }
+            if (data.role === "coordinator") {
+                window.location.href = "../coordinator/courses.html";
             }
         } catch (error) {
             console.error(error);

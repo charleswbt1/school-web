@@ -78,14 +78,15 @@ body {
 
 
 }
-.top-logo{
-    text-align:center;
-    margin:20px 0 40px;
+
+.top-logo {
+    text-align: center;
+    margin: 20px 0 40px;
 }
 
-.top-logo img{
-    width:250px;
-    max-width:90%;
+.top-logo img {
+    width: 250px;
+    max-width: 90%;
 }
 
 
@@ -236,6 +237,29 @@ body {
     border-radius: 8px;
 }
 
+/* FORM */
+
+.info-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 15px;
+}
+
+.info-form input,
+.info-form select {
+    padding: 12px;
+}
+
+.info-form button {
+    padding: 12px;
+    border: none;
+    background: #1e3a5f;
+    color: white;
+    border-radius: 8px;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
@@ -345,4 +369,40 @@ body {
 .topics-list li {
 
     margin-bottom: 8px;
+}
+
+/* TABLES */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.style-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.style-table th,
+.style-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.style-table th {
+    background: #f5f5f5;
+}
+
+.btn-primary,
+.btn-edit,
+.btn-delete {
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-right: 5px;
 }

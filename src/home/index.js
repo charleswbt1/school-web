@@ -1,5 +1,7 @@
 async function loadCourses() {
     try {
+        localStorage.clear();
+        sessionStorage.clear();
         const response = await fetch("http://localhost:3000/api/courses");
         const courses = await response.json();
 
