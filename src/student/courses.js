@@ -1,7 +1,7 @@
 async function loadCourses() {
     try {
         const userId = localStorage.getItem("userId");
-        const response = await fetch(`http://localhost:3000/api/students/courses?user_id=${userId}`);
+        const response = await fetch(`${apiUrl}/api/students/courses?user_id=${userId}`);
         const courses = await response.json();
         const container = document.getElementById("studentCoursesContainer");
         container.innerHTML = "";

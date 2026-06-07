@@ -1,6 +1,6 @@
 async function loadCourses() {
     try {
-        const response = await fetch("http://localhost:3000/api/courses");
+        const response = await fetch(`${apiUrl}/api/courses`);
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
@@ -56,7 +56,7 @@ document.addEventListener("click", async (event) => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/contents?id=${contentId}`
+                `${apiUrl}/api/contents?id=${contentId}`
             );
 
             const data = await response.json();
@@ -90,7 +90,7 @@ document.addEventListener("click", async (event) => {
         const userId = localStorage.getItem("userId");
         const courseId = button.dataset.content;
         const student = await fetch(
-            "http://localhost:3000/api/students/register",
+            `${apiUrl}/api/students/register`,
             {
                 method: "POST",
                 headers: {
@@ -108,7 +108,6 @@ document.addEventListener("click", async (event) => {
 
 /* ===================== CLOSE MODALS ===================== */
 
-document.getElementById("closeContentModal")
-    .addEventListener("click", () => {
-        document.getElementById("contentModal").style.display = "none";
-    });
+document.getElementById("closeContentModal").addEventListener("click", () => {
+    document.getElementById("contentModal").style.display = "none";
+});

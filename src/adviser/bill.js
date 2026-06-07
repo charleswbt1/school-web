@@ -1,15 +1,12 @@
 async function loadStudents() {
-
     try {
         const adviserId = localStorage.getItem("userId");
         const response = await fetch(
-            "http://localhost:3000/api/students/adviser?adviser_id=" + adviserId
+            `${apiUrl}/api/students/adviser?adviser_id=${adviserId}`
         );
 
         const students = await response.json();
-
-        const select =
-            document.getElementById("studentId");
+        const select = document.getElementById("studentId");
 
         select.innerHTML = `
             <option value="">
@@ -18,22 +15,14 @@ async function loadStudents() {
         `;
 
         students.forEach(student => {
-
             select.innerHTML += `
                 <option value="${student.id}">
                     ${student.curp} - ${student.course_name}
                 </option>
             `;
-
         });
-
     } catch (error) {
-
-        console.error(
-            "Error cargando estudiantes:",
-            error
-        );
-
+        console.error("Error cargando estudiantes:", error);
     }
 }
 
@@ -41,15 +30,11 @@ loadStudents();
 
 document.getElementById("invoiceImage").addEventListener("change", (e) => {
     const file = e.target.files[0];
-
     if (!file) return;
 
-    const preview =
-        document.getElementById("previewImage");
-
+    const preview = document.getElementById("previewImage");
     preview.src = URL.createObjectURL(file);
     preview.style.display = "block";
-
 });
 
 document.getElementById("amount").addEventListener("keydown", (e) => {
@@ -75,64 +60,50 @@ document.getElementById("amount").addEventListener("keydown", (e) => {
 });
 
 
-document.getElementById("studentForm")
-    .addEventListener("submit", async (e) => {
+document.getElementById("studentForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    const file = document.getElementById("invoiceImage").files[0];
+    const amount = document.getElementById("amount").value;
+    const studentId = document.getElementById("studentId").value;
 
-        const file = document.getElementById("invoiceImage").files[0];
+    try {
+        /* SUBIR ARCHIVO */
+        const formData = new FormData();
+        formData.append("reqFile", file);
+        formData.append("directory", `student/${studentId}/payment`);
 
-        const amount = document.getElementById("amount").value;
+        const uploadResponse = await fetch(
+            `${apiUrl}/api/files`,
+            {
+                method: "POST",
+                body: formData
 
-        const studentId = document.getElementById("studentId").value;
+            }
+        );
+        const uploadData = await uploadResponse.json();
+        const imageUrl = uploadData.url;
 
-        try {
+        /* CREAR FACTURA */
+        const invoiceResponse = await fetch(
+            `${apiUrl}/api/students/bill`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: imageUrl,
+                    amount,
+                    student_id: studentId
+                })
+            }
+        );
 
-            /* SUBIR ARCHIVO */
-
-            const formData = new FormData();
-
-            formData.append("reqFile", file);
-            formData.append("directory", `student/${studentId}/payment`);
-
-            const uploadResponse = await fetch(
-                "http://localhost:3000/api/files",
-                {
-                    method: "POST",
-                    body: formData
-
-                }
-            );
-            const uploadData = await uploadResponse.json();
-
-            const imageUrl = uploadData.url;
-
-            /* CREAR FACTURA */
-
-            const invoiceResponse = await fetch(
-                "http://localhost:3000/api/students/bill",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        url: imageUrl,
-                        amount,
-                        student_id: studentId
-                    })
-                }
-            );
-
-
-            alert("Factura creada correctamente");
-            document.getElementById("studentForm").reset();
-            document.getElementById("previewImage").style.display = "none";
-
-        } catch (error) {
-
-            alert("Error al crear factura");
-
-        }
-
-    });
+        alert("Factura creada correctamente");
+        document.getElementById("studentForm").reset();
+        document.getElementById("previewImage").style.display = "none";
+    } catch (error) {
+        alert("Error al crear factura");
+    }
+});

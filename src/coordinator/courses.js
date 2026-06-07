@@ -1,6 +1,6 @@
 async function loadCourses() {
     try {
-        const response = await fetch('http://localhost:3000/api/courses');
+        const response = await fetch(`${apiUrl}/api/courses`);
 
         if (!response.ok) {
             throw new Error('Error al obtener cursos');
@@ -72,7 +72,7 @@ async function deleteCourse(id) {
 
     try {
         const response = await fetch(
-            `http://localhost:3000/api/courses/${id}`,
+            `${apiUrl}/api/courses/${id}`,
             {
                 method: 'DELETE'
             }

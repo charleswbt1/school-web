@@ -1,6 +1,6 @@
 async function loadSquads() {
     try {
-        const response = await fetch('http://localhost:3000/api/squads');
+        const response = await fetch(`${apiUrl}/api/squads`);
 
         if (!response.ok) {
             throw new Error('Error al obtener escuelas');
@@ -70,7 +70,7 @@ async function deleteSquad(id) {
 
     try {
         const response = await fetch(
-            `http://localhost:3000/api/squads?id=${id}`,
+            `${apiUrl}/api/squads?id=${id}`,
             {
                 method: 'DELETE'
             }

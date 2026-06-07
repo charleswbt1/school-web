@@ -1,5 +1,3 @@
-const apiUrl = "https://school-back-764239827508.us-east1.run.app";
-
 async function loadCourses() {
     try {
         localStorage.clear();

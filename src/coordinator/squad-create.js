@@ -10,7 +10,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         formData.append("reqFile", file);
         formData.append("directory", `squad/${cct}`);
         const uploadResponse = await fetch(
-            "http://localhost:3000/api/files",
+            `${apiUrl}/api/files`,
             {
                 method: "POST",
                 body: formData
@@ -21,7 +21,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         const imageUrl = uploadData.url;
 
         const invoiceResponse = await fetch(
-            "http://localhost:3000/api/squads",
+            `${apiUrl}/api/squads`,
             {
                 method: "POST",
                 headers: {

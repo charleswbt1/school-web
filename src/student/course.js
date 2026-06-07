@@ -1,19 +1,15 @@
 async function loadStudentCourses() {
-
     try {
-
+        const studentId = localStorage.getItem("studentId");
         const response = await fetch(
-            "http://localhost:3000/api/students?id=" + localStorage.getItem("studentId")
+            `${apiUrl}/api/students?id=${studentId}`
         );
 
         const courses = await response.json();
-
         const infoSection = document.querySelector(".info-section");
 
         infoSection.innerHTML = "";
-
         courses.forEach(course => {
-
             const modules = course.content.modules.map(
                 (module, index) => `
                 <div class="module-card">

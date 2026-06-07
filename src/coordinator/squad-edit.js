@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadSquad() {
     try {
-        const response = await fetch(`http://localhost:3000/api/squads?id=${squadId}`);
+        const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
         if (!response.ok) {
             throw new Error('Error al obtener la escuela');
         }
@@ -44,7 +44,7 @@ async function updateSquad(event) {
     event.preventDefault();
     try {
         const response = await fetch(
-            `http://localhost:3000/api/squads?id=${squadId}`,
+            `${apiUrl}/api/squads?id=${squadId}`,
             {
                 method: 'PATCH',
                 headers: {

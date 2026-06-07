@@ -1,3 +1,5 @@
+const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+
 async function loadComponents() {
     const role = localStorage.getItem("role");
 
@@ -78,7 +80,7 @@ function initializeLoginModal() {
 
         try {
             const response = await fetch(
-                "http://localhost:3000/api/users/login",
+                `${apiUrl}/api/users/login`,
                 {
                     method: "POST",
                     headers: {
@@ -99,7 +101,7 @@ function initializeLoginModal() {
             const courseid = localStorage.getItem("courseId");
             if (courseid) {
                 const student = await fetch(
-                    "http://localhost:3000/api/students/register",
+                    `${apiUrl}/api/students/register`,
                     {
                         method: "POST",
                         headers: {
@@ -115,7 +117,6 @@ function initializeLoginModal() {
             }
 
             if (data.role === "adviser") {
-                localStorage.setItem("role", data.role);
                 window.location.href = "../adviser/bill.html";
             }
             if (data.role === "student") {
