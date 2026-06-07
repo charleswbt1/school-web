@@ -1,8 +1,10 @@
+const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+
 async function loadCourses() {
     try {
         localStorage.clear();
         sessionStorage.clear();
-        const response = await fetch("http://localhost:3000/api/courses");
+        const response = await fetch(`${apiUrl}/api/courses`);
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
@@ -58,7 +60,7 @@ document.addEventListener("click", async (event) => {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/contents?id=${contentId}`
+                `${apiUrl}/api/contents?id=${contentId}`
             );
 
             const data = await response.json();
