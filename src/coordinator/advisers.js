@@ -1,0 +1,101 @@
+async function loadTable() {
+    try {
+        const response = await fetch(`${apiUrl}/api/users/role?role=adviser`);
+        if (!response.ok) {
+            throw new Error('Error al obtener asesores');
+        }
+        const jsonResponse = await response.json();
+        const tbody = document.getElementById('table-body');
+
+        if (!jsonResponse.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7">No hay asesores registrados</td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = jsonResponse.map(element => `
+            <tr>
+                <td>${element.nick_name}</td>
+                <td>${element.first_name} ${element.last_name} ${element.second_last_name}</td>
+                <td>${element.phone}</td>
+                <td>${element.email}</td>
+                <td>${element.state}</td>
+                <td>
+                    <button
+                        class="btn-edit"
+                        onclick="editSquad('${element.id}')">
+                        Editar
+                    </button>
+
+                    <button
+                        class="btn-delete"
+                        onclick="deleteSquad('${element.id}')">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+
+    } catch (error) {
+        console.error(error);
+
+        document.getElementById('table-body').innerHTML = `
+            <tr>
+                <td colspan="7">
+                    Error al cargar los asesores
+                </td>
+            </tr>
+        `;
+    }
+}
+
+function editSquad(id) {
+    // Redirige a la pantalla de edición
+    window.location.href = `squad-edit.html?id=${id}`;
+}
+
+async function deleteSquad(id) {
+    const confirmDelete = confirm(
+        '¿Deseas eliminar este asesor?'
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${apiUrl}/api/users?id=${id}`,
+            {
+                method: 'DELETE'
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar');
+        }
+
+        alert('Asesor eliminado correctamente');
+
+        loadTable();
+
+    } catch (error) {
+        console.error(error);
+        alert('No fue posible eliminar el asesor');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadTable();
+
+    const btnAdd = document.getElementById('btn-add');
+
+    if (btnAdd) {
+        btnAdd.addEventListener('click', () => {
+            window.location.href = 'adviser-create.html';
+        });
+    }
+});
