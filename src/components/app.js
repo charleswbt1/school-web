@@ -1,4 +1,4 @@
-const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+const apiUrl = "http://localhost:3000";
 
 async function loadComponents() {
     const role = localStorage.getItem("role");
