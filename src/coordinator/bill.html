@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+
+            <h2>Factura</h2>
+
+            <form id="studentForm">
+
+                <input type="file" id="invoiceImage" accept="image/*,.pdf" required>
+                <img id="previewImage" style="max-width:300px;display:none;margin-top:10px;">
+
+                <input type="text" id="amount" placeholder="Monto" min="0" required>
+
+
+                <select id="studentId" required></select>
+
+                <button type="submit">
+                    Crear Factura
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="bill.js"></script>
+
+</body>
+
+</html>
