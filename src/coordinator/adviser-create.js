@@ -10,13 +10,13 @@ document.getElementById("adviserForm").addEventListener("submit", async (e) => {
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
     try {
-        const emailResponse = await fetch(`${apiUrl}/api/users/valid-item?email=${user.email}`);
+        const emailResponse = await fetch(`${apiUrl}/api/users/valid-item?email=${email}`);
         const emailBody = await emailResponse.json();
         if (!emailBody.valid) {
             throw new Error(`Error ${emailBody.message}`);
         }
 
-        const nicknameResponse = await fetch(`${apiUrl}/api/users/valid-item?nick_name=${user.nick_name}`);
+        const nicknameResponse = await fetch(`${apiUrl}/api/users/valid-item?nick_name=${nick_name}`);
         const nicknameBody = await nicknameResponse.json();
         if (!nicknameBody.valid) {
             throw new Error(`Error ${nicknameBody.message}`);
