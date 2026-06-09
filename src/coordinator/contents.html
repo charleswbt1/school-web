@@ -20,23 +20,24 @@
         <section class="info-section">
 
             <div class="section-header">
-                <h2>Alumnos</h2>
+                <h2>Contenidos</h2> <button id="btn-add" class="btn-primary"> + Nuevo Contenido </button>
             </div>
             <div class="table-container">
                 <table class="style-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>CURP</th>
                             <th>Nombre</th>
-                            <th>Nombre Curso</th>
-                            <th>Telefono</th>
-                            <th>Comision</th>
+                            <th>Descripción</th>
+                            <th>Módulos</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="students-table-body">
+                    <tbody id="contentsTableBody">
                         <tr>
-                            <td colspan="7">Cargando alumnos...</td>
+                            <td colspan="5">
+                                Cargando contenidos...
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -50,7 +51,7 @@
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="students.js"></script>
+    <script src="contents.js"></script>
 
 </body>
 

@@ -95,7 +95,8 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
                 body: JSON.stringify({
                     url: imageUrl,
                     amount,
-                    student_id: studentId
+                    student_id: studentId,
+                    source: "adviser"
                 })
             }
         );

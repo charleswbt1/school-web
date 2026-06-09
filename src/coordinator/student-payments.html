@@ -20,26 +20,31 @@
         <section class="info-section">
 
             <div class="section-header">
-                <h2>Alumnos</h2>
+                <h2>Pagos de Alumno</h2>
             </div>
+
             <div class="table-container">
+
                 <table class="style-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>CURP</th>
-                            <th>Nombre</th>
-                            <th>Nombre Curso</th>
-                            <th>Telefono</th>
-                            <th>Comision</th>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                            <th>Comprobante</th>
                         </tr>
                     </thead>
-                    <tbody id="students-table-body">
+
+                    <tbody id="paymentsTableBody">
                         <tr>
-                            <td colspan="7">Cargando alumnos...</td>
+                            <td colspan="4">
+                                Cargando pagos...
+                            </td>
                         </tr>
                     </tbody>
+
                 </table>
+
             </div>
 
         </section>
@@ -50,7 +55,7 @@
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="students.js"></script>
+    <script src="student-payments.js"></script>
 
 </body>
 

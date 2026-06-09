@@ -21,13 +21,23 @@
             <div class="section-header">
                 <h2>Crear Curso</h2>
             </div>
-            <form id="studentForm">
+            <form class="info-form" id="courseForm">
                 <input type="text" id="name" placeholder="Nombre" required>
                 <input type="text" id="description" placeholder="Descripción" required>
-                <input type="number" id="cost" placeholder="Costo" required>
-                <input type="date" id="startDate" placeholder="Fecha Inicio" required>
-                <input type="date" id="endDate" placeholder="Fecha Fin" required>
+                <input type="text" id="cost" placeholder="Costo" required>
+                <input type="date" id="dateInit" placeholder="Fecha Inicio" required>
+                <input type="date" id="dateEnd" placeholder="Fecha Fin" required>
                 <input type="text" id="rvoe" placeholder="RVOE" required>
+                <select id="squadId" required>
+                    <option value=""> Selecciona una escuela </option>
+                </select>
+                <select id="contentId" required>
+                    <option value=""> Selecciona un contenido </option>
+                </select>
+                <select id="adviserId" required>
+                    <option value=""> Selecciona un asesor </option>
+                </select>
+
                 <button type="submit">
                     Crear Curso
                 </button>
@@ -40,7 +50,7 @@
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="courses.js"></script>
+    <script src="course-create.js"></script>
 
 </body>
 

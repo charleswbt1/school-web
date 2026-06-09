@@ -26,7 +26,8 @@ async function loadStudents() {
                 <td>${student.curp}</td>
                 <td>${student.name}</td>
                 <td>${student.course_name}</td>
-                <td>${student.commision}</td>
+                <td>${student.phone}</td>
+                <td>${student.commision}</td>                
             </tr>
         `).join('');
 

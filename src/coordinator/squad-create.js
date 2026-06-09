@@ -1,3 +1,12 @@
+document.getElementById("squadImage").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const preview = document.getElementById("previewImage");
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+});
+
 document.getElementById("squadForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 

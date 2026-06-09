@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+            <div class="section-header">
+                <h2>Crear Contenido Académico</h2>
+            </div>
+            <form class="info-form" id="contentForm">
+                <input type="text" id="contentName" placeholder="Nombre del contenido" required>
+                <input type="text" id="contentDescription" placeholder="Descripción" required>
+                <hr>
+                <div class="section-header">
+                    <h3>Módulos</h3>
+                    <button type="button" id="addModuleBtn">
+                        + Agregar módulo
+                    </button>
+                </div>
+                <div id="modulesContainer"></div>
+                <br>
+                <button type="submit">
+                    Guardar Contenido
+                </button>
+            </form>
+
+            <template id="moduleTemplate">
+                <div class="module-card">
+                    <h4>Módulo</h4>
+                    <input type="text" class="module-name" placeholder="Nombre del módulo" required>
+                    <input type="text" class="module-description" placeholder="Descripción" required>
+                    <input type="text" class="module-qualification" placeholder="Calificación mínima">
+                    <input type="text" class="module-exam" placeholder="Examen">
+
+                    <div class="topics-container"></div>
+
+                    <button type="button" class="add-topic-btn">
+                        + Agregar tema
+                    </button>
+                    <button type="button" class="remove-module-btn">
+                        Eliminar módulo
+                    </button>
+                    <hr>
+                </div>
+
+            </template>
+
+            <template id="topicTemplate">
+                <div class="topic-card">
+                    <input type="text" class="topic-name" placeholder="Nombre del tema" required>
+                    <input type="text" class="topic-description" placeholder="Descripción" required>
+                    <input type="text" class="topic-multimedia" placeholder="URL multimedia">
+
+                    <button type="button" class="remove-topic-btn">
+                        Eliminar tema
+                    </button>
+
+                </div>
+            </template>
+
+        </section>
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="content-create.js"></script>
+
+</body>
+
+</html>
