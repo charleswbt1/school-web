@@ -1,4 +1,5 @@
-const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+// const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+const apiUrl = "http://localhost:3000";
 
 async function loadComponents() {
     const role = localStorage.getItem("role");
@@ -13,6 +14,9 @@ async function loadComponents() {
     }
     if (role === "coordinator") {
         sidebarFile = "../components/sidebar-coordinator.html";
+    }
+    if (role === "teacher") {
+        sidebarFile = "../components/sidebar-teacher.html";
     }
     const sidebar = await fetch(sidebarFile);
     document.getElementById("sidebar-container").innerHTML = await sidebar.text();
@@ -124,6 +128,9 @@ function initializeLoginModal() {
             }
             if (data.role === "coordinator") {
                 window.location.href = "../coordinator/courses.html";
+            }
+            if (data.role === "teacher") {
+                window.location.href = "../teacher/students.html";
             }
         } catch (error) {
             console.error(error);

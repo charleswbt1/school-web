@@ -31,7 +31,7 @@ async function loadCourses() {
                     <button 
                         class="login-btn open-login-btn"
                         data-content="${course.id}">
-                        regiistrate
+                        Registrate
                     </button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ document.addEventListener("click", async (event) => {
                 .join("");
 
             document.getElementById("contentData").innerHTML = `
-            <h2>${data.name}</h2>
+            <h2>Plan de estudios</h2>
             <div class="modules-container">${modules}</div>
             `;
 

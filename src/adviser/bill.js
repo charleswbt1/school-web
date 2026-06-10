@@ -2,7 +2,7 @@ async function loadStudents() {
     try {
         const adviserId = localStorage.getItem("userId");
         const response = await fetch(
-            `${apiUrl}/api/students/adviser?adviser_id=${adviserId}`
+            `${apiUrl}/api/students/data?adviser_id=${adviserId}`
         );
 
         const students = await response.json();
