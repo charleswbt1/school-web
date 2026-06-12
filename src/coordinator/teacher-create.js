@@ -1,4 +1,4 @@
-document.getElementById("adviserForm").addEventListener("submit", async (e) => {
+document.getElementById("teacherForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const userRequest = {
@@ -10,7 +10,7 @@ document.getElementById("adviserForm").addEventListener("submit", async (e) => {
         curp: document.getElementById("curp").value,
         email: document.getElementById("email").value,
         phone: document.getElementById("phone").value,
-        role: "adviser"
+        role: "teacher"
     }
     try {
         const invoiceResponse = await fetch(
@@ -23,10 +23,10 @@ document.getElementById("adviserForm").addEventListener("submit", async (e) => {
                 body: JSON.stringify(userRequest)
             }
         );
-        alert("Asesor creado correctamente");
-        document.getElementById("adviserForm").reset();
-        window.location.href = "../coordinator/advisers.html";
+        alert("Docente creado correctamente");
+        document.getElementById("teacherForm").reset();
+        window.location.href = "../coordinator/teachers.html";
     } catch (error) {
-        alert("Error al registrar asesor - " + error.message);
+        alert("Error al registrar docente - " + error.message);
     }
 });

@@ -41,18 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const emailResponse = await fetch(`${apiUrl}/api/users/valid-item?email=${user.email}`);
-            const emailBody = await emailResponse.json();
-            if (!emailBody.valid) {
-                throw new Error(`Error ${emailBody.message}`);
-            }
-
-            const nicknameResponse = await fetch(`${apiUrl}/api/users/valid-item?nick_name=${user.nick_name}`);
-            const nicknameBody = await nicknameResponse.json();
-            if (!nicknameBody.valid) {
-                throw new Error(`Error ${nicknameBody.message}`);
-            }
-
             const userResponse = await fetch(`${apiUrl}/api/users`, {
                 method: "POST",
                 headers: {

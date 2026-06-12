@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+
+            <div class="section-header">
+                <h2>Docentes</h2> <button id="btn-add" class="btn-primary"> + Nuevo Docente </button>
+            </div>
+            <div class="table-container">
+                <table class="style-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td colspan="7">Cargando docentes...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="teachers.js"></script>
+
+</body>
+
+</html>

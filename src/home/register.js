@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const form = document.getElementById("studentForm");
-
     form.addEventListener("submit", async (e) => {
-
         e.preventDefault();
 
-        const user = {
+        const userRequest = {
             nick_name: document.getElementById("nick_name").value,
             password: document.getElementById("password").value,
             first_name: document.getElementById("first_name").value,
@@ -18,50 +15,24 @@ document.addEventListener("DOMContentLoaded", () => {
             curp: document.getElementById("curp").value
         };
 
-
         try {
-            const emailResponse = await fetch(`${apiUrl}/api/users/valid-item?email=${user.email}`);
-            const emailBody = await emailResponse.json();
-            if (!emailBody.valid) {
-                throw new Error(`Error ${emailBody.message}`);
-            }
-
-            const nicknameResponse = await fetch(`${apiUrl}/api/users/valid-item?nick_name=${user.nick_name}`);
-            const nicknameBody = await nicknameResponse.json();
-            if (!nicknameBody.valid) {
-                throw new Error(`Error ${nicknameBody.message}`);
-            }
-
             const response = await fetch(`${apiUrl}/api/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify(userRequest)
             });
 
             if (!response.ok) {
                 throw new Error(`Error ${response.status}`);
             }
 
-            const data = await response.json();
-
             alert("Usuario registrado correctamente");
-
-            console.log(data);
-
             form.reset();
-
             window.location.href = "../home/index.html";
-
         } catch (error) {
-
-            console.error(error);
-
             alert("Error al registrar el usuario - " + error.message);
-
         }
-
     });
-
 });
