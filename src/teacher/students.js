@@ -25,6 +25,7 @@ async function loadStudents() {
                 <tr>
                     <td>${student.name}</td>
                     <td>${student.course_name}</td>
+                    <td>${student.average}</td>
                       <td>
                         <button
                             onclick="viewStudent('${student.id}')">

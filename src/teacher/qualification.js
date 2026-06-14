@@ -27,7 +27,7 @@ async function loadQualifications() {
                         </td> 
                         <td>
                             <button
-                                class="btn-edit"
+                                class="btn-edit"qualification
                                 onclick="saveQualification('${module.name}')">
                                 Guardar
                             </button>
