@@ -7,6 +7,7 @@
     <title>Inicio</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 
 <body>
@@ -21,17 +22,28 @@
             <div class="section-header">
                 <h2>Mi Perfil</h2>
             </div>
-            <form class="info-form" id="squadForm">
-                <input type="text" id="name" placeholder="Nombre">
+
+            <input type="file" id="invoiceImage" accept="image/*" hidden>
+            <img class="profile-image" id="previewImage"
+                src="https://storage.googleapis.com/school-source/web/perfil.jpg" alt="Perfil">
+
+            <form class="info-form" id="userForm">
+                <input type="text" id="first_name" placeholder="Nombre">
+                <input type="text" id="last_name" placeholder="Apellido">
+                <input type="text" id="second_last_name" placeholder="Segundo Apellido">
                 <input type="text" id="curp" placeholder="CURP">
-                <input type="text" id="e-mail" placeholder="Correo Electronico">
-                <input type="text" id="phone" placeholder="Telefono" >
+                <input type="text" id="email" placeholder="Correo Electronico">
+                <input type="text" id="phone" placeholder="Telefono">
                 <button type="submit">
-                Cambiar contraseña
+                    Actualizar perfil
                 </button>
             </form>
-        </section>
+            
+            <button type="submit" id="changePassword">
+                Cambiar contraseña
+            </button>
 
+        </section>
     </div>
 
     <!-- MODAL LOGIN -->

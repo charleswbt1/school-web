@@ -1,0 +1,15 @@
+.hero-right{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.profile-image{
+    width:220px;
+    height:220px;
+    object-fit:cover;
+    border-radius:50%;
+    cursor:pointer;
+    border:4px solid #1e3a5f;
+}
