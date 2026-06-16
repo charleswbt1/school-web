@@ -23,9 +23,14 @@ document.getElementById("adviserForm").addEventListener("submit", async (e) => {
                 body: JSON.stringify(userRequest)
             }
         );
-        alert("Asesor creado correctamente");
-        document.getElementById("adviserForm").reset();
-        window.location.href = "../coordinator/advisers.html";
+
+        if (invoiceResponse.ok) {
+            alert("Asesor creado correctamente");
+            document.getElementById("adviserForm").reset();
+            window.location.href = "../coordinator/advisers.html";
+        } else {
+            alert("Error al registrar asesor - " + invoiceResponse.message);
+        }
     } catch (error) {
         alert("Error al registrar asesor - " + error.message);
     }
