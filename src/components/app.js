@@ -98,6 +98,9 @@ function initializeLoginModal() {
             );
 
             const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Error en el login");
+            }
             loginModal.style.display = "none";
             localStorage.setItem("userId", data.user_id);
             localStorage.setItem("role", data.role);
@@ -153,5 +156,4 @@ function initializeLogout() {
         }
     );
 }
-
 loadComponents();

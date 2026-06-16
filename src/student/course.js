@@ -25,6 +25,10 @@ async function loadStudentCourses() {
                             <li>
                                 <strong>${topic.name}</strong><br>
                                 ${topic.description}
+                                ${topic.multimedia
+                                ? `<a href="${topic.multimedia}" target="_blank">Ver recurso</a>`
+                                : ""
+                                }                            
                             </li>
                         `).join("")}
                     </ul>
