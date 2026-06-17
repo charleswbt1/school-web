@@ -75,14 +75,19 @@ function initializeLoginModal() {
 
 
     /* ========================= LOGIN ========================= */
-    const loginForm = document.getElementById("loginForm");
 
     loginForm.addEventListener("submit", async (e) => {
+
         e.preventDefault();
-        const nick_name = document.getElementById("nickname").value;
-        const password = document.getElementById("password").value;
+
+        const nick_name =
+            document.getElementById("nickname").value;
+
+        const password =
+            document.getElementById("password").value;
 
         try {
+
             const response = await fetch(
                 `${apiUrl}/api/users/login`,
                 {
@@ -98,16 +103,25 @@ function initializeLoginModal() {
             );
 
             const data = await response.json();
+
             if (!response.ok) {
-                throw new Error(data.message || "Error en el login");
+
+                document.getElementById("loginError").textContent = 
+                "Usuario o Contraseña Incorrectos";
+
+                return;
             }
+
             loginModal.style.display = "none";
+
             localStorage.setItem("userId", data.user_id);
             localStorage.setItem("role", data.role);
 
             const courseid = localStorage.getItem("courseId");
+
             if (courseid) {
-                const student = await fetch(
+
+                await fetch(
                     `${apiUrl}/api/students/register`,
                     {
                         method: "POST",
@@ -120,24 +134,36 @@ function initializeLoginModal() {
                         })
                     }
                 );
+
                 localStorage.removeItem("courseId");
             }
 
+            // Redirecciones...
             if (data.role === "adviser") {
                 window.location.href = "../adviser/bill.html";
             }
+
             if (data.role === "student") {
                 window.location.href = "../student/courses.html";
             }
+
             if (data.role === "coordinator") {
                 window.location.href = "../coordinator/courses.html";
             }
+
             if (data.role === "teacher") {
                 window.location.href = "../teacher/students.html";
             }
+
         } catch (error) {
+
             console.error(error);
+
+            document.getElementById("loginError").textContent =
+                "Error de conexión con el servidor";
+
         }
+
     });
 }
 
