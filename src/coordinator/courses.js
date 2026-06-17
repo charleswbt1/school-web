@@ -1,15 +1,20 @@
+const params = new URLSearchParams(window.location.search);
+
 async function loadCourses() {
     try {
-        const response = await fetch(`${apiUrl}/api/courses`);
-
+        const year = params.get('year');
+        const month = params.get('month');
+        let response;
+        if (year && month) {
+            response = await fetch(`${apiUrl}/api/courses?year=${year}&month=${month}`);
+        } else {
+            response = await fetch(`${apiUrl}/api/courses`);
+        }
         if (!response.ok) {
             throw new Error('Error al obtener cursos');
         }
-
         const courses = await response.json();
-
         const tbody = document.getElementById('courses-table-body');
-
         if (!courses.length) {
             tbody.innerHTML = `
                 <tr>
@@ -22,8 +27,7 @@ async function loadCourses() {
         tbody.innerHTML = courses.map(course => `
             <tr>
                 <td>${course.name}</td>
-                <td>${course.description}</td>
-                <td>$${Number(course.cost).toLocaleString()}</td>
+                <td>${course.description}</td>                
                 <td>${course.date_init}</td>
                 <td>${course.date_end}</td>
                 <td>${course.state}</td>
