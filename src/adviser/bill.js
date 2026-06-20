@@ -66,6 +66,8 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
     const file = document.getElementById("invoiceImage").files[0];
     const amount = document.getElementById("amount").value;
     const studentId = document.getElementById("studentId").value;
+    const year = document.getElementById("year").value;
+    const month = document.getElementById("month").value;
 
     try {
         /* SUBIR ARCHIVO */
@@ -95,6 +97,8 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
                 body: JSON.stringify({
                     url: imageUrl,
                     amount,
+                    year,
+                    month,
                     student_id: studentId,
                     source: "adviser"
                 })

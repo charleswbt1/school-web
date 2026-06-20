@@ -25,9 +25,9 @@ async function loadStudents() {
                 <tr>
                     <td>${student.id}</td>
                     <td>${student.course_name}</td>
-                    <td>${student.modulesCompleted} / ${student.totalModules}</td>
-                    <td>$${Number(student.totalCost).toLocaleString()}</td>
-                    <td>$${Number(student.costCompleted).toLocaleString()}</td>
+                    <td>${student.modules_completed} / ${student.total_modules}</td>
+                    <td>$${Number(student.total_cost).toLocaleString()}</td>
+                    <td>$${Number(student.cost_completed).toLocaleString()}</td>
                     <td>$${debt.toLocaleString()}</td>
                     <td>${student.state}</td>
                     <td>

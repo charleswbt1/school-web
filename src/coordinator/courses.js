@@ -34,14 +34,8 @@ async function loadCourses() {
                 <td>
                     <button
                         class="btn-edit"
-                        onclick="editCourse('${course.id}')">
-                        Editar
-                    </button>
-
-                    <button
-                        class="btn-delete"
-                        onclick="deleteCourse('${course.id}')">
-                        Eliminar
+                        onclick="viewStudents('${course.id}')">
+                        Alumnos
                     </button>
                 </td>
             </tr>
@@ -60,41 +54,6 @@ async function loadCourses() {
     }
 }
 
-function editCourse(id) {
-    // Redirige a la pantalla de edición
-    window.location.href = `course-edit.html?id=${id}`;
-}
-
-async function deleteCourse(id) {
-    const confirmDelete = confirm(
-        '¿Deseas eliminar este curso?'
-    );
-
-    if (!confirmDelete) {
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `${apiUrl}/api/courses/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Error al eliminar');
-        }
-
-        alert('Curso eliminado correctamente');
-
-        loadCourses();
-
-    } catch (error) {
-        console.error(error);
-        alert('No fue posible eliminar el curso');
-    }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCourses();
@@ -107,3 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function viewStudents(id) {
+    window.location.href = `control-students.html?id=${id}`;
+}
