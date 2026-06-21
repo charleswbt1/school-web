@@ -26,9 +26,9 @@ async function loadStudentCourses() {
                                 <strong>${topic.name}</strong><br>
                                 ${topic.description}
                                 ${topic.multimedia
-                                ? `<a href="${topic.multimedia}" target="_blank">Ver recurso</a>`
-                                : ""
-                                }                            
+                        ? `<a href="${topic.multimedia}" target="_blank">Ver recurso</a>`
+                        : ""
+                    }                            
                             </li>
                         `).join("")}
                     </ul>
@@ -60,22 +60,12 @@ async function loadStudentCourses() {
 
                         <p>
                             <strong>Módulos:</strong>
-                            ${course.totalModules}
+                            ${course.total_modules}
                         </p>
 
                         <p>
                             <strong>Completados:</strong>
-                            ${course.modulesCompleted}
-                        </p>
-
-                        <p>
-                            <strong>Costo:</strong>
-                            $${course.totalCost}
-                        </p>
-
-                        <p>
-                            <strong>Pagado:</strong>
-                            $${course.costCompleted}
+                            ${course.modules_completed}
                         </p>
 
                         <p>
