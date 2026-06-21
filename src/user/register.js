@@ -1,15 +1,21 @@
 async function loadRoles() {
     try {
+        const role = localStorage.getItem("role");
         const roleSelect = document.getElementById("role");
+        roleSelect.style.display = "none";
+
         roleSelect.innerHTML = `
             <option value="">
                 Selecciona Rol
             </option>
             <option value="adviser">Asesor</option>
-            <option value="student">Estudiante</option>
+            <option value="student" selected>Estudiante</option>
             <option value="teacher">Docente</option>
             <option value="coordinator">Coordinador</option>
         `;
+        if (role === 'coordinator') {
+            roleSelect.style.display = "block";
+        }
     } catch (error) {
         console.error("Error cargando: ", error);
     }
@@ -17,7 +23,7 @@ async function loadRoles() {
 
 loadRoles();
 
-document.getElementById("adviserForm").addEventListener("submit", async (e) => {
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const userRequest = {
@@ -45,8 +51,8 @@ document.getElementById("adviserForm").addEventListener("submit", async (e) => {
 
         if (invoiceResponse.ok) {
             alert("Registro creado correctamente");
-            document.getElementById("adviserForm").reset();
-            window.location.href = "../coordinator/advisers.html";
+            document.getElementById("registerForm").reset();
+            window.location.href = "../user/register.html";
         } else {
             alert("Error al registrar - " + invoiceResponse.message);
         }
