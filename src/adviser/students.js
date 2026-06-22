@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-add');
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = 'student-create.html';
+            window.location.href = '../user/register.html';
         });
     }
 });

@@ -16,9 +16,17 @@ async function loadCourses() {
                 <div class="course-body">
                     <h3>${course.name}</h3>
                     <p>${course.description}</p>
-                    <p>${course.date_init} - ${course.date_end}</p>
-                    <p>$ ${course.cost}</p>
-
+                    <p>Clases: ${course.date_init} - ${course.date_end}</p>
+                    <p>
+                        Aprovecha de
+                        <span style="text-decoration: line-through; color: #999;">
+                            $${course.cost_quota}
+                        </span>
+                        a: 
+                        <strong>
+                            $${course.offer_cost_quota}
+                        </strong>
+                    </p>
                     <div class="course-actions">
                         <button 
                             class="info-btn content-btn"
