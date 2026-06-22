@@ -25,17 +25,9 @@ async function loadPayments() {
                         <td>${new Date(payment.date).toLocaleString()}</td>
                         <td>$${Number(payment.amount).toLocaleString()}</td>                        
                         <td>
-                            <img
-                                src="${payment.url}"
-                                alt="Comprobante"
-                                style="
-                                    width:auto;
-                                    height:auto;
-                                    border-radius:8px;
-                                    cursor:pointer;
-                                "
-                                onclick="window.open('${payment.url}', '_blank')"
-                            >
+                            <div class="view-image-container" id="frame-image"> 
+                                <img id="previewImage" class="view-bill-image" src="${payment.url}" onclick="window.open('${payment.url}', '_blank')">
+                            </div> 
                         </td>
                     </tr>
                 `)

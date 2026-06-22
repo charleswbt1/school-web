@@ -68,6 +68,9 @@ document.getElementById("invoiceImage").addEventListener("change", (e) => {
     const preview = document.getElementById("previewImage");
     preview.src = URL.createObjectURL(file);
     preview.style.display = "block";
+
+    const frameImage = document.getElementById("frame-image");
+    frameImage.style.display = "block";
 });
 
 document.getElementById("amount").addEventListener("keydown", (e) => {
