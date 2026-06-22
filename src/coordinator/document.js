@@ -1,6 +1,7 @@
 async function loadStudents() {
     try {
-        const response = await fetch(`${apiUrl}/api/students/data`);
+        const coordinator_id = localStorage.getItem("userId");
+        const response = await fetch(`${apiUrl}/api/students/data?coordinator_id=${coordinator_id}`);
         const students = await response.json();
 
         const select = document.getElementById("studentId");

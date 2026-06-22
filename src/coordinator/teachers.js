@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = 'teacher-create.html';
+            window.location.href = '../user/register.html';
         });
     }
 });

@@ -2,11 +2,12 @@ const params = new URLSearchParams(window.location.search);
 
 async function loadCourses() {
     try {
+        const coordinator_id = localStorage.getItem("userId");
         const year = params.get('year');
         const month = params.get('month');
         let response;
         if (year && month) {
-            response = await fetch(`${apiUrl}/api/courses?year=${year}&month=${month}`);
+            response = await fetch(`${apiUrl}/api/courses?year=${year}&month=${month}&coordinator_id=${coordinator_id}`);
         } else {
             response = await fetch(`${apiUrl}/api/courses`);
         }

@@ -19,7 +19,7 @@ async function loadStudents() {
 
         tbody.innerHTML = students.map(student => {
 
-            const debt = Number(student.totalCost || 0) - Number(student.costCompleted || 0);
+            const debt = Number(student.total_cost || 0) - Number(student.cost_completed || 0);
 
             return `
                 <tr>

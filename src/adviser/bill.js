@@ -1,9 +1,12 @@
 async function loadStudents() {
     try {
-        const adviserId = localStorage.getItem("userId");
-        const response = await fetch(
-            `${apiUrl}/api/students/data?adviser_id=${adviserId}`
-        );
+        const userId = localStorage.getItem("userId");
+        const role = localStorage.getItem("role");
+        let query = `adviser_id=${userId}`;
+        if (role === "coordinator") {
+            query = `coordinator_id=${userId}`;
+        }
+        const response = await fetch(`${apiUrl}/api/students/data?${query}`);
 
         const students = await response.json();
         const select = document.getElementById("studentId");
@@ -21,6 +24,36 @@ async function loadStudents() {
                 </option>
             `;
         });
+
+        const yearSelect = document.getElementById("year");
+        yearSelect.innerHTML = `
+            <option value="">
+                Año
+            </option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+        `;
+
+        const monthSelect = document.getElementById("month");
+        monthSelect.innerHTML = `
+            <option value="">
+                Mes
+            </option>
+
+            <option value="ENERO">ENERO</option>
+            <option value="FEBRERO">FEBRERO</option>
+            <option value="MARZO">MARZO</option>
+            <option value="ABRIL">ABRIL</option>
+            <option value="MAYO">MAYO</option>
+            <option value="JUNIO">JUNIO</option>
+            <option value="JULIO">JULIO</option>
+            <option value="AGOSTO">AGOSTO</option>
+            <option value="SEPTIEMBRE">SEPTIEMBRE</option>
+            <option value="OCTUBRE">OCTUBRE</option>
+            <option value="NOVIEMBRE">NOVIEMBRE</option>
+            <option value="DICIEMBRE">DICIEMBRE</option>
+        `;
     } catch (error) {
         console.error("Error cargando estudiantes:", error);
     }
@@ -64,10 +97,7 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const file = document.getElementById("invoiceImage").files[0];
-    const amount = document.getElementById("amount").value;
     const studentId = document.getElementById("studentId").value;
-    const year = document.getElementById("year").value;
-    const month = document.getElementById("month").value;
 
     try {
         /* SUBIR ARCHIVO */
@@ -87,6 +117,14 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
         const imageUrl = uploadData.url;
 
         /* CREAR FACTURA */
+        const billRequest = {
+            url: imageUrl,
+            student_id: studentId,
+            amount: document.getElementById("amount").value,
+            year: document.getElementById("year").value,
+            month: document.getElementById("month").value,
+            source: "coordinator"
+        }
         const invoiceResponse = await fetch(
             `${apiUrl}/api/students/bill`,
             {
@@ -94,14 +132,7 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    url: imageUrl,
-                    amount,
-                    year,
-                    month,
-                    student_id: studentId,
-                    source: "adviser"
-                })
+                body: JSON.stringify(billRequest)
             }
         );
 

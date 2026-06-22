@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = 'adviser-create.html';
+            window.location.href = '../user/register.html';
         });
     }
 });

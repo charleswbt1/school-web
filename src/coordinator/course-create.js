@@ -109,6 +109,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         squad_id: squadId,
         content_id: document.getElementById("contentId").value,
         adviser_id: document.getElementById("adviserId").value,
+        coordinator_id: localStorage.getItem("userId"),
         teacher_id: document.getElementById("teacherId").value,
         image: squads[0].logo,
         cost: Number(document.getElementById("cost").value),
