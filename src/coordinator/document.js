@@ -72,7 +72,7 @@ document.getElementById("documentForm").addEventListener("submit", async (e) => 
         const uploadData = await uploadResponse.json();
         const imageUrl = uploadData.url;
 
-        /* CREAR FACTURA */
+        /* CREAR DOCUMENTO */
         const documentRequest = {
             url: imageUrl,
             student_id: studentId,

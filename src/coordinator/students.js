@@ -31,10 +31,7 @@ async function loadStudents() {
                     <td>$${debt.toLocaleString()}</td>
                     <td>${student.state}</td>
                     <td>
-                        <button
-                            onclick="viewStudent('${student.id}')">
-                            Ver
-                        </button>
+                        
                         <button
                             onclick="paymentsStudent('${student.id}')">
                             Pagos
@@ -55,9 +52,6 @@ async function loadStudents() {
     }
 }
 
-function viewStudent(id) {
-    window.location.href = `student-view.html?id=${id}`;
-}
 
 function paymentsStudent(id) {
     window.location.href = `student-payments.html?id=${id}`;

@@ -30,11 +30,6 @@ async function loadTable() {
                         Editar
                     </button>
 
-                    <button
-                        class="btn-delete"
-                        onclick="deleteRegister('${element.id}')">
-                        Eliminar
-                    </button>
                 </td>
             </tr>
         `).join('');
@@ -56,36 +51,6 @@ function editRegister(id) {
     window.location.href = `teacher-edit.html?id=${id}`;
 }
 
-async function deleteRegister(id) {
-    const confirmDelete = confirm(
-        '¿Deseas eliminar este docente?'
-    );
-
-    if (!confirmDelete) {
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `${apiUrl}/api/users?id=${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Error al eliminar');
-        }
-
-        alert('Docente eliminado correctamente');
-
-        loadTable();
-
-    } catch (error) {
-        console.error(error);
-        alert('No fue posible eliminar el docente');
-    }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTable();

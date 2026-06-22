@@ -41,6 +41,65 @@ body {
     font-size: 18px;
 }
 
+/* BUTTONS */
+button {
+    background: #1e3a5f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2a6fb0;
+}
+
+/*BOTON LABEL*/
+.file-btn {
+    display: inline-block;
+    background: #1e3a5f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.file-btn:hover {
+    background-color: #2a6fb0;
+}
+
+#fileName {
+    display: block;
+    margin-top: 10px;
+    color: #0d2c5a;
+}
+
+/*BILL*/
+.bill-image{
+    width:180px;
+    height:240px;
+    object-fit:cover;
+    border-radius:15%;
+    cursor:pointer;
+    border:4px solid #1e3a5f;
+}
+
+/*DOCUMENT*/
+.document-image{
+    width:180px;
+    height:240px;
+    object-fit:cover;
+    border-radius:15%;
+    cursor:pointer;
+    border:4px solid #1e3a5f;
+}
+
 /* MAIN */
 
 .main-container {
@@ -60,18 +119,6 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.login-btn {
-    background: #1e3a5f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-.login-btn:hover {
-    background-color: #2a6fb0;
-}
 
 .hamburger {
     display: none;
@@ -192,18 +239,6 @@ body {
     padding: 12px;
 }
 
-.modal-content button {
-    padding: 12px;
-    background: #1e3a5f;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.modal-content button:hover {
-    background-color: #2a6fb0;
-}
-
 .close {
     position: absolute;
     right: 15px;
@@ -235,34 +270,6 @@ body {
 
 /* FORM */
 
-#studentForm {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    gap: 15px;
-}
-
-#studentForm input,
-#studentForm select {
-    padding: 12px;
-}
-
-#studentForm button {
-    padding: 12px;
-    border: none;
-    background: #1e3a5f;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-#studentForm button:hover {
-    background-color: #2a6fb0;
-}
-
-/* FORM */
-
 .info-form {
     margin-top: 20px;
     display: flex;
@@ -274,19 +281,6 @@ body {
 .info-form input,
 .info-form select {
     padding: 12px;
-}
-
-.info-form button {
-    padding: 12px;
-    border: none;
-    background: #1e3a5f;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.info-form button:hover {
-    background-color: #2a6fb0;
 }
 
 /* RESPONSIVE */
@@ -327,18 +321,6 @@ body {
     margin-top: 15px;
 }
 
-.info-btn {
-    border: none;
-    background: #1e3a5f;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-}
-.info-btn:hover {
-    background-color: #2a6fb0;
-}
 
 .school-info {
     text-align: center;
@@ -405,13 +387,6 @@ body {
     background: #f5f5f5;
 }
 
-.btn-primary,
-.btn-edit,
-.btn-delete {
-    padding: 8px 12px;
-    cursor: pointer;
-    margin-right: 5px;
-}
 
 .login-error {
     color: red;

@@ -29,12 +29,7 @@ async function loadTable() {
                         onclick="editSquad('${element.id}')">
                         Editar
                     </button>
-
-                    <button
-                        class="btn-delete"
-                        onclick="deleteSquad('${element.id}')">
-                        Eliminar
-                    </button>
+                    
                 </td>
             </tr>
         `).join('');
@@ -57,36 +52,6 @@ function editSquad(id) {
     window.location.href = `squad-edit.html?id=${id}`;
 }
 
-async function deleteSquad(id) {
-    const confirmDelete = confirm(
-        '¿Deseas eliminar este asesor?'
-    );
-
-    if (!confirmDelete) {
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `${apiUrl}/api/users?id=${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Error al eliminar');
-        }
-
-        alert('Asesor eliminado correctamente');
-
-        loadTable();
-
-    } catch (error) {
-        console.error(error);
-        alert('No fue posible eliminar el asesor');
-    }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTable();

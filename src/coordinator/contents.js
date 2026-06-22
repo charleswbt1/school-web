@@ -40,11 +40,7 @@ async function loadContents() {
                         onclick="editContent('${content.id}')">
                         Editar
                     </button>
-                    <button
-                        class="btn-delete"
-                        onclick="deleteContent('${content.id}')">
-                        Eliminar
-                    </button>
+                
                 </td>
             </tr>
         `).join('');
@@ -64,25 +60,4 @@ async function loadContents() {
 
 function editContent(id) {
     window.location.href = `content-edit.html?id=${id}`;
-}
-
-async function deleteContent(id) {
-    if (!confirm('¿Eliminar contenido?')) {
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `${apiUrl}/api/contents?id=${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-        if (!response.ok) {
-            throw new Error('Error al eliminar');
-        }
-        loadContents();
-    } catch (error) {
-        alert('No fue posible eliminar el contenido');
-    }
 }

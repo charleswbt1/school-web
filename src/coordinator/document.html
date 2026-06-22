@@ -19,11 +19,13 @@
 
         <section class="info-section">
 
-            <h2>Factura</h2>
+            <h2>Documento</h2>
 
             <form class="info-form" id="documentForm">
 
-                <input type="file" id="invoiceImage" accept="image/*,.pdf" required>
+                <input type="file" id="invoiceImage" accept="image/*,.pdf" required hidden>
+                <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
+
                 <img id="previewImage" style="max-width:300px;display:none;margin-top:10px;">
                 <select id="documentType" required></select>
                 <select id="studentId" required></select>
