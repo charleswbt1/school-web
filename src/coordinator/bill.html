@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factura</title>
+    <title>Comprabante de pago</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
 </head>
@@ -27,6 +27,10 @@
                 <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
                 <img id="previewImage" style="max-width:300px;display:none;margin-top:10px;">
 
+                <div class="view-image-container" id="frame-image" hidden> 
+                    <img id="previewImage" class="view-image" src="imagen.jpg">
+                </div>
+                
                 <input type="text" id="amount" placeholder="Monto" min="0" required>
                 <select id="year" required></select>
                 <select id="month" required></select>
