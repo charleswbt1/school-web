@@ -22,18 +22,21 @@ async function loadTable() {
                 <td>${element.first_name} ${element.last_name} ${element.second_last_name}</td>
                 <td>${element.phone}</td>
                 <td>${element.email}</td>
-                <td>${element.state}</td>
                 <td>
-                    <button
-                        class="btn-edit"
-                        onclick="editRegister('${element.id}')">
-                        Editar
-                    </button>
+                    <label class="switch">
+                        <input
+                            type="checkbox"
+                            class="status-switch"
+                            data-userid="${element.id}"
+                            ${element.state === "active" ? "checked" : ""}
+                        >
+                        <span class="slider"></span>
+                    </label>
 
                 </td>
             </tr>
         `).join('');
-
+        addSwitchEvents();
     } catch (error) {
         console.error(error);
 
@@ -47,10 +50,65 @@ async function loadTable() {
     }
 }
 
-function editRegister(id) {
-    window.location.href = `teacher-edit.html?id=${id}`;
-}
 
+function addSwitchEvents() {
+
+    document.querySelectorAll(".status-switch")
+        .forEach(switchBtn => {
+
+            switchBtn.addEventListener(
+                "change",
+                async () => {
+
+                    const userId =
+                        switchBtn.dataset.userid;
+
+                    const state =
+                        switchBtn.checked
+                            ? "active"
+                            : "inactive";
+
+                    try {
+
+                        const response = await fetch(
+                            `${apiUrl}/api/users?id=${userId}`,
+                            {
+                                method: "PATCH",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    state: state
+                                })
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Error al actualizar estado"
+                            );
+                        }
+
+                        console.log(
+                            `Usuario ${userId} actualizado a ${state}`
+                        );
+
+                    } catch (error) {
+
+                        alert(
+                            "Error al actualizar el estado"
+                        );
+
+                        switchBtn.checked =
+                            !switchBtn.checked;
+
+                        console.error(error);
+                    }
+                }
+            );
+
+        });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTable();
