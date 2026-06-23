@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../user/register.html';
+            window.location.href = '../user/register.html?roleRegister=teacher';
         });
     }
 });

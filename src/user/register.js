@@ -1,19 +1,18 @@
+const roleRegister = new URLSearchParams(window.location.search).get('roleRegister');
+const roleSession = localStorage.getItem("role");
+
 async function loadRoles() {
     try {
-        const role = localStorage.getItem("role");
         const roleSelect = document.getElementById("role");
-        roleSelect.style.display = "none";
-
         roleSelect.innerHTML = `
-            <option value="">
-                Selecciona Rol
-            </option>
+            <option value="">Selecciona Rol</option>
             <option value="adviser">Asesor</option>
-            <option value="student" selected>Estudiante</option>
+            <option value="student">Estudiante</option>
             <option value="teacher">Docente</option>
             <option value="coordinator">Coordinador</option>
         `;
-        if (role === 'coordinator') {
+        roleSelect.value = roleRegister || "student";
+        if (roleSession === 'coordinator') {
             roleSelect.style.display = "block";
         }
     } catch (error) {
@@ -25,11 +24,11 @@ loadRoles();
 
 async function loadCourses() {
     try {
-        const role = localStorage.getItem("role");
         const select = document.getElementById("courseId");
-        select.style.display = "none";
-
-        if (role === 'adviser' || role === 'coordinator') {
+        if (roleRegister) {
+            return;
+        }
+        if (roleSession === 'adviser' || roleSession === 'coordinator') {
             const response = await fetch(`${apiUrl}/api/courses`);
             const courses = await response.json();
 
@@ -87,8 +86,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
             return;
         }
 
-        const role = localStorage.getItem("role");
-        if (roleSelected === 'student' && (role === 'adviser' || role === 'coordinator')) {
+        if (roleSelected === 'student' && (roleSession === 'adviser' || roleSession === 'coordinator')) {
             const student = {
                 user_id: userData.id,
                 course_id: document.getElementById("courseId").value,
