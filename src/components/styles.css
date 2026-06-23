@@ -397,3 +397,50 @@ button:hover {
     margin-top: 10px;
     min-height: 20px;
 }
+
+/*SWITCH*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 40px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: red;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 5px;
+    top: 5px;
+    border-radius: 50px;
+    background: white;
+    transition: .4s;
+}
+
+/* ACTIVO SWITCH*/
+input:checked + .slider {
+    position: absolute;
+    inset: 0;
+    background: green;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(calc(120px - 30px - 10px));
+}
