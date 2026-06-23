@@ -9,6 +9,8 @@ document.getElementById("squadImage").addEventListener("change", (e) => {
 
 document.getElementById("squadForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
     const file = document.getElementById("squadImage").files[0];
     const name = document.getElementById("name").value;
@@ -49,5 +51,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         window.location.href = "../coordinator/squads.html";
     } catch (error) {
         alert("Error al crear escuela");
+    } finally {
+        submitButton.disabled = false;
     }
 });

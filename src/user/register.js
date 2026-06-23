@@ -55,6 +55,8 @@ loadCourses();
 
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
     const roleSelected = document.getElementById("role").value;
     const userRequest = {
@@ -111,5 +113,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         registerForm.reset();
     } catch (error) {
         alert("Error al registrar - " + error.message);
+    } finally {
+        submitButton.disabled = false;
     }
 });

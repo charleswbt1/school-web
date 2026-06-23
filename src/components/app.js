@@ -69,7 +69,7 @@ function initializeLoginModal() {
 
     if (registerBtn) {
         registerBtn.addEventListener("click", () => {
-            window.location.href = "../home/register.html";
+            window.location.href = "../user/register.html";
         });
     }
 

@@ -55,6 +55,8 @@ document.getElementById("invoiceImage").addEventListener("change", (e) => {
 
 document.getElementById("documentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
     const file = document.getElementById("invoiceImage").files[0];
     const studentId = document.getElementById("studentId").value;
@@ -96,5 +98,7 @@ document.getElementById("documentForm").addEventListener("submit", async (e) => 
         document.getElementById("previewImage").style.display = "none";
     } catch (error) {
         alert("Error al cargar documento");
+    } finally {
+        submitButton.disabled = false;
     }
 });

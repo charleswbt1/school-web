@@ -1,5 +1,7 @@
 document.getElementById("userForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
     const userRequest = {
         user_id: localStorage.getItem("userId"),
@@ -25,5 +27,7 @@ document.getElementById("userForm").addEventListener("submit", async (e) => {
         }
     } catch (error) {
         alert("Error al actualizar contraseña - " + error.message);
+    } finally {
+        submitButton.disabled = false;
     }
 });

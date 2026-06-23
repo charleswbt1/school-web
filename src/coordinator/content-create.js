@@ -31,6 +31,9 @@ function addTopic(topicsContainer) {
 
 document.getElementById('contentForm').addEventListener('submit', e => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
     const data = {
         name: document.getElementById('contentName').value,
         description: document.getElementById('contentDescription').value,
@@ -70,5 +73,7 @@ document.getElementById('contentForm').addEventListener('submit', e => {
         window.location.href = '../coordinator/contents.html';
     } catch (error) {
         alert('Error al crear el contenido');
+    } finally {
+        submitButton.disabled = false;
     }
 });

@@ -100,6 +100,9 @@ loadTeachers();
 
 document.getElementById("courseForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
     const squadId = document.getElementById("squadId").value;
     const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
     const squads = await response.json();
@@ -148,5 +151,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         window.location.href = '../coordinator/courses.html';
     } catch (error) {
         alert("Error al crear curso");
+    } finally {
+        submitButton.disabled = false;
     }
 });
