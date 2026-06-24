@@ -432,7 +432,7 @@ button:hover {
 }
 
 /* ACTIVO SWITCH*/
-input:checked + .slider {
+input:checked+.slider {
     position: absolute;
     inset: 0;
     background: green;
@@ -441,6 +441,49 @@ input:checked + .slider {
     transition: .4s;
 }
 
-.switch input:checked + .slider::before {
+.switch input:checked+.slider::before {
     transform: translateX(calc(120px - 30px - 10px));
+}
+
+
+/* FAQ */
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.faq-card {
+    background: rgb(158, 201, 230);
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    text-align: justify;
+
+}
+
+.faq-card h4 {
+    color: #1e3a5f;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.faq-card p,
+.faq-card li {
+    color: #0a0909;
+    line-height: 1.0;
+    font-size: 16px;
+    text-align: justify;
+
+}
+
+.faq-card li {
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+.faq-card ul {
+    padding-left: 80px;
 }
