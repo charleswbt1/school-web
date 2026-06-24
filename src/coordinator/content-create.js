@@ -45,7 +45,6 @@ document.getElementById('contentForm').addEventListener('submit', e => {
             name: moduleCard.querySelector('.module-name').value,
             description: moduleCard.querySelector('.module-description').value,
             qualification: Number(moduleCard.querySelector('.module-qualification').value),
-            exam: moduleCard.querySelector('.module-exam').value,
             topics: []
         };
 
@@ -53,7 +52,6 @@ document.getElementById('contentForm').addEventListener('submit', e => {
             module.topics.push({
                 name: topicCard.querySelector('.topic-name').value,
                 description: topicCard.querySelector('.topic-description').value,
-                multimedia: topicCard.querySelector('.topic-multimedia').value
             });
         });
 

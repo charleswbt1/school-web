@@ -390,6 +390,18 @@ button:hover {
     background: #f5f5f5;
 }
 
+.row-active {
+    background-color: #d4edda;
+}
+
+.row-inactive {
+    background-color: #f03e4d;
+}
+
+.row-pending {
+    background-color: #eef8b8;
+}
+
 
 .login-error {
     color: red;

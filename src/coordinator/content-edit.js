@@ -23,7 +23,6 @@ async function loadContent() {
         moduleElement.querySelector('.module-name').value = module.name;
         moduleElement.querySelector('.module-description').value = module.description;
         moduleElement.querySelector('.module-qualification').value = module.qualification;
-        moduleElement.querySelector('.module-exam').value = module.exam;
 
         const topicsContainer = moduleElement.querySelector('.topics-container');
 
@@ -38,7 +37,6 @@ async function loadContent() {
 
             topicElement.querySelector('.topic-name').value = topic.name;
             topicElement.querySelector('.topic-description').value = topic.description;
-            topicElement.querySelector('.topic-multimedia').value = topic.multimedia;
 
             topicElement.querySelector('.remove-topic-btn')
                 .addEventListener('click', () => topicElement.remove());
@@ -112,7 +110,6 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
             qualification: Number(
                 moduleCard.querySelector('.module-qualification').value
             ),
-            exam: moduleCard.querySelector('.module-exam').value,
             topics: []
         };
 
@@ -121,7 +118,6 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
                 id: topicCard.dataset.id || null,
                 name: topicCard.querySelector('.topic-name').value,
                 description: topicCard.querySelector('.topic-description').value,
-                multimedia: topicCard.querySelector('.topic-multimedia').value
             });
         });
 

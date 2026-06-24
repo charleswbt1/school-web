@@ -8,16 +8,12 @@ const documentTypes = [
 ];
 
 function getMonths(dateInit, dateEnd) {
-
     const months = [];
-
     const start = new Date(dateInit);
     const end = new Date(dateEnd);
-
     const current = new Date(start);
 
     while (current <= end) {
-
         months.push({
             year: String(current.getFullYear()),
             month: current
@@ -26,7 +22,6 @@ function getMonths(dateInit, dateEnd) {
                 })
                 .toUpperCase()
         });
-
         current.setMonth(current.getMonth() + 1);
     }
 
@@ -34,35 +29,20 @@ function getMonths(dateInit, dateEnd) {
 }
 
 async function loadStudents() {
-
     try {
-
-        const courseId =
-            new URLSearchParams(
-                window.location.search
-            ).get("id");
-
-        const response = await fetch(
-            `${apiUrl}/api/students/control?course_id=${courseId}`
-        );
-
+        const courseId = new URLSearchParams(window.location.search).get("id");
+        const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
         const data = await response.json();
 
-        const months = getMonths(
-            data.date_init,
-            data.date_end
-        );
-
-        const table =
-            document.getElementById(
-                "studentsTable"
-            );
+        const months = getMonths(data.date_init, data.date_end);
+        const table = document.getElementById("studentsTable");
 
         table.innerHTML = `
             <thead>
-
                 <tr>
-
+                    <th rowspan="2">
+                        #
+                    </th>
                     <th rowspan="2">
                         Alumno
                     </th>
@@ -75,28 +55,31 @@ async function loadStudents() {
                         Teléfono
                     </th>
 
-                    <th colspan="${documentTypes.length}">
-                        Documentos
+                    <th rowspan="2">
+                        clave
                     </th>
 
                     <th colspan="${months.length}">
                         Pagos
                     </th>
 
+                    <th colspan="${documentTypes.length}">
+                        Documentos
+                    </th>
                 </tr>
 
                 <tr>
-
-                    ${documentTypes.map(type => `
-                        <th>
-                            ${type.toUpperCase()}
-                        </th>
-                    `).join("")}
 
                     ${months.map(month => `
                         <th>
                             ${month.month}
                             ${month.year}
+                        </th>
+                    `).join("")}
+
+                    ${documentTypes.map(type => `
+                        <th>
+                            ${type.toUpperCase()}
                         </th>
                     `).join("")}
 
@@ -106,55 +89,65 @@ async function loadStudents() {
 
             <tbody>
 
-                ${data.students.map(student => {
+                ${data.students.map((student, index) => {
 
-                    const documents =
-                        documentTypes.map(type => {
+            const documents = documentTypes.map(type => {
+                const exists = student.documents.some(
+                    document => document.type.toLowerCase() === type
+                );
+                return `
+                        <td style="text-align:center">
+                            <input
+                                type="checkbox"
+                                ${exists ? "checked" : ""}
+                                disabled
+                            >
+                        </td>
+                    `;
+            }).join("");
 
-                            const exists =
-                                student.documents.some(
-                                    document =>
-                                        document.type.toLowerCase() === type
-                                );
+            const payments = months.map(period => {
+                const totalPaid = student.payments
+                    .filter(payment =>
+                        payment.year === period.year &&
+                        payment.month === period.month
+                    )
+                    .reduce(
+                        (sum, payment) =>
+                            sum + Number(payment.amount || 0),
+                        0
+                    );
+                return `
+                        <td style="text-align:right">
+                        ${totalPaid > 0 ?
+                        `$${totalPaid.toLocaleString()}`
+                        : "-"
+                    }
+                    </td>
+                `;
+            }).join("");
 
-                            return `
-                                <td style="text-align:center">
-                                    <input
-                                        type="checkbox"
-                                        ${exists ? "checked" : ""}
-                                        disabled
-                                    >
-                                </td>
-                            `;
-                        }).join("");
+            let rowClass = '';
 
-                    const payments =
-                        months.map(period => {
+            switch (student.state?.toLowerCase()) {
+                case 'active':
+                    rowClass = 'row-active';
+                    break;
 
-                            const totalPaid =
-                                student.payments
-                                    .filter(payment =>
-                                        payment.year === period.year &&
-                                        payment.month === period.month
-                                    )
-                                    .reduce(
-                                        (sum, payment) =>
-                                            sum + Number(payment.amount || 0),
-                                        0
-                                    );
+                case 'inactive':
+                    rowClass = 'row-inactive';
+                    break;
 
-                            return `
-                                <td style="text-align:right">
-                                    ${totalPaid > 0
-                                        ? `$${totalPaid.toLocaleString()}`
-                                        : "-"
-                                    }
-                                </td>
-                            `;
-                        }).join("");
+                case 'pending':
+                    rowClass = 'row-pending';
+                    break;
+            }
 
-                    return `
-                        <tr>
+            return `
+                        <tr class="${rowClass}">
+                            <td>
+                                ${index + 1}
+                            </td>
 
                             <td>
                                 ${student.name}
@@ -168,22 +161,24 @@ async function loadStudents() {
                                 ${student.phone}
                             </td>
 
-                            ${documents}
+                            <td>
+                                ${student.school_id || '-'}
+                            </td>
 
                             ${payments}
+
+                            ${documents}                           
 
                         </tr>
                     `;
 
-                }).join("")}
+        }).join("")}
 
             </tbody>
         `;
 
     } catch (error) {
-
         console.error(error);
-
     }
 }
 

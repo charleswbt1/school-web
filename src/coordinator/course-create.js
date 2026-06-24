@@ -1,6 +1,6 @@
 async function loadSquads() {
     try {
-        const response = await fetch(`${apiUrl}/api/squads`);
+        const response = await fetch(`${apiUrl}/api/squads?state=active`);
         const squads = await response.json();
         const select = document.getElementById("squadId");
 
@@ -23,7 +23,7 @@ async function loadSquads() {
 
 async function loadContents() {
     try {
-        const response = await fetch(`${apiUrl}/api/contents`);
+        const response = await fetch(`${apiUrl}/api/contents?state=active`);
         const contents = await response.json();
         const select = document.getElementById("contentId");
 
@@ -47,7 +47,7 @@ async function loadContents() {
 
 async function loadAdvisers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users/role?role=adviser`);
+        const response = await fetch(`${apiUrl}/api/users/role?role=adviser&state=active`);
         const advisers = await response.json();
         const select = document.getElementById("adviserId");
 
@@ -71,7 +71,7 @@ async function loadAdvisers() {
 
 async function loadTeachers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users/role?role=teacher`);
+        const response = await fetch(`${apiUrl}/api/users/role?role=teacher&state=active`);
         const teachers = await response.json();
         const select = document.getElementById("teacherId");
 

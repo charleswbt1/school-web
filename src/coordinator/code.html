@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Factura</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
 </head>
@@ -19,16 +19,29 @@
 
         <section class="info-section">
 
-            <table id="studentsTable" class="style-table"></table>
+            <h2>Alumno</h2>
+
+            <form class="info-form" id="documentForm">
+
+                <input type="text" id="schoolId" placeholder="Codigo escolar">
+                <select id="state"></select>
+                <select id="studentId" required></select>
+
+                <button type="submit">
+                    Actualizar
+                </button>
+
+            </form>
 
         </section>
 
     </div>
 
+    <!-- MODAL LOGIN -->
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="control-students.js"></script>
+    <script src="code.js"></script>
 
 </body>
 
