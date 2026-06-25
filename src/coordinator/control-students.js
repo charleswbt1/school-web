@@ -37,6 +37,22 @@ async function loadStudents() {
         const months = getMonths(data.date_init, data.date_end);
         const table = document.getElementById("studentsTable");
 
+        const paymentTotals = months.map(period => {
+            return data.students.reduce((sum, student) => {
+                const totalPaid = (student.payments || [])
+                    .filter(payment =>
+                        payment.year === period.year &&
+                        payment.month === period.month
+                    )
+                    .reduce(
+                        (subtotal, payment) =>
+                            subtotal + Number(payment.amount || 0),
+                        0
+                    );
+                return sum + totalPaid;
+            }, 0);
+        });
+
         table.innerHTML = `
             <thead>
                 <tr>
@@ -167,13 +183,28 @@ async function loadStudents() {
 
                             ${payments}
 
-                            ${documents}                           
+                            ${documents}
 
                         </tr>
                     `;
-
         }).join("")}
+                <tr style="font-weight:bold; background:#f5f5f5;">
+                
+                    <td colspan="5">
+                        TOTAL
+                    </td>
 
+                    ${paymentTotals.map(total => `
+                        <td style="text-align:right">
+                            $${total.toLocaleString()}
+                        </td>
+                    `).join("")}
+
+                    ${documentTypes.map(() => `
+                        <td></td>
+                    `).join("")}
+
+                </tr>
             </tbody>
         `;
 

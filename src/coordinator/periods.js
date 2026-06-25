@@ -52,3 +52,12 @@ loadPeriods();
 function viewCourses(year, month) {
     window.location.href = `courses.html?year=${year}&month=${month}`;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnAdd = document.getElementById('btn-add-course');
+    if (btnAdd) {
+        btnAdd.addEventListener('click', () => {
+            window.location.href = 'course-create.html';
+        });
+    }
+});

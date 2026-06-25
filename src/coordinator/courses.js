@@ -38,6 +38,12 @@ async function loadCourses() {
                         onclick="viewStudents('${course.id}')">
                         Alumnos
                     </button>
+                    <br><br>
+                    <button
+                        class="btn-edit"
+                        onclick="updateLinks('${course.id}')">
+                        Links
+                    </button>
                 </td>
             </tr>
         `).join('');
@@ -70,4 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function viewStudents(id) {
     window.location.href = `control-students.html?id=${id}`;
+}
+
+function updateLinks(id) {
+    window.location.href = `course-edit.html?id=${id}`;
 }
