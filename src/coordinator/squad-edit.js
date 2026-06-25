@@ -1,10 +1,36 @@
 const squadId = new URLSearchParams(window.location.search).get('id');
 
 document.addEventListener('DOMContentLoaded', () => {
+
     loadSquad();
     document
         .getElementById('squadForm')
         .addEventListener('submit', updateSquad);
+
+    const imageInput =
+        document.getElementById("squadImage");
+
+    imageInput.addEventListener("change", (event) => {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+
+            const preview =
+                document.getElementById("newLogoPreview");
+
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
 });
 
 async function loadSquad() {

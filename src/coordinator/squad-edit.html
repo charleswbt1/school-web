@@ -25,8 +25,27 @@
                 <input type="text" id="name" placeholder="Nombre">
                 <input type="text" id="description" placeholder="Descripción">
                 <input type="text" id="cct" placeholder="CCT">
-                <div id="currentLogoContainer"></div>
-                <input type="file" id="squadImage" accept="image/*,.pdf">
+
+
+                <div class="image-container">
+
+                    <div class="image-box">
+                        <h4>Logo Actual</h4>
+                        <div id="currentLogoContainer"></div>
+                    </div>
+
+                    <div class="image-box">
+                        <h4>Nuevo Logo</h4>
+                        <img id="newLogoPreview" src="" alt="Vista previa" style="display:none;">
+                    </div>
+
+                </div>
+
+                <input type="file" id="squadImage" accept="image/*" hidden>
+                <label for="squadImage" class="file-btn">Nueva Imagen</label>
+
+
+
                 <button type="submit">
                     Actualizar Escuela
                 </button>

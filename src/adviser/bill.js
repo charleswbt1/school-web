@@ -60,18 +60,37 @@ async function loadStudents() {
 }
 
 loadStudents();
+document.addEventListener("DOMContentLoaded", () => {
 
-document.getElementById("invoiceImage").addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
+    const input = document.getElementById("invoiceImage");
     const preview = document.getElementById("previewImage");
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
 
-    const frameImage = document.getElementById("frame-image");
-    frameImage.style.display = "block";
+    input.addEventListener("change", (e) => {
+
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const imageUrl = URL.createObjectURL(file);
+
+        preview.src = imageUrl;
+        preview.style.display = "block";
+
+        preview.addEventListener("click", () => {
+            modalImage.src = imageUrl;
+            modal.style.display = "flex";
+        });
+
+    });
+
+    modal.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
 });
+
+
 
 document.getElementById("amount").addEventListener("keydown", (e) => {
     const allowedKeys = [

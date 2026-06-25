@@ -68,6 +68,7 @@ button:hover {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
+    text-align: center;
 }
 
 .file-btn:hover {
@@ -248,6 +249,36 @@ button:hover {
     top: 10px;
     font-size: 22px;
     cursor: pointer;
+}
+
+/*MODAL IMAGE*/
+.preview-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+.preview-image:hover {
+    transform: scale(1.05);
+}
+
+.modal-image {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.modal-image img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
 }
 
 /* DASHBOARD */
@@ -498,4 +529,24 @@ input:checked+.slider {
 
 .faq-card ul {
     padding-left: 80px;
+}
+
+/*SQUAD-EDIT*/
+
+.image-container {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.image-box {
+    text-align: center;
+}
+
+.image-box img,
+#currentLogoContainer img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
 }
