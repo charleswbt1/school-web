@@ -20,7 +20,7 @@ async function loadStudents() {
         students.forEach(student => {
             select.innerHTML += `
                 <option value="${student.id}">
-                    ${student.curp} - ${student.course_name}
+                    ${student.curp} - ${student.name} - ${student.course_name}
                 </option>
             `;
         });
@@ -31,7 +31,7 @@ async function loadStudents() {
                 Año
             </option>
             <option value="2025">2025</option>
-            <option value="2026">2026</option>
+            <option value="2026" selected>2026</option>
             <option value="2027">2027</option>
         `;
 

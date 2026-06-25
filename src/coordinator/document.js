@@ -13,7 +13,7 @@ async function loadStudents() {
         students.forEach(student => {
             select.innerHTML += `
                 <option value="${student.id}">
-                    ${student.curp} - ${student.course_name}
+                    ${student.curp} - ${student.name} - ${student.course_name}
                 </option>
             `;
         });
