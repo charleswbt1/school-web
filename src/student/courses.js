@@ -41,10 +41,9 @@ document.addEventListener("click", async (event) => {
     /* ===================== CONTENT ===================== */
 
     if (button.classList.contains("content-btn")) {
-        const contentId = button.dataset.content;
+        const courseId = button.dataset.content;
         try {
-            localStorage.setItem("studentId", contentId);
-            window.location.href = "../student/course.html";
+            window.location.href = `../student/course.html?id=${courseId}`;
         } catch (error) {
             console.error("Error setting student ID:", error);
         }

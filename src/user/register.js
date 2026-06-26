@@ -94,7 +94,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
                 course_id: document.getElementById("courseId").value,
                 adviser_id: localStorage.getItem("userId")
             }
-            const studentResponse = await fetch(`${apiUrl}/api/students/register`, {
+            const studentResponse = await fetch(`${apiUrl}/api/students`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

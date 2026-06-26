@@ -20,16 +20,33 @@ async function loadStudents() {
             return;
         }
 
-        tbody.innerHTML = students.map(student => `
-            <tr>
-                <td>${student.id}</td>
-                <td>${student.curp}</td>
-                <td>${student.name}</td>
-                <td>${student.course_name}</td>
-                <td>${student.phone}</td>
-                <td>${student.commision}</td>                
-            </tr>
-        `).join('');
+        tbody.innerHTML = students.map(student => {
+            let rowClass = '';
+
+            switch (student.state?.toLowerCase()) {
+                case 'active':
+                    rowClass = 'row-active';
+                    break;
+
+                case 'inactive':
+                    rowClass = 'row-inactive';
+                    break;
+
+                case 'pending':
+                    rowClass = 'row-pending';
+                    break;
+            }
+
+            return `
+                <tr class="${rowClass}">
+                    <td>${student.curp}</td>
+                    <td>${student.name}</td>
+                    <td>${student.course_name}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.total_paid}</td>                
+                </tr>
+            `
+        }).join('');
 
     } catch (error) {
         console.error(error);

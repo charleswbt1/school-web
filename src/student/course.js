@@ -1,21 +1,17 @@
+const courseId = new URLSearchParams(window.location.search).get('id');
+
 async function loadStudentCourses() {
     try {
         const studentId = localStorage.getItem("studentId");
-        const studentResponse = await fetch(`${apiUrl}/api/students?id=${studentId}`);
-        const student = (await studentResponse.json())[0];
-
-        const courseResponse = await fetch(`${apiUrl}/api/courses?id=${student.course_id}`);
-        const course = (await courseResponse.json())[0];
-
-        const contentResponse = await fetch(`${apiUrl}/api/contents?id=${course.content_id}`);
-        const content = (await contentResponse.json())[0];
-
+        const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
+        const response = await responseService.json();
+        
         const infoSection = document.querySelector(".info-section");
         infoSection.innerHTML = "";
-        const modules = content.modules.map(
+        const modules = response.content.modules.map(
             (module, index) => `
                 <div class="module-card">
-                    <h4>Módulo ${index + 1}: ${module.name} (${student.notes?.find(note => note.module === module.name)?.value ?? 0})</h4>
+                    <h4>Módulo ${index + 1}: ${module.name} (${response.student.notes?.find(note => note.module === module.name)?.value ?? 0})</h4>
                     <ul>
                         ${module.topics.map(topic => `
                             <li>
@@ -29,7 +25,7 @@ async function loadStudentCourses() {
             `
         ).join("");
 
-        const documents = student.documents.map(
+        const documents = response.student.documents.map(
             (document, index) => `
                 <a href="${document.url}" target="_blank" rel="noopener noreferrer">${document.type}</a>
             `
@@ -39,34 +35,34 @@ async function loadStudentCourses() {
                 <div class="student-course-card">
 
                     <img
-                        src="${course.image}"
-                        alt="${course.course_name}"
+                        src="${response.course.image}"
+                        alt="${response.course.course_name}"
                         class="course-image"
                     >
 
                     <div class="course-info">
 
-                        <h2>${course.name}</h2>
+                        <h2>${response.course.name}</h2>
 
                         <p>
                             <strong>Contenido:</strong>
-                            ${course.content.description}
+                            ${response.course.content.description}
                         </p>
 
                         <p>
                             <strong>Módulos:</strong>
-                            ${student.notes.length} / ${content.modules.length}
+                            ${response.student.notes.length} / ${response.content.modules.length}
                         </p>
 
                         <p>
                         <br>
                             <strong>Promedio:</strong>
-                            ${student.average}
+                            ${response.student.average}
                         </p>
 
                         <p>
-                            <a href="${course.call_link}" target="_blank" rel="noopener noreferrer">Clase en linea</a>
-                            <a href="${course.class_link}" target="_blank" rel="noopener noreferrer">Clases grabadas</a>
+                            <a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer">Clase en linea</a>
+                            <a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer">Clases grabadas</a>
                         </p>
 
                         <div class="modules-container">

@@ -1,6 +1,6 @@
 async function loadCourses() {
     try {
-        const response = await fetch(`${apiUrl}/api/courses`);
+        const response = await fetch(`${apiUrl}/api/courses?available=true`);
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
@@ -98,7 +98,7 @@ document.addEventListener("click", async (event) => {
         const userId = localStorage.getItem("userId");
         const courseId = button.dataset.content;
         const student = await fetch(
-            `${apiUrl}/api/students/register`,
+            `${apiUrl}/api/students`,
             {
                 method: "POST",
                 headers: {

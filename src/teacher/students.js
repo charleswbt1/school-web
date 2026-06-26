@@ -1,7 +1,8 @@
+const courseId = new URLSearchParams(window.location.search).get('id');
+
 async function loadStudents() {
     try {
-        const adviserId = localStorage.getItem("userId");
-        const response = await fetch(`${apiUrl}/api/students/data`);
+        const response = await fetch(`${apiUrl}/api/students/data?course_id=${courseId}`);
         const students = await response.json();
 
         const tbody = document.getElementById("studentsTableBody");
@@ -25,10 +26,10 @@ async function loadStudents() {
                 <tr>
                     <td>${student.name}</td>
                     <td>${student.course_name}</td>
-                    <td>${student.average}</td>
+                    <td>${student.notes.length} / ${student.modulesTotal}</td>
                       <td>
                         <button
-                            onclick="viewStudent('${student.id}')">
+                            onclick="viewStudent('${student.id}','${student.content_id}')">
                             Calificaciones
                         </button>
                     </td>
@@ -47,8 +48,8 @@ async function loadStudents() {
     }
 }
 
-function viewStudent(id) {
-    window.location.href = `qualification.html?id=${id}`;
+function viewStudent(id, contentId) {
+    window.location.href = `qualification.html?id=${id}&content_id=${contentId}`;
 }
 
 

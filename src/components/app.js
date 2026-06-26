@@ -122,7 +122,7 @@ function initializeLoginModal() {
             if (courseid) {
 
                 await fetch(
-                    `${apiUrl}/api/students/register`,
+                    `${apiUrl}/api/students`,
                     {
                         method: "POST",
                         headers: {
@@ -152,7 +152,7 @@ function initializeLoginModal() {
             }
 
             if (data.role === "teacher") {
-                window.location.href = "../teacher/students.html";
+                window.location.href = "../teacher/courses.html";
             }
 
         } catch (error) {

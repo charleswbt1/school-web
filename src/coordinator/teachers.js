@@ -1,6 +1,6 @@
 async function loadTable() {
     try {
-        const response = await fetch(`${apiUrl}/api/users/role?role=teacher`);
+        const response = await fetch(`${apiUrl}/api/users?role=teacher`);
         if (!response.ok) {
             throw new Error('Error al obtener docentes');
         }

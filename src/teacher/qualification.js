@@ -1,4 +1,5 @@
 const studentId = new URLSearchParams(window.location.search).get('id');
+const contentId = new URLSearchParams(window.location.search).get('content_id');
 
 async function loadQualifications() {
     try {
@@ -6,36 +7,41 @@ async function loadQualifications() {
         const jsonResponse = await response.json();
         const student = jsonResponse[0];
 
+        const contentResponse = await fetch(`${apiUrl}/api/contents?id=${contentId}`);
+        const contentJsonResponse = await contentResponse.json();
+        const content = contentJsonResponse[0];
+
         const tbody = document.getElementById('qualificationsTableBody');
 
-        if (!student.content.modules || !student.content.modules.length) {
-            tbody.innerHTML = `
+        tbody.innerHTML = content.modules.map((module, index) => {
+            const note = student.notes?.find(
+                note => note.module === module.name
+            );
+
+            return `
                 <tr>
-                    <td colspan="4">
-                        No hay calificaciones registradas
+                    <td>${module.name}</td>
+
+                    <td>
+                        <input
+                            type="number"
+                            id="qualification-${index}"
+                            value="${note?.value ?? 0}"
+                            min="0"
+                            max="10"
+                        >
+                    </td>
+
+                    <td>
+                        <button
+                            class="btn-edit"
+                            onclick="saveQualification('${module.name}', ${index}, this)">
+                            Guardar
+                        </button>
                     </td>
                 </tr>
             `;
-            return;
-        }
-
-        tbody.innerHTML = student.content.modules.map(module => `
-                    <tr>
-                        <td>${module.name}</td>
-                        <td>
-                            <input type="text" id="qualification" placeholder="${module.qualification}">
-                        </td> 
-                        <td>
-                            <button
-                                class="btn-edit"qualification
-                                onclick="saveQualification('${module.name}')">
-                                Guardar
-                            </button>
-                        </td>                     
-                       
-                    </tr>
-                `)
-            .join('');
+        }).join('');
     } catch (error) {
         document.getElementById('qualificationsTableBody').innerHTML = `
             <tr>
@@ -49,12 +55,17 @@ async function loadQualifications() {
 
 loadQualifications();
 
-async function saveQualification(name) {
-    const confirmDelete = confirm(
-        '¿Confirmar Calificacion?'
-    );
+async function saveQualification(moduleName, index) {
 
-    if (!confirmDelete) {
+    if (!confirm("¿Confirmar calificación?")) {
+        return;
+    }
+
+    const qualification = Number(
+        document.getElementById(`qualification-${index}`).value
+    );
+    if (qualification < 0 || qualification > 10) {
+        alert("La calificación debe estar entre 0 y 10.");
         return;
     }
 
@@ -62,25 +73,23 @@ async function saveQualification(name) {
         const response = await fetch(
             `${apiUrl}/api/students/qualification`,
             {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    module_name: name,
-                    qualification: document.getElementById('qualification').value,
+                    module_name: moduleName,
+                    qualification: Number(qualification),
                     student_id: studentId
                 })
             }
         );
 
         if (!response.ok) {
-            throw new Error('Error al guardar calificacion');
+            throw new Error();
         }
-
-        alert('Calificacion guardada correctamente');
-        loadQualifications();
+        alert("Calificación guardada correctamente");
     } catch (error) {
-        alert('No fue posible guardar la calificacion');
+        alert("No fue posible guardar la calificación");
     }
 }
