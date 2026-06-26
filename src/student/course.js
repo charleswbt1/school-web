@@ -1,11 +1,10 @@
-const courseId = new URLSearchParams(window.location.search).get('id');
+const studentId = new URLSearchParams(window.location.search).get('id');
 
 async function loadStudentCourses() {
     try {
-        const studentId = localStorage.getItem("studentId");
         const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
         const response = await responseService.json();
-        
+
         const infoSection = document.querySelector(".info-section");
         infoSection.innerHTML = "";
         const modules = response.content.modules.map(
@@ -60,10 +59,17 @@ async function loadStudentCourses() {
                             ${response.student.average}
                         </p>
 
-                        <p>
-                            <a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer">Clase en linea</a>
-                            <a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer">Clases grabadas</a>
-                        </p>
+                        <div class="course-actions">
+
+                            <a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            Clase en línea
+                            </a>
+
+                            <a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            Clases grabadas
+                            </a>
+
+                        </div>
 
                         <div class="modules-container">
                             ${documents}

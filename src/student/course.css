@@ -43,3 +43,27 @@
 .module-card li{
     margin-bottom:10px;
 }
+
+
+.btn-primary {
+    display: inline-block;
+    background: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color .3s;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background-color: #2a6fb0;
+}
+
+.course-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
