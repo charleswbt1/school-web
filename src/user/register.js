@@ -53,6 +53,34 @@ async function loadCourses() {
 
 loadCourses();
 
+async function loadAdvisers() {
+    try {
+        const adviserSelect = document.getElementById("adviserId");
+        if (roleSession === 'adviser' || roleSession === 'coordinator') {
+            const response = await fetch(`${apiUrl}/api/users?role=adviser`);
+            const advisers = await response.json();
+
+            adviserSelect.innerHTML = `
+                <option value="">
+                    Seleccionar Asesor
+                </option>
+            `;
+            advisers.forEach(adviser => {
+                adviserSelect.innerHTML += `
+                <option value="${adviser.id}">
+                    ${adviser.first_name} ${adviser.last_name} ${adviser.second_last_name}
+                </option>
+            `;
+            });
+            adviserSelect.style.display = "block";
+        }
+    } catch (error) {
+        console.error("Error cargando cursos:", error);
+    }
+}
+
+loadAdvisers();
+
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
@@ -92,7 +120,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
             const student = {
                 user_id: userData.id,
                 course_id: document.getElementById("courseId").value,
-                adviser_id: localStorage.getItem("userId")
+                adviser_id: document.getElementById("adviserId").value
             }
             const studentResponse = await fetch(`${apiUrl}/api/students`, {
                 method: "POST",
