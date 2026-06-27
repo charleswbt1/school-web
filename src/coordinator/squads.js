@@ -27,7 +27,6 @@ async function loadSquads() {
                 <td>${squad.state}</td>
                 <td>
                     <button
-                        class="btn-edit"
                         onclick="editSquad('${squad.id}')">
                         Editar
                     </button>

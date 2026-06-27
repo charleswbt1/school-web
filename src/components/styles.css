@@ -57,6 +57,28 @@ button:hover {
     background-color: #2a6fb0;
 }
 
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.button-container button {
+    background: #1f3b67;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.button-container button:hover {
+    background: #2d4f84;
+}
+
 /*BOTON LABEL*/
 .file-btn {
     display: inline-block;

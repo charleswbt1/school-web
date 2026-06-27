@@ -36,7 +36,6 @@ async function loadContents() {
                 <td>${content.state}</td>
                 <td>
                     <button
-                        class="btn-edit"
                         onclick="editContent('${content.id}')">
                         Editar
                     </button>

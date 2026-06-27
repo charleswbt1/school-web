@@ -24,7 +24,6 @@ async function loadCourses() {
                 <td>${course.date_end}</td>
                 <td>
                     <button
-                        class="btn-edit"
                         onclick="viewStudents('${course.id}')">
                         Alumnos
                     </button>

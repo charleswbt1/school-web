@@ -28,7 +28,6 @@ async function loadPeriods() {
                     <td>${courseName}</td>
                     <td>
                         <button
-                            class="btn-edit"
                             onclick="viewCourses('${item.year}', '${item.month}')">
                             Cursos
                         </button>

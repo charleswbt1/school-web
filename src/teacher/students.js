@@ -19,14 +19,11 @@ async function loadStudents() {
         }
 
         tbody.innerHTML = students.map(student => {
-
-            const debt = Number(student.total_cost || 0) - Number(student.cost_completed || 0);
-
             return `
                 <tr>
                     <td>${student.name}</td>
                     <td>${student.course_name}</td>
-                    <td>${student.notes.length} / ${student.modulesTotal}</td>
+                    <td>${student.notes?.length ?? 0} / ${student.modulesTotal}</td>
                       <td>
                         <button
                             onclick="viewStudent('${student.id}','${student.content_id}')">

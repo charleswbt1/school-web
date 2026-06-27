@@ -33,17 +33,20 @@ async function loadCourses() {
                 <td>${course.date_end}</td>
                 <td>${course.state}</td>
                 <td>
-                    <button
-                        class="btn-edit"
-                        onclick="viewStudents('${course.id}')">
-                        Alumnos
-                    </button>
-                    <br><br>
-                    <button
-                        class="btn-edit"
-                        onclick="updateLinks('${course.id}')">
-                        Links
-                    </button>
+                    <div class="button-container">
+                        <button
+                            onclick="viewStudents('${course.id}')">
+                            Control
+                        </button>
+                        <button
+                            onclick="viewCount('${course.id}')">
+                            Conteo
+                        </button>
+                        <button
+                            onclick="updateLinks('${course.id}')">
+                            Links
+                        </button>
+                    </div>
                 </td>
             </tr>
         `).join('');
@@ -76,6 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function viewStudents(id) {
     window.location.href = `control-students.html?id=${id}`;
+}
+
+function viewCount(id) {
+    window.location.href = `count-advisers.html?id=${id}`;
 }
 
 function updateLinks(id) {

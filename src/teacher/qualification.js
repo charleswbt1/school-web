@@ -34,7 +34,6 @@ async function loadQualifications() {
 
                     <td>
                         <button
-                            class="btn-edit"
                             onclick="saveQualification('${module.name}', ${index}, this)">
                             Guardar
                         </button>
