@@ -5,10 +5,11 @@ async function loadRoles() {
     try {
         const roleSelect = document.getElementById("role");
         roleSelect.innerHTML = `
-            <option value="">Selecciona Rol</option>
-            <option value="adviser">Asesor</option>
+            <option value="">Selecciona Rol</option>            
             <option value="student">Estudiante</option>
             <option value="teacher">Docente</option>
+            <option value="adviser">Asesor</option>
+            <option value="counter">Contador</option>
             <option value="coordinator">Coordinador</option>
         `;
         roleSelect.value = roleRegister || "student";

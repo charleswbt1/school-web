@@ -9,14 +9,17 @@ async function loadComponents() {
     if (role === "student") {
         sidebarFile = "../components/sidebar-student.html";
     }
+    if (role === "teacher") {
+        sidebarFile = "../components/sidebar-teacher.html";
+    }
     if (role === "adviser") {
         sidebarFile = "../components/sidebar-adviser.html";
     }
+    if (role === "counter") {
+        sidebarFile = "../components/sidebar-counter.html";
+    }
     if (role === "coordinator") {
         sidebarFile = "../components/sidebar-coordinator.html";
-    }
-    if (role === "teacher") {
-        sidebarFile = "../components/sidebar-teacher.html";
     }
     const sidebar = await fetch(sidebarFile);
     document.getElementById("sidebar-container").innerHTML = await sidebar.text();
@@ -139,21 +142,27 @@ function initializeLoginModal() {
             }
 
             // Redirecciones...
+            if (data.role === "student") {
+                window.location.href = "../student/courses.html";
+            }
+
+            if (data.role === "teacher") {
+                window.location.href = "../teacher/courses.html";
+            }
+
             if (data.role === "adviser") {
                 window.location.href = "../adviser/bill.html";
             }
 
-            if (data.role === "student") {
-                window.location.href = "../student/courses.html";
+            if (data.role === "counter") {
+                window.location.href = "../counter/periods.html";
             }
 
             if (data.role === "coordinator") {
                 window.location.href = "../coordinator/periods.html";
             }
 
-            if (data.role === "teacher") {
-                window.location.href = "../teacher/courses.html";
-            }
+
 
         } catch (error) {
 
