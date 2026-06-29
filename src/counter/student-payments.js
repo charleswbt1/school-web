@@ -107,14 +107,13 @@ async function loadStudents() {
                 );
 
                 const images = monthPayments.map(payment => `
-        <a href="${payment.url}" target="_blank">
-            <img
-                class="preview-image"
-                src="${payment.url}"
-                title="$${Number(payment.amount).toLocaleString()}"
-            >
-        </a>
-    `).join("");
+                    <div class="button-container">
+                        <button
+                            onclick="viewImage('${payment.url}')">
+                            Pago 
+                        </button>
+                    </div>
+                `).join("");
 
                 return `
         <td style="text-align:center">
@@ -197,3 +196,15 @@ async function loadStudents() {
 }
 
 loadStudents();
+
+function viewImage(imageUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    modalImage.src = imageUrl;
+    modal.style.display = "flex";
+
+    modal.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+}

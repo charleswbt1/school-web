@@ -2,7 +2,7 @@ async function loadCourses() {
     try {
         localStorage.clear();
         sessionStorage.clear();
-        const response = await fetch(`${apiUrl}/api/courses?available=true`);
+        const response = await fetch(`${apiUrl}/api/courses`);
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
