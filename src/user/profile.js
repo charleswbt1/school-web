@@ -52,7 +52,7 @@ async function updateSquad(event) {
         if (file) {
             const formData = new FormData();
             formData.append("reqFile", file);
-            formData.append("directory", `student/${userId}/documents`);
+            formData.append("directory", `users/${userId}/documents`);
 
             const uploadResponse = await fetch(
                 `${apiUrl}/api/files`,

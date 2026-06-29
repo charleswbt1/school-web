@@ -19,7 +19,7 @@ async function loadStudents() {
 
         students.forEach(student => {
             select.innerHTML += `
-                <option value="${student.id}">
+                <option value="${student.course_id}#${student.id}">
                     ${student.curp} - ${student.name} - ${student.course_name}
                 </option>
             `;
@@ -121,13 +121,13 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
     submitButton.disabled = true;
 
     const file = document.getElementById("invoiceImage").files[0];
-    const studentId = document.getElementById("studentId").value;
+    const [courseId, studentId] = document.getElementById("studentId").value.split("#");
 
     try {
         /* SUBIR ARCHIVO */
         const formData = new FormData();
         formData.append("reqFile", file);
-        formData.append("directory", `student/${studentId}/payment`);
+        formData.append("directory", `courses/${courseId}/${studentId}/payment`);
 
         const uploadResponse = await fetch(
             `${apiUrl}/api/files`,
