@@ -47,7 +47,7 @@ async function loadContents() {
 
 async function loadAdvisers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users/role?role=adviser&state=active`);
+        const response = await fetch(`${apiUrl}/api/users?role=adviser&state=active`);
         const advisers = await response.json();
         const select = document.getElementById("adviserId");
 
@@ -71,7 +71,7 @@ async function loadAdvisers() {
 
 async function loadTeachers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users/role?role=teacher&state=active`);
+        const response = await fetch(`${apiUrl}/api/users?role=teacher&state=active`);
         const teachers = await response.json();
         const select = document.getElementById("teacherId");
 

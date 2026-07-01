@@ -1,12 +1,3 @@
-const documentTypes = [
-    "curp",
-    "acta",
-    "certificado",
-    "titulo",
-    "cedula",
-    "ine"
-];
-
 function getMonths(dateInit, dateEnd) {
     const months = [];
     const start = new Date(dateInit);
@@ -110,7 +101,7 @@ async function loadStudents() {
                     <div class="button-container">
                         <button
                             onclick="viewImage('${payment.url}')">
-                            Pago 
+                            Pago
                         </button>
                     </div>
                 `).join("");
@@ -181,11 +172,6 @@ async function loadStudents() {
                             $${total.toLocaleString()}
                         </td>
                     `).join("")}
-
-                    ${documentTypes.map(() => `
-                        <td></td>
-                    `).join("")}
-
                 </tr>
             </tbody>
         `;
@@ -206,5 +192,7 @@ function viewImage(imageUrl) {
 
     modal.addEventListener("click", () => {
         modal.style.display = "none";
+        const modalImage = document.getElementById("modalImage");
+        modalImage.src = '';
     });
 }
