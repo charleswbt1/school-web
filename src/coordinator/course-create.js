@@ -148,7 +148,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         }
         alert("Curso creado correctamente");
         document.getElementById("courseForm").reset();
-        window.location.href = '../coordinator/courses.html';
+        window.location.href = '../coordinator/periods.html';
     } catch (error) {
         alert("Error al crear curso");
     } finally {
