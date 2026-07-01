@@ -39,7 +39,7 @@ async function loadCourses() {
         `).join('');
 
     } catch (error) {
-        console.error(error);
+            alert(error);
 
         document.getElementById('courses-table-body').innerHTML = `
             <tr>

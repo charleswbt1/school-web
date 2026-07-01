@@ -95,14 +95,10 @@ function addSwitchEvents() {
 
                     } catch (error) {
 
-                        alert(
-                            "Error al actualizar el estado"
-                        );
+                        alert("Error al actualizar el estado");
 
                         switchBtn.checked =
                             !switchBtn.checked;
-
-                        console.error(error);
                     }
                 }
             );

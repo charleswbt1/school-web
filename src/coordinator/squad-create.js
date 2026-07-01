@@ -46,11 +46,12 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
                 })
             }
         );
-        alert("Escuela creada correctamente");
+        await showSuccess("Registro Exitoso");
         document.getElementById("squadForm").reset();
         window.location.href = "../coordinator/squads.html";
     } catch (error) {
-        alert("Error al crear escuela");
+        showError("Error al Registrar");
+
     } finally {
         submitButton.disabled = false;
     }

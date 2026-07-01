@@ -137,12 +137,12 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
             throw new Error(await response.text());
         }
 
-        alert('Contenido actualizado correctamente');
+        await showSuccess("Registro Exitoso");
         window.location.href = '../coordinator/contents.html';
 
     } catch (error) {
         console.error(error);
-        alert('Error al actualizar el contenido');
+        showError("Error al Registrar");
     }
 
 });

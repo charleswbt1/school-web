@@ -177,8 +177,62 @@ function initializeLoginModal() {
 }
 loadComponents();
 
-function initializeLogout() {
+function showSuccess(message) {
 
+    return new Promise(resolve => {
+
+        document.getElementById("alertOverlay").style.display = "block";
+        document.getElementById("customAlert").style.display = "block";
+
+        const icon = document.getElementById("alertIcon");
+
+        icon.className = "alert-icon success";
+        icon.innerHTML = "✓";
+
+        document.getElementById("alertTitle").innerHTML = "ÉXITO";
+        document.getElementById("alertMessage").innerHTML = message;
+
+        document.getElementById("alertButton").style.background = "#4CAF50";
+        document.getElementById("alertButton").innerHTML = "CONTINUAR";
+
+        const button = document.getElementById("alertButton");
+
+        button.onclick = () => {
+
+            closeAlert();
+            resolve();
+
+        };
+
+    });
+
+}
+
+function showError(message) {
+
+    document.getElementById("alertOverlay").style.display = "block";
+    document.getElementById("customAlert").style.display = "block";
+
+    const icon = document.getElementById("alertIcon");
+
+    icon.className = "alert-icon error";
+    icon.innerHTML = "✕";
+
+    document.getElementById("alertTitle").innerHTML = "ERROR";
+    document.getElementById("alertMessage").innerHTML = message;
+
+    document.getElementById("alertButton").style.background = "#F44336";
+    document.getElementById("alertButton").innerHTML = "ACEPTAR";
+}
+
+function closeAlert() {
+
+    document.getElementById("alertOverlay").style.display = "none";
+    document.getElementById("customAlert").style.display = "none";
+
+}
+
+function initializeLogout() {
     const logoutBtn = document.getElementById("logoutBtn");
     if (!logoutBtn) return;
 

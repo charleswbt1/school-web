@@ -34,7 +34,7 @@ async function loadStudents() {
             <option value="cedula-curso">Cedula Entregado</option>
         `;
     } catch (error) {
-        console.error("Error cargando estudiantes:", error);
+        alert("Error cargando estudiantes:", error);
     }
 }
 
@@ -93,11 +93,11 @@ document.getElementById("documentForm").addEventListener("submit", async (e) => 
                 body: JSON.stringify(documentRequest)
             }
         );
-        alert("Documento cargado correctamente");
+        await showSuccess("Registro Exitoso");
         document.getElementById("documentForm").reset();
         document.getElementById("previewImage").style.display = "none";
     } catch (error) {
-        alert("Error al cargar documento");
+        showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
     }

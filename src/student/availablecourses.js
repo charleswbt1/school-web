@@ -73,7 +73,7 @@ async function loadCourses() {
         });
 
     } catch (error) {
-        console.error("Error loading courses:", error);
+        alert("Error loading courses:", error);
     }
 }
 

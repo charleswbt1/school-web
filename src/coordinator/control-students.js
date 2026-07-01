@@ -209,7 +209,7 @@ async function loadStudents() {
         `;
 
     } catch (error) {
-        console.error(error);
+        alert("Error al Registrar");
     }
 }
 

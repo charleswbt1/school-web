@@ -28,7 +28,7 @@ async function loadStudents() {
             <option value="pending">Pendiente</option>
         `;
     } catch (error) {
-        console.error("Error cargando estudiantes:", error);
+        alert("Error cargando estudiantes:", error);
     }
 }
 loadStudents();
@@ -61,10 +61,10 @@ document.getElementById("documentForm").addEventListener("submit", async (e) => 
             alert(`No se actualizo alumno - ${response.message}`);
             return;
         }
-        alert("Alumno actualizado correctamente");
+        await showSuccess("Registro Exitoso");
         document.getElementById("documentForm").reset();
     } catch (error) {
-        alert("Error al cargar documento");
+        showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
     }

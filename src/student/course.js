@@ -84,7 +84,7 @@ async function loadStudentCourses() {
                 </div>
             `;
     } catch (error) {
-        console.error(error);
+        alerterror(error);
     }
 }
 

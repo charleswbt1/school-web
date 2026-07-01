@@ -17,7 +17,7 @@ async function loadRoles() {
             roleSelect.style.display = "block";
         }
     } catch (error) {
-        console.error("Error cargando: ", error);
+        alart("Error cargando: ", error);
     }
 }
 
@@ -48,7 +48,7 @@ async function loadCourses() {
             select.style.display = "block";
         }
     } catch (error) {
-        console.error("Error cargando cursos:", error);
+        alert("Error cargando cursos:", error);
     }
 }
 
@@ -76,7 +76,7 @@ async function loadAdvisers() {
             adviserSelect.style.display = "block";
         }
     } catch (error) {
-        console.error("Error cargando cursos:", error);
+        alert("Error cargando cursos:", error);
     }
 }
 
@@ -113,7 +113,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         const userData = await userResponse.json();
 
         if (!userResponse.ok) {
-            alert("Error al registrar usuario - " + userData.message);
+            showError(`Error al registrar ${userData.message}`);
             return;
         }
 
@@ -141,7 +141,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         alert("Registro exitoso");
         registerForm.reset();
     } catch (error) {
-        alert("Error al registrar - " + error.message);
+        showError(`Error al registrar ${error}`);
     } finally {
         submitButton.disabled = false;
     }

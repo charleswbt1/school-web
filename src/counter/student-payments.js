@@ -177,7 +177,7 @@ async function loadStudents() {
         `;
 
     } catch (error) {
-        console.error(error);
+        alerterror(error);
     }
 }
 

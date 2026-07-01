@@ -27,7 +27,7 @@ async function loadCourses() {
             `;
         });
     } catch (error) {
-        console.error(error);
+        alert(error);
     }
 }
 loadCourses();
@@ -45,7 +45,7 @@ document.addEventListener("click", async (event) => {
         try {
             window.location.href = `../student/course.html?id=${courseId}`;
         } catch (error) {
-            console.error("Error setting student ID:", error);
+            alert("Error setting student ID:", error);
         }
     }
   

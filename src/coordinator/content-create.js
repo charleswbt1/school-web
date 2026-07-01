@@ -66,11 +66,11 @@ document.getElementById('contentForm').addEventListener('submit', e => {
             },
             body: JSON.stringify(data)
         });
-        alert('Contenido creado exitosamente');
+        await showSuccess("Registro Exitoso");
         document.getElementById("contentForm").reset();
         window.location.href = '../coordinator/contents.html';
     } catch (error) {
-        alert('Error al crear el contenido');
+        showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
     }

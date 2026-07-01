@@ -50,8 +50,8 @@ async function updateCourse(event) {
         if (!response.ok) {
             throw new Error('Error al actualizar');
         }
-        alert('Registro actualizado correctamente');
+        await showSuccess("Registro Exitoso");
     } catch (error) {
-        alert('Error al actualizar la escuela');
+        showError("Error al Registrar");
     }
 }

@@ -152,11 +152,11 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         if (!response.ok) {
             throw new Error("Error al crear curso");
         }
-        alert("Curso creado correctamente");
+        await showSuccess("Registro Exitoso");
         document.getElementById("courseForm").reset();
         window.location.href = '../coordinator/periods.html';
     } catch (error) {
-        alert("Error al crear curso");
+        showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
     }

@@ -83,7 +83,6 @@ async function updateSquad(event) {
         alert('Perfil actualizado correctamente');
         window.location.href = 'profile.html';
     } catch (error) {
-        console.error(error);
         alert('Error al actualizar el perfil');
     }
 }

@@ -160,11 +160,11 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
             }
         );
 
-        alert("Factura creada correctamente");
+        await showSuccess("Registro Exitoso");
         document.getElementById("studentForm").reset();
         document.getElementById("previewImage").style.display = "none";
     } catch (error) {
-        alert("Error al crear factura");
+        showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
     }

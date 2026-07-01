@@ -87,20 +87,9 @@ function addSwitchEvents() {
                             );
                         }
 
-                        console.log(
-                            `Usuario ${userId} actualizado a ${state}`
-                        );
-
                     } catch (error) {
-
-                        alert(
-                            "Error al actualizar el estado"
-                        );
-
-                        switchBtn.checked =
-                            !switchBtn.checked;
-
-                        console.error(error);
+                        showError("Error al Registrar");
+                        switchBtn.checked = !switchBtn.checked;
                     }
                 }
             );

@@ -95,7 +95,16 @@ document.addEventListener("click", async (event) => {
             console.error("Error loading content:", error);
         }
     }
+    const modal = document.getElementById("contentModal");
 
+    modal.addEventListener("click", (e) => {
+
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+
+    });
+    
     if (button.classList.contains("open-login-btn")) {
         const courseId = button.dataset.content;
         localStorage.setItem("courseId", courseId);
