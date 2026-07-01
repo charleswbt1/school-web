@@ -175,20 +175,18 @@ function initializeLoginModal() {
 
     });
 }
+loadComponents();
 
 function initializeLogout() {
 
     const logoutBtn = document.getElementById("logoutBtn");
     if (!logoutBtn) return;
 
-    logoutBtn.addEventListener(
-        "click",
-        () => {
-            localStorage.clear();
-            sessionStorage.clear();
-
-            window.location.replace("../home/index.html");
-        }
-    );
+    logoutBtn.addEventListener("click", window.logout);
 }
-loadComponents();
+
+window.logout = function () {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.replace("../home/index.html");
+};

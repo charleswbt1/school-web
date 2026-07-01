@@ -106,13 +106,19 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     const squadId = document.getElementById("squadId").value;
     const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
     const squads = await response.json();
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        alert("Usuario no autenticado");
+        window.logout();
+        return;
+    }
     const body = {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
         squad_id: squadId,
         content_id: document.getElementById("contentId").value,
         adviser_id: document.getElementById("adviserId").value,
-        coordinator_id: localStorage.getItem("userId"),
+        coordinator_id: userId,
         teacher_id: document.getElementById("teacherId").value,
         image: squads[0].logo,
         cost: Number(document.getElementById("cost").value),
