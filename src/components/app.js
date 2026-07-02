@@ -165,14 +165,9 @@ function initializeLoginModal() {
 
 
         } catch (error) {
-
-            console.error(error);
-
-            document.getElementById("loginError").textContent =
-                "Error de conexión con el servidor";
-
+            alert(error);
+            document.getElementById("loginError").textContent = "Error de conexión con el servidor";
         }
-
     });
 }
 loadComponents();

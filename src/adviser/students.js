@@ -54,7 +54,7 @@ async function loadStudents() {
         }).join('');
 
     } catch (error) {
-        console.error(error);
+        alert(error);
 
         document.getElementById('students-table-body').innerHTML = `
             <tr>

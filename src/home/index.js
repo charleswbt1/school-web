@@ -48,7 +48,7 @@ async function loadCourses() {
         });
 
     } catch (error) {
-        console.error("Error loading courses:", error);
+        alert("Error loading courses:", error);
     }
 }
 
@@ -92,7 +92,7 @@ document.addEventListener("click", async (event) => {
 
             document.getElementById("contentModal").style.display = "flex";
         } catch (error) {
-            console.error("Error loading content:", error);
+            alert("Error loading content:", error);
         }
     }
     const modal = document.getElementById("contentModal");

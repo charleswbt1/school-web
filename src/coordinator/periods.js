@@ -36,6 +36,7 @@ async function loadPeriods() {
             `;
         }).join('');
     } catch (error) {
+        alert('Error al cargar los periodos', error);
         document.getElementById('courses-table-body').innerHTML = `
             <tr>
                 <td colspan="7">

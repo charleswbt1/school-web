@@ -64,7 +64,7 @@ async function saveQualification(moduleName, index) {
         document.getElementById(`qualification-${index}`).value
     );
     if (qualification < 0 || qualification > 10) {
-        alert("La calificación debe estar entre 0 y 10.");
+        showError("La calificación debe estar entre 0 y 10.");
         return;
     }
 
@@ -87,8 +87,8 @@ async function saveQualification(moduleName, index) {
         if (!response.ok) {
             throw new Error();
         }
-        alert("Calificación guardada correctamente");
+        await showSuccess("Actualizacion exitosa");
     } catch (error) {
-        alert("No fue posible guardar la calificación");
+        showError("No fue posible guardar la calificación");
     }
 }

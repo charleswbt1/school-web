@@ -17,7 +17,7 @@ async function loadRoles() {
             roleSelect.style.display = "block";
         }
     } catch (error) {
-        alart("Error cargando: ", error);
+        alert("Error cargando: ", error);
     }
 }
 
@@ -138,7 +138,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
             }
         }
 
-        alert("Registro exitoso");
+        await showSuccess("Registro exitoso");
         registerForm.reset();
     } catch (error) {
         showError(`Error al registrar ${error}`);

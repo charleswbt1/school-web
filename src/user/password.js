@@ -19,14 +19,15 @@ document.getElementById("userForm").addEventListener("submit", async (e) => {
             }
         );
         if (!userResponse.ok) {
-            alert("Error al actualizar contraseña");
-        } else {
-            alert("Contraseña actualizada correctamente");
-            document.getElementById("userForm").reset();
-            window.location.href = "../user/profile.html";
+            showError("Error al actualizar contraseña");
+            return;
         }
+
+        await showSuccess("Actualizacion exitosa");
+        document.getElementById("userForm").reset();
+        window.location.href = "../user/profile.html";
     } catch (error) {
-        alert("Error al actualizar contraseña - " + error.message);
+        showError("Error al actualizar contraseña - " + error.message);
     } finally {
         submitButton.disabled = false;
     }

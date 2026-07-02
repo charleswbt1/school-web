@@ -50,7 +50,6 @@ async function loadSquad() {
             `;
         }
     } catch (error) {
-        console.error(error);
         alert('Error al cargar la escuela');
     }
 }

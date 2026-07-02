@@ -45,6 +45,7 @@ async function loadContents() {
         `).join('');
 
     } catch (error) {
+        alert('Error al cargar contenidos', error);
         document.getElementById(
             'contentsTableBody'
         ).innerHTML = `

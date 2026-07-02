@@ -141,7 +141,7 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
         window.location.href = '../coordinator/contents.html';
 
     } catch (error) {
-        console.error(error);
+        alert(error);
         showError("Error al Registrar");
     }
 

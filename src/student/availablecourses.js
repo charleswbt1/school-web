@@ -117,7 +117,7 @@ document.addEventListener("click", async (event) => {
 
             document.getElementById("contentModal").style.display = "flex";
         } catch (error) {
-            console.error("Error loading content:", error);
+            alert("Error loading content:", error);
         }
     }
 

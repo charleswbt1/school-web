@@ -45,12 +45,12 @@ async function loadStudentCourses() {
 
                         <p>
                             <strong>Contenido:</strong>
-                            ${response.course.content.description}
+                            ${response.content.description}
                         </p>
 
                         <p>
                             <strong>Módulos:</strong>
-                            ${response.student.notes.length} / ${response.content.modules.length}
+                            ${response.student.notes?.length ?? 0} / ${response.content.modules.length}
                         </p>
 
                         <p>
@@ -84,7 +84,7 @@ async function loadStudentCourses() {
                 </div>
             `;
     } catch (error) {
-        alerterror(error);
+        alert(error);
     }
 }
 

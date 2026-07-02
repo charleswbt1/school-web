@@ -17,7 +17,7 @@ async function loadSquads() {
             `;
         });
     } catch (error) {
-        console.error("Error cargando escuelas:", error);
+        alert("Error cargando escuelas:", error);
     }
 }
 
@@ -41,7 +41,7 @@ async function loadContents() {
             `;
         });
     } catch (error) {
-        console.error("Error cargando contenidos:", error);
+        alert("Error cargando contenidos:", error);
     }
 }
 
@@ -65,7 +65,7 @@ async function loadAdvisers() {
             `;
         });
     } catch (error) {
-        console.error("Error cargando asesores:", error);
+        alert("Error cargando asesores:", error);
     }
 }
 
@@ -89,7 +89,7 @@ async function loadTeachers() {
             `;
         });
     } catch (error) {
-        console.error("Error cargando docentes:", error);
+        alert("Error cargando docentes:", error);
     }
 }
 
@@ -109,9 +109,9 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
         alert("Usuario no autenticado");
-        window.logout();
         return;
     }
+
     const body = {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,

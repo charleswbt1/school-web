@@ -80,15 +80,16 @@ async function updateSquad(event) {
         if (!response.ok) {
             throw new Error('Error al actualizar');
         }
-        alert('Perfil actualizado correctamente');
+        await showSuccess("Actualizacion exitosa");
         window.location.href = 'profile.html';
     } catch (error) {
-        alert('Error al actualizar el perfil');
+        showError('Error al actualizar');
     }
 }
 
 const previewImage = document.getElementById("previewImage");
 const invoiceImage = document.getElementById("invoiceImage");
+
 previewImage.addEventListener("click", () => {
     invoiceImage.click();
 });

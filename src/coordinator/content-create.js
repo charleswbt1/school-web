@@ -29,7 +29,7 @@ function addTopic(topicsContainer) {
     topicsContainer.appendChild(topicElement);
 }
 
-document.getElementById('contentForm').addEventListener('submit', e => {
+document.getElementById("contentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;

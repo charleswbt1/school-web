@@ -55,7 +55,7 @@ async function loadStudents() {
             <option value="DICIEMBRE">DICIEMBRE</option>
         `;
     } catch (error) {
-        console.error("Error cargando estudiantes:", error);
+        alert("Error cargando estudiantes:", error);
     }
 }
 

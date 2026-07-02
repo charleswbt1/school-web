@@ -51,7 +51,6 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         window.location.href = "../coordinator/squads.html";
     } catch (error) {
         showError("Error al Registrar");
-
     } finally {
         submitButton.disabled = false;
     }
