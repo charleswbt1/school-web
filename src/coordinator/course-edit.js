@@ -19,6 +19,7 @@ async function loadCourse() {
 
         document.getElementById('name').value = course.name || '';
         document.getElementById('description').value = course.description || '';
+        document.getElementById('hours_week').value = course.hours_week || '';
         document.getElementById('call_link').value = course.call_link || '';
         document.getElementById('class_link').value = course.class_link || '';
 
@@ -41,6 +42,7 @@ async function updateCourse(event) {
                 body: JSON.stringify({
                     name: document.getElementById('name').value,
                     description: document.getElementById('description').value,
+                    hours_week: document.getElementById('hours_week').value,
                     call_link: document.getElementById('call_link').value,
                     class_link: document.getElementById('class_link').value
                 })

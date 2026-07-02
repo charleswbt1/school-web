@@ -44,7 +44,7 @@ async function loadCourses() {
                         </button>
                         <button
                             onclick="updateLinks('${course.id}')">
-                            Links
+                            Ediatr
                         </button>
                     </div>
                 </td>
