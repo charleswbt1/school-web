@@ -1,7 +1,7 @@
 async function loadStudents() {
     try {
-        const userId = localStorage.getItem("userId");
-        const role = localStorage.getItem("role");
+        const userId = sessionStorage.getItem("userId");
+        const role = sessionStorage.getItem("role");
         let query = `adviser_id=${userId}`;
         if (role === "coordinator") {
             query = `coordinator_id=${userId}`;

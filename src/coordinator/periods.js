@@ -1,6 +1,6 @@
 async function loadPeriods() {
     try {
-        const coordinator_id = localStorage.getItem("userId");
+        const coordinator_id = sessionStorage.getItem("userId");
         const response = await fetch(`${apiUrl}/api/courses/periods?coordinator_id=${coordinator_id}`);
         if (!response.ok) {
             throw new Error('Error al obtener periodos');

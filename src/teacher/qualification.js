@@ -15,7 +15,7 @@ async function loadQualifications() {
 
         tbody.innerHTML = content.modules.map((module, index) => {
             const note = student.notes?.find(
-                note => note.module === module.name
+                note => note.module_id === module.id
             );
 
             return `
@@ -34,7 +34,7 @@ async function loadQualifications() {
 
                     <td>
                         <button
-                            onclick="saveQualification('${module.name}', ${index}, this)">
+                            onclick="saveQualification('${module.id}', ${module.qualification}, ${index}, this)">
                             Guardar
                         </button>
                     </td>
@@ -54,7 +54,7 @@ async function loadQualifications() {
 
 loadQualifications();
 
-async function saveQualification(moduleName, index) {
+async function saveQualification(moduleId, umbral, index) {
 
     if (!confirm("¿Confirmar calificación?")) {
         return;
@@ -77,9 +77,10 @@ async function saveQualification(moduleName, index) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    module_name: moduleName,
+                    module_id: moduleId,
                     qualification: Number(qualification),
-                    student_id: studentId
+                    student_id: studentId,
+                    state: qualification >= umbral ? "aprobado" : "fallo"
                 })
             }
         );

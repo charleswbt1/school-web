@@ -24,8 +24,7 @@ async function loadCourse() {
         document.getElementById('class_link').value = course.class_link || '';
 
     } catch (error) {
-        console.error(error);
-        alert('Error al cargar la escuela');
+        alert('Error al cargar la escuela', error);
     }
 }
 
@@ -42,7 +41,7 @@ async function updateCourse(event) {
                 body: JSON.stringify({
                     name: document.getElementById('name').value,
                     description: document.getElementById('description').value,
-                    hours_week: document.getElementById('hours_week').value,
+                    hours_week: Number(document.getElementById('hours_week').value),
                     call_link: document.getElementById('call_link').value,
                     class_link: document.getElementById('class_link').value
                 })
@@ -52,8 +51,8 @@ async function updateCourse(event) {
         if (!response.ok) {
             throw new Error('Error al actualizar');
         }
-        await showSuccess("Registro Exitoso");
+        await showSuccess("Actualización Exitosa");
     } catch (error) {
-        showError("Error al Registrar");
+        showError("Error al actualizar");
     }
 }

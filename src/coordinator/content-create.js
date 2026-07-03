@@ -37,6 +37,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     const data = {
         name: document.getElementById('contentName').value,
         description: document.getElementById('contentDescription').value,
+        coordinator_id: sessionStorage.getItem("userId"),
         modules: []
     };
 
@@ -45,6 +46,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
             name: moduleCard.querySelector('.module-name').value,
             description: moduleCard.querySelector('.module-description').value,
             qualification: Number(moduleCard.querySelector('.module-qualification').value),
+            link: moduleCard.querySelector('.module-link').value,
             topics: []
         };
 
@@ -52,6 +54,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
             module.topics.push({
                 name: topicCard.querySelector('.topic-name').value,
                 description: topicCard.querySelector('.topic-description').value,
+                link: topicCard.querySelector('.module-link').value
             });
         });
 

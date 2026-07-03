@@ -1,3 +1,4 @@
+const coordinatorId = sessionStorage.getItem("userId");
 async function loadSquads() {
     try {
         const response = await fetch(`${apiUrl}/api/squads?state=active`);
@@ -106,7 +107,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     const squadId = document.getElementById("squadId").value;
     const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
     const squads = await response.json();
-    const userId = localStorage.getItem("userId");
+    const userId = sessionStorage.getItem("userId");
     if (!userId) {
         alert("Usuario no autenticado");
         return;
@@ -121,14 +122,9 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         coordinator_id: userId,
         teacher_id: document.getElementById("teacherId").value,
         image: squads[0].logo,
-        cost: Number(document.getElementById("cost").value),
-        cost_inscription: Number(document.getElementById("costInscription").value),
         offer_cost_inscription: Number(document.getElementById("offerCostInscription").value),
-        cost_quota: Number(document.getElementById("costQuota").value),
         offer_cost_quota: Number(document.getElementById("offerCostQuota").value),
-        cost_reinscription: Number(document.getElementById("costReinscription").value),
         offer_cost_reinscription: Number(document.getElementById("offerCostReinscription").value),
-        cost_title: Number(document.getElementById("costTitle").value),
         offer_cost_title: Number(document.getElementById("offerCostTitle").value),
         number_quota: Number(document.getElementById("numberQuota").value),
         offer: true,

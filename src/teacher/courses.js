@@ -1,6 +1,6 @@
 async function loadCourses() {
     try {
-        const teacher_id = localStorage.getItem("userId");
+        const teacher_id = sessionStorage.getItem("userId");
         let response = await fetch(`${apiUrl}/api/courses?teacher_id=${teacher_id}`);
         if (!response.ok) {
             throw new Error('Error al obtener cursos');

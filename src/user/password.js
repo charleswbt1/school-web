@@ -4,7 +4,7 @@ document.getElementById("userForm").addEventListener("submit", async (e) => {
     submitButton.disabled = true;
 
     const userRequest = {
-        user_id: localStorage.getItem("userId"),
+        user_id: sessionStorage.getItem("userId"),
         new_password: document.getElementById("new_password").value
     }
     try {

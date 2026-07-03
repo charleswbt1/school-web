@@ -23,6 +23,7 @@ async function loadContent() {
         moduleElement.querySelector('.module-name').value = module.name;
         moduleElement.querySelector('.module-description').value = module.description;
         moduleElement.querySelector('.module-qualification').value = module.qualification;
+        moduleElement.querySelector('.module-link').value = module.link;
 
         const topicsContainer = moduleElement.querySelector('.topics-container');
 
@@ -37,6 +38,7 @@ async function loadContent() {
 
             topicElement.querySelector('.topic-name').value = topic.name;
             topicElement.querySelector('.topic-description').value = topic.description;
+            topicElement.querySelector('.topic-link').value = topic.link;
 
             topicElement.querySelector('.remove-topic-btn')
                 .addEventListener('click', () => topicElement.remove());
@@ -110,6 +112,7 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
             qualification: Number(
                 moduleCard.querySelector('.module-qualification').value
             ),
+            link: moduleCard.querySelector('.module-link').value,
             topics: []
         };
 
@@ -118,6 +121,7 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
                 id: topicCard.dataset.id || null,
                 name: topicCard.querySelector('.topic-name').value,
                 description: topicCard.querySelector('.topic-description').value,
+                link: topicCard.querySelector('.topic-link').value
             });
         });
 
@@ -137,12 +141,12 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
             throw new Error(await response.text());
         }
 
-        await showSuccess("Registro Exitoso");
+        await showSuccess("Actualización Exitosa");
         window.location.href = '../coordinator/contents.html';
 
     } catch (error) {
         alert(error);
-        showError("Error al Registrar");
+        showError("Error al Actualizar");
     }
 
 });

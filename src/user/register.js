@@ -1,5 +1,5 @@
 const roleRegister = new URLSearchParams(window.location.search).get('roleRegister');
-const roleSession = localStorage.getItem("role");
+const roleSession = sessionStorage.getItem("role");
 
 async function loadRoles() {
     try {

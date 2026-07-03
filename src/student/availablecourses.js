@@ -6,7 +6,7 @@ async function loadCourses() {
         const courses = await response.json();
 
         // Cursos del alumno
-        const userId = localStorage.getItem("userId");
+        const userId = sessionStorage.getItem("userId");
         const studentResponse = await fetch(`${apiUrl}/api/students/courses?user_id=${userId}`);
         const studentCourses = await studentResponse.json();
 
@@ -122,7 +122,7 @@ document.addEventListener("click", async (event) => {
     }
 
     if (button.classList.contains("register-btn")) {
-        const userId = localStorage.getItem("userId");
+        const userId = sessionStorage.getItem("userId");
         const courseId = button.dataset.content;
         const student = await fetch(
             `${apiUrl}/api/students`,

@@ -1,4 +1,4 @@
-const userId = localStorage.getItem("userId");
+const userId = sessionStorage.getItem("userId");
 
 async function loadSquad() {
     try {

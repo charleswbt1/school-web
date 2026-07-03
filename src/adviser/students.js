@@ -1,6 +1,6 @@
 async function loadStudents() {
     try {
-        const adviserId = localStorage.getItem('userId');
+        const adviserId = sessionStorage.getItem('userId');
         const response = await fetch(`${apiUrl}/api/students/data?adviser_id=${adviserId}`);
         const students = await response.json();
 

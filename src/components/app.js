@@ -2,7 +2,7 @@ const apiUrl = "https://school-back-764239827508.us-east1.run.app";
 // const apiUrl = "http://localhost:3000";
 
 async function loadComponents() {
-    const role = localStorage.getItem("role");
+    const role = sessionStorage.getItem("role");
 
     // SIDEBAR
     let sidebarFile = "../components/sidebar.html";
@@ -117,10 +117,10 @@ function initializeLoginModal() {
 
             loginModal.style.display = "none";
 
-            localStorage.setItem("userId", data.user_id);
-            localStorage.setItem("role", data.role);
+            sessionStorage.setItem("userId", data.user_id);
+            sessionStorage.setItem("role", data.role);
 
-            const courseid = localStorage.getItem("courseId");
+            const courseid = sessionStorage.getItem("courseId");
 
             if (courseid) {
 
@@ -138,7 +138,7 @@ function initializeLoginModal() {
                     }
                 );
 
-                localStorage.removeItem("courseId");
+                sessionStorage.removeItem("courseId");
             }
 
             // Redirecciones...
@@ -235,7 +235,6 @@ function initializeLogout() {
 }
 
 window.logout = function () {
-    localStorage.clear();
     sessionStorage.clear();
     window.location.replace("../home/index.html");
 };

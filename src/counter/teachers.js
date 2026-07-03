@@ -1,4 +1,4 @@
-const roleSession = localStorage.getItem('role');
+const roleSession = sessionStorage.getItem('role');
 
 async function loadTable() {
     try {

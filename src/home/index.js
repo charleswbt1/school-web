@@ -1,7 +1,5 @@
 async function loadCourses() {
     try {
-        localStorage.clear();
-        sessionStorage.clear();
         const response = await fetch(`${apiUrl}/api/courses?available=true`);
         const courses = await response.json();
 
@@ -107,7 +105,7 @@ document.addEventListener("click", async (event) => {
     
     if (button.classList.contains("open-login-btn")) {
         const courseId = button.dataset.content;
-        localStorage.setItem("courseId", courseId);
+        sessionStorage.setItem("courseId", courseId);
 
         document.getElementById("loginModal").style.display = "flex";
 

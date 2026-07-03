@@ -2,7 +2,7 @@ const params = new URLSearchParams(window.location.search);
 
 async function loadCourses() {
     try {
-        const coordinator_id = localStorage.getItem("userId");
+        const coordinator_id = sessionStorage.getItem("userId");
         const year = params.get('year');
         const month = params.get('month');
         let response;
