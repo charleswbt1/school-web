@@ -5,7 +5,8 @@ async function loadStudentCourses() {
         const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
         const response = await responseService.json();
 
-        const infoSection = document.querySelector(".info-section");
+        const infoSection = document.getElementById("courseContainer");
+
         infoSection.innerHTML = "";
         const modules = response.content.modules.map(
             (module, index) => `
@@ -16,7 +17,14 @@ async function loadStudentCourses() {
                             <li>
                                 <strong>${topic.name}</strong>
                                 <br>
-                                ${topic.description}                                
+                                ${topic.description}
+                                <br>
+                                ${topic.link && topic.link.startsWith("http")
+                    ? `<button onclick="showVideo('${topic.link}')">
+                            Ver video
+                        </button>`
+                    : ""
+                }
                             </li>
                         `).join("")}
                     </ul>
@@ -60,20 +68,26 @@ async function loadStudentCourses() {
                         </p>
 
                         <div class="course-actions">
-
-                            <a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            ${response.course.call_link && response.course.call_link.startsWith("http")
+                ? `<a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                             Clase en línea
-                            </a>
-
-                            <a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            </a>`
+                : ""
+            }
+                            ${response.course.class_link && response.course.class_link.startsWith("http")
+                ? `<a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                             Clases grabadas
-                            </a>
-
+                            </a>`
+                : ""
+            }
+                            
                         </div>
 
                         <div class="modules-container">
                             ${documents}
                         </div>
+
+                        <div id="videoContainer"></div>
 
                         <div class="modules-container">
                             ${modules}
@@ -89,3 +103,26 @@ async function loadStudentCourses() {
 }
 
 loadStudentCourses();
+
+function showVideo(url) {
+    let videoId = "";
+
+    if (url.includes("youtube.com/watch?v=")) {
+        videoId = new URL(url).searchParams.get("v");
+    } else if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0];
+    }
+    videoId = `https://www.youtube.com/embed/${videoId}`;
+
+    document.getElementById("videoContainer").innerHTML = `
+    <iframe
+        width="100%"
+        height="450"
+        src="${videoId}"
+        title="Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+`;
+}
