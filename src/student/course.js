@@ -19,7 +19,7 @@ async function loadStudentCourses() {
                                 <br>
                                 ${topic.description}
                                 <br>
-                                ${topic.link && topic.link.startsWith("http")
+                                ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
                     ? `<button onclick="showVideo('${topic.link}')">
                             Ver video
                         </button>`
@@ -66,15 +66,27 @@ async function loadStudentCourses() {
                             <strong>Promedio:</strong>
                             ${response.student.average}
                         </p>
+                     <p class="
+                        course-state
+                        ${response.student.state === "inactive" ? "alert-danger" : ""}
+                        ${response.student.state === "pending" ? "alert-warning" : ""}
+                    ">
+                        ${response.student.state === "inactive"
+                                    ? "❌ Este módulo no está disponible. Comunícate con tu coordinador."
+                                    : response.student.state === "pending"
+                                        ? "⚠️ Este módulo no está disponible. Comunícate con tu asesor."
+                                        : ""
+                                }
+                         </p>
 
                         <div class="course-actions">
-                            ${response.course.call_link && response.course.call_link.startsWith("http")
+                            ${response.student.state === "active" && response.course.call_link && response.course.call_link.startsWith("http")
                 ? `<a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                             Clase en línea
                             </a>`
                 : ""
             }
-                            ${response.course.class_link && response.course.class_link.startsWith("http")
+                            ${response.student.state === "active" && response.course.class_link && response.course.class_link.startsWith("http")
                 ? `<a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                             Clases grabadas
                             </a>`
