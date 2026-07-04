@@ -254,6 +254,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    cursor: pointer;
 }
 
 .modal-content {
@@ -265,16 +266,19 @@ button:hover {
     padding: 30px;
     border-radius: 12px;
     position: relative;
+    cursor: pointer;
 }
 
 .modal-content form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    cursor: pointer;
 }
 
 .modal-content input {
     padding: 12px;
+    cursor: pointer;
 }
 
 .close {
@@ -313,6 +317,7 @@ button:hover {
     max-width: 90%;
     max-height: 90%;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 /* DASHBOARD */

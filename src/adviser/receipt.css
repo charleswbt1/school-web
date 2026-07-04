@@ -15,7 +15,7 @@ body {
 }
 
 .receipt-header {
-    background: #0b2148;
+    background: #000b1f;
     color: #fff;
 
     display: flex;
@@ -251,4 +251,63 @@ body {
 
     }
 
+}
+/* Botón de descarga */
+
+.button-container{
+    margin:25px 0;
+    display:flex;
+    justify-content:center;
+}
+
+.button-container button{
+    background:#1d4075;
+    color:#fff;
+    border:none;
+    padding:14px 30px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+
+.button-container button:hover{
+    background:#2b5ba3;
+    transform:translateY(-2px);
+}
+
+.button-container button:active{
+    transform:scale(.98);
+}
+@media print{
+
+    body *{
+        visibility:hidden;
+    }
+
+    .receipt,
+    .receipt *{
+        visibility:visible;
+    }
+
+    .receipt{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        box-shadow:none;
+    }
+
+    .button-container{
+        display:none;
+    }
+
+    #sidebar-container,
+    #header-container,
+    .info-form,
+    h2{
+        display:none;
+    }
 }

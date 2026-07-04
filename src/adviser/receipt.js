@@ -44,15 +44,11 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
 
     const payment = student.payments[student.payments.length - 1];
 
-
-    document.getElementById("logo").src =
-        "https://storage.googleapis.com/school-source/web/iucHeader.png"
-
     document.getElementById("receiptNumber").textContent =
         student.receipt_number ?? "000000";
 
     document.getElementById("date").textContent =
-        payment.date;
+        payment.date.split("T")[0];
 
     document.getElementById("total").textContent =
         `$${Number(payment.amount).toLocaleString()}`;
@@ -79,7 +75,27 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
                 <td>Colegiatura</td>
                 <td>$${Number(payment.amount).toLocaleString()}</td>
             </tr>
-`;
+            `;
 });
 
 
+document.getElementById("downloadReceipt").addEventListener("click", () => {
+
+    const receipt = document.getElementById("receiptContainer");
+
+    html2canvas(receipt, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff"
+    }).then(canvas => {
+
+        const link = document.createElement("a");
+
+        link.download = "Recibo.png";
+
+        link.href = canvas.toDataURL("image/png");
+
+        link.click();
+    });
+
+});
