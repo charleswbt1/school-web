@@ -1,7 +1,12 @@
+const user_id = sessionStorage.getItem("userId");
+const role = sessionStorage.getItem("role");
+
 async function loadPeriods() {
     try {
-        const coordinator_id = sessionStorage.getItem("userId");
-        const response = await fetch(`${apiUrl}/api/courses/periods?coordinator_id=${coordinator_id}`);
+        const query = role === 'coordinator' ? `?coordinator_id=${user_id}` : '';
+        document.getElementById('btn-add-course').style.display = role === 'coordinator' ? 'block' : 'none';
+
+        const response = await fetch(`${apiUrl}/api/courses/periods${query}`);
         if (!response.ok) {
             throw new Error('Error al obtener periodos');
         }
@@ -36,7 +41,7 @@ async function loadPeriods() {
             `;
         }).join('');
     } catch (error) {
-        alert('Error al cargar los periodos', error);
+        console.error('control periods: Error al cargar los periodos', error);
         document.getElementById('courses-table-body').innerHTML = `
             <tr>
                 <td colspan="7">
@@ -57,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-add-course');
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = 'course-create.html';
+            window.location.href = '../coordinator/course-create.html';
         });
     }
 });

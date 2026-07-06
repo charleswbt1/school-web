@@ -155,11 +155,11 @@ function initializeLoginModal() {
             }
 
             if (data.role === "counter") {
-                window.location.href = "../counter/periods.html";
+                window.location.href = "../control/periods.html";
             }
 
             if (data.role === "coordinator") {
-                window.location.href = "../coordinator/periods.html";
+                window.location.href = "../control/periods.html";
             }
 
 
@@ -173,11 +173,10 @@ function initializeLoginModal() {
 loadComponents();
 
 function showSuccess(message) {
-
     return new Promise(resolve => {
-
         document.getElementById("alertOverlay").style.display = "block";
         document.getElementById("customAlert").style.display = "block";
+        document.getElementById("alertCancelButton").style.display = "none";
 
         const icon = document.getElementById("alertIcon");
 
@@ -187,16 +186,46 @@ function showSuccess(message) {
         document.getElementById("alertTitle").innerHTML = "ÉXITO";
         document.getElementById("alertMessage").innerHTML = message;
 
-        document.getElementById("alertButton").style.background = "#4CAF50";
-        document.getElementById("alertButton").innerHTML = "CONTINUAR";
-
         const button = document.getElementById("alertButton");
-
+        button.style.background = "#4CAF50";
+        button.innerHTML = "CONTINUAR";
         button.onclick = () => {
-
             closeAlert();
             resolve();
+        };
 
+    });
+
+}
+
+function showConfirm(message) {
+    return new Promise(resolve => {
+        document.getElementById("alertOverlay").style.display = "block";
+        document.getElementById("customAlert").style.display = "block";
+        document.getElementById("alertCancelButton").style.display = "block";
+
+        const icon = document.getElementById("alertIcon");
+
+        icon.className = "alert-icon confirm";
+        icon.innerHTML = "?";
+
+        document.getElementById("alertTitle").innerHTML = "CONFIRMAR";
+        document.getElementById("alertMessage").innerHTML = message;
+
+        const button = document.getElementById("alertButton");
+        button.style.background = "#2196F3";
+        button.innerHTML = "ACEPTAR";
+        button.onclick = () => {
+            closeAlert();
+            resolve(true);
+        };
+
+        const cancelButton = document.getElementById("alertCancelButton");
+        cancelButton.style.background = "#f33321";
+        cancelButton.innerHTML = "CANCELAR";
+        cancelButton.onclick = () => {
+            closeAlert();
+            resolve(false);
         };
 
     });
@@ -204,9 +233,9 @@ function showSuccess(message) {
 }
 
 function showError(message) {
-
     document.getElementById("alertOverlay").style.display = "block";
     document.getElementById("customAlert").style.display = "block";
+    document.getElementById("alertCancelButton").style.display = "none";
 
     const icon = document.getElementById("alertIcon");
 
@@ -221,20 +250,19 @@ function showError(message) {
 }
 
 function closeAlert() {
-
     document.getElementById("alertOverlay").style.display = "none";
     document.getElementById("customAlert").style.display = "none";
-
+    document.getElementById("alertCancelButton").style.display = "none";
 }
 
 function initializeLogout() {
     const logoutBtn = document.getElementById("logoutBtn");
     if (!logoutBtn) return;
-
     logoutBtn.addEventListener("click", window.logout);
 }
 
 window.logout = function () {
+    sessionStorage.removeItem("userId");
     sessionStorage.clear();
     window.location.replace("../home/index.html");
 };

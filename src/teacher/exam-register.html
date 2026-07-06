@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Examen</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+
+            <div class="section-header">
+                <h2 id="examTitle"></h2>
+            </div>
+
+            <form class="info-form" id="examForm">
+
+                <input type="text" id="examName" placeholder="Nombre del examen" required>
+
+                <input type="text" id="examDescription" placeholder="Descripción">
+
+                <hr>
+
+                <h3>Preguntas</h3>
+
+                <div id="questionsContainer"></div>
+
+                <br>
+
+                <button type="button" id="addQuestionBtn">
+                    + Agregar pregunta
+                </button>
+
+                <br>
+
+                <button id="examBtn" type="submit">
+                </button>
+                <button id="deleteExamBtn" hidden>
+                    Eliminar examen
+                </button>
+            </form>
+
+            <!-- TEMPLATE PREGUNTA -->
+
+            <template id="questionTemplate">
+
+                <div class="question-card">
+
+                    <h4>Pregunta</h4>
+
+                    <input type="text" class="question-text" placeholder="Pregunta" required>
+
+                    <div class="answers-container"></div>
+
+                    <br>
+
+                    <button type="button" class="add-answer-btn">
+                        + Agregar respuesta
+                    </button>
+
+                    <button type="button" class="remove-question-btn">
+                        Eliminar pregunta
+                    </button>
+
+                    <hr>
+
+                </div>
+
+            </template>
+
+            <!-- TEMPLATE RESPUESTA -->
+
+            <template id="answerTemplate">
+
+                <div class="answer-card">
+
+                    <input type="text" class="answer-text" placeholder="Respuesta" required>
+
+                    <label>
+
+                        <input type="checkbox" class="answer-correct">
+
+                        Correcta
+
+                    </label>
+
+                    <button type="button" class="remove-answer-btn">
+                        Eliminar
+                    </button>
+
+                </div>
+
+            </template>
+
+        </section>
+
+    </div>
+
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="exam-register.js"></script>
+
+</body>
+
+</html>

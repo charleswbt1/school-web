@@ -645,6 +645,10 @@ input:checked+.slider {
     background: #F44336;
 }
 
+.confirm {
+    background: #2196F3;
+}
+
 /* Texto */
 
 .custom-alert h2 {

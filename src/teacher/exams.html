@@ -20,21 +20,24 @@
         <section class="info-section">
 
             <div class="section-header">
-                <h2>Cursos</h2> <button id="btn-add-course" class="btn-primary"> + Nuevo Curso </button>
+                <h2>Examenes</h2>
+                <button id="btn-add-exam" class="btn-primary"> + Nuevo Examen </button>
             </div>
             <div class="table-container">
                 <table class="style-table">
                     <thead>
                         <tr>
-                            <th>Año</th>
-                            <th>Mes</th>
-                            <th>Cursos</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="courses-table-body">
+
+                    <tbody id="examsTableBody">
                         <tr>
-                            <td colspan="7">Cargando cursos...</td>
+                            <td colspan="9">
+                                Cargando examenes...
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -48,7 +51,7 @@
     <div id="modal-container"></div>
 
     <script src="../components/app.js"></script>
-    <script src="periods.js"></script>
+    <script src="exams.js"></script>
 
 </body>
 

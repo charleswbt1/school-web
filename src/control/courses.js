@@ -1,16 +1,17 @@
 const params = new URLSearchParams(window.location.search);
+const user_id = sessionStorage.getItem("userId");
+const role = sessionStorage.getItem("role");
 
 async function loadCourses() {
     try {
-        const coordinator_id = sessionStorage.getItem("userId");
         const year = params.get('year');
         const month = params.get('month');
-        let response;
-        if (year && month) {
-            response = await fetch(`${apiUrl}/api/courses?year=${year}&month=${month}&coordinator_id=${coordinator_id}`);
-        } else {
-            response = await fetch(`${apiUrl}/api/courses`);
-        }
+        let query = year && month ? `?year=${year}&month=${month}` : "";
+        query = role === "coordinator" ? `${query}&coordinator_id=${user_id}` : query;
+        const btnView = role != "coordinator" ? 'hidden' : '';
+        document.getElementById('btn-add-course').style.display = role === 'coordinator' ? 'block' : 'none';
+
+        const response = await fetch(`${apiUrl}/api/courses${query}`);
         if (!response.ok) {
             throw new Error('Error al obtener cursos');
         }
@@ -35,25 +36,27 @@ async function loadCourses() {
                 <td>
                     <div class="button-container">
                         <button
-                            onclick="viewStudents('${course.id}')">
+                            onclick="viewPayments('${course.id}')">
+                            Pagos
+                        </button>
+                        <button
+                            onclick="viewStudents('${course.id}')" ${btnView}>
                             Control
                         </button>
                         <button
-                            onclick="viewCount('${course.id}')">
+                            onclick="viewCount('${course.id}')" ${btnView}>
                             Conteo
                         </button>
                         <button
-                            onclick="updateLinks('${course.id}')">
+                            onclick="update('${course.id}')" ${btnView}>
                             Editar
                         </button>
                     </div>
                 </td>
             </tr>
         `).join('');
-
     } catch (error) {
-        alert(error);
-
+        console.error('control courses: Error al cargar los cursos', error);
         document.getElementById('courses-table-body').innerHTML = `
             <tr>
                 <td colspan="7">
@@ -72,19 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = 'course-create.html';
+            window.location.href = '../coordinator/course-create.html';
         });
     }
 });
 
 function viewStudents(id) {
-    window.location.href = `control-students.html?id=${id}`;
+    window.location.href = `../coordinator/control-students.html?id=${id}`;
 }
 
 function viewCount(id) {
-    window.location.href = `count-advisers.html?id=${id}`;
+    window.location.href = `../coordinator/count-advisers.html?id=${id}`;
 }
 
-function updateLinks(id) {
-    window.location.href = `course-edit.html?id=${id}`;
+function viewPayments(id) {
+    window.location.href = `../counter/student-payments.html?id=${id}`;
+}
+
+function update(id) {
+    window.location.href = `../coordinator/course-edit.html?id=${id}`;
 }
