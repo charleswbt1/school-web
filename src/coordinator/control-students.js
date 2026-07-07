@@ -7,51 +7,14 @@ const documentTypes = [
     "ine"
 ];
 
-function getMonths(dateInit, dateEnd) {
-    const months = [];
-    const start = new Date(dateInit);
-    const end = new Date(dateEnd);
-    const current = new Date(start);
-
-    while (current <= end) {
-        months.push({
-            year: String(current.getFullYear()),
-            month: current
-                .toLocaleString("es-MX", {
-                    month: "long"
-                })
-                .toUpperCase()
-        });
-        current.setMonth(current.getMonth() + 1);
-    }
-
-    return months;
-}
-
 async function loadStudents() {
     try {
         const courseId = new URLSearchParams(window.location.search).get("id");
         const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
         const data = await response.json();
 
-        const months = getMonths(data.date_init, data.date_end);
         const table = document.getElementById("studentsTable");
 
-        const paymentTotals = months.map(period => {
-            return data.students.reduce((sum, student) => {
-                const totalPaid = (student.payments || [])
-                    .filter(payment =>
-                        payment.year === period.year &&
-                        payment.month === period.month
-                    )
-                    .reduce(
-                        (subtotal, payment) =>
-                            subtotal + Number(payment.amount || 0),
-                        0
-                    );
-                return sum + totalPaid;
-            }, 0);
-        });
 
         table.innerHTML = `
             <thead>
@@ -75,23 +38,12 @@ async function loadStudents() {
                         clave
                     </th>
 
-                    <th colspan="${months.length}">
-                        Pagos
-                    </th>
-
                     <th colspan="${documentTypes.length}">
                         Documentos
                     </th>
                 </tr>
 
                 <tr>
-
-                    ${months.map(month => `
-                        <th>
-                            ${month.month}
-                            ${month.year}
-                        </th>
-                    `).join("")}
 
                     ${documentTypes.map(type => `
                         <th>
@@ -120,27 +72,6 @@ async function loadStudents() {
                             >
                         </td>
                     `;
-            }).join("");
-
-            const payments = months.map(period => {
-                const totalPaid = student.payments
-                    .filter(payment =>
-                        payment.year === period.year &&
-                        payment.month === period.month
-                    )
-                    .reduce(
-                        (sum, payment) =>
-                            sum + Number(payment.amount || 0),
-                        0
-                    );
-                return `
-                        <td style="text-align:right">
-                        ${totalPaid > 0 ?
-                        `$${totalPaid.toLocaleString()}`
-                        : "-"
-                    }
-                    </td>
-                `;
             }).join("");
 
             let rowClass = '';
@@ -181,30 +112,12 @@ async function loadStudents() {
                                 ${student.school_id || '-'}
                             </td>
 
-                            ${payments}
-
                             ${documents}
 
                         </tr>
                     `;
         }).join("")}
-                <tr style="font-weight:bold; background:#f5f5f5;">
-                
-                    <td colspan="5">
-                        TOTAL
-                    </td>
-
-                    ${paymentTotals.map(total => `
-                        <td style="text-align:right">
-                            $${total.toLocaleString()}
-                        </td>
-                    `).join("")}
-
-                    ${documentTypes.map(() => `
-                        <td></td>
-                    `).join("")}
-
-                </tr>
+             
             </tbody>
         `;
 
