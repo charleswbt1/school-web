@@ -1,4 +1,4 @@
-const coordinatorId = sessionStorage.getItem("userId");
+const userId = sessionStorage.getItem("userId");
 async function loadSquads() {
     try {
         const response = await fetch(`${apiUrl}/api/squads?state=active`);
@@ -24,7 +24,7 @@ async function loadSquads() {
 
 async function loadContents() {
     try {
-        const response = await fetch(`${apiUrl}/api/contents?state=active`);
+        const response = await fetch(`${apiUrl}/api/contents?state=active&coordinator_id=${userId}`);
         const contents = await response.json();
         const select = document.getElementById("contentId");
 
@@ -107,7 +107,6 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     const squadId = document.getElementById("squadId").value;
     const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
     const squads = await response.json();
-    const userId = sessionStorage.getItem("userId");
     if (!userId) {
         alert("Usuario no autenticado");
         return;
