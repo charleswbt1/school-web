@@ -33,7 +33,6 @@ async function loadContents() {
                 Seleccionar Contenido
             </option>
         `;
-
         contents.forEach(content => {
             select.innerHTML += `
                 <option value="${content.id}">
@@ -57,7 +56,6 @@ async function loadAdvisers() {
                 Seleccionar Asesor
             </option>
         `;
-
         advisers.forEach(adviser => {
             select.innerHTML += `
                 <option value="${adviser.id}">
@@ -81,7 +79,6 @@ async function loadTeachers() {
                 Seleccionar Docente
             </option>
         `;
-
         teachers.forEach(teacher => {
             select.innerHTML += `
                 <option value="${teacher.id}">
@@ -104,32 +101,24 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;
 
-    const squadId = document.getElementById("squadId").value;
-    const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
-    const squads = await response.json();
-    if (!userId) {
-        alert("Usuario no autenticado");
-        return;
-    }
-
     const body = {
         name: document.getElementById("name").value,
         description: document.getElementById("description").value,
-        squad_id: squadId,
+        type: document.getElementById("type").value,
+        squad_id: document.getElementById("squadId").value,
         content_id: document.getElementById("contentId").value,
         adviser_id: document.getElementById("adviserId").value,
         coordinator_id: userId,
         teacher_id: document.getElementById("teacherId").value,
-        image: squads[0].logo,
         offer_cost_inscription: Number(document.getElementById("offerCostInscription").value),
         offer_cost_quota: Number(document.getElementById("offerCostQuota").value),
         offer_cost_reinscription: Number(document.getElementById("offerCostReinscription").value),
         offer_cost_title: Number(document.getElementById("offerCostTitle").value),
+        offer_cost_title_two: Number(document.getElementById("offerCostTitleTwo").value),
         number_quota: Number(document.getElementById("numberQuota").value),
-        offer: true,
         rvoe: document.getElementById("rvoe").value,
         date_init: document.getElementById("dateInit").value,
-        date_end: document.getElementById("dateEnd").value,
+        date_end: document.getElementById("dateEnd").value
     };
 
     try {
@@ -149,7 +138,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         }
         await showSuccess("Registro Exitoso");
         document.getElementById("courseForm").reset();
-        window.location.href = '../coordinator/periods.html';
+        window.location.href = '../control/periods.html';
     } catch (error) {
         showError("Error al Registrar");
     } finally {

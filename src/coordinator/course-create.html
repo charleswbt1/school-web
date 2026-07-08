@@ -21,34 +21,69 @@
             <div class="section-header">
                 <h2>Crear Curso</h2>
             </div>
+            <p class="required-note">
+                <span class="required">*</span> Campos obligatorios
+            </p>
             <form class="info-form" id="courseForm">
+                <label>Nombre<span class="required">*</span></label>
                 <input type="text" id="name" placeholder="Nombre" required>
+
+                <label>Descripción<span class="required">*</span></label>
                 <input type="text" id="description" placeholder="Descripción" required>
+
+                <label>Costo Inscripción<span class="required">*</span></label>
                 <input type="text" id="offerCostInscription" placeholder="Costo Inscripción" required>
+
+                <label>Número de cuotas<span class="required">*</span></label>
                 <input type="text" id="numberQuota" placeholder="Número de cuotas" required>
+
+                <label>Costo Cuota<span class="required">*</span></label>
                 <input type="text" id="offerCostQuota" placeholder="Costo Cuota" required>
+
+                <label>Costo Reinscripción<span class="required">*</span></label>
                 <input type="text" id="offerCostReinscription" placeholder="Costo Reinscripción" required>
+
+                <label>Costo Título<span class="required">*</span></label>
                 <input type="text" id="offerCostTitle" placeholder="Costo Título" required>
+
+                <label>Costo Título adicional</label>
+                <input type="text" id="offerCostTitleTwo" placeholder="Costo Título adicional">
+
+                <label>Fecha Inicio de clase<span class="required">*</span></label>
                 <input type="date" id="dateInit" placeholder="Fecha Inicio" required>
+
+                <label>Fecha Fin de clase<span class="required">*</span></label>
                 <input type="date" id="dateEnd" placeholder="Fecha Fin" required>
+
+                <label>RVOE<span class="required">*</span></label>
                 <input type="text" id="rvoe" placeholder="RVOE" required>
-                <select id="squadId" required>
-                    <option value=""> Selecciona una escuela </option>
+
+                <label>Grado<span class="required">*</span></label>
+                <select id="type" required>
+                    <option value=""> Selecciona Grado</option>
+                    <option value="Licenciatura">Licenciatura</option>
+                    <option value="Especialidad">Especialidad</option>
+                    <option value="Especialidad Maestría">Especialidad Maestría</option>
+                    <option value="Bachillerato">Bachillerato</option>
                 </select>
-                <select id="contentId" required>
-                    <option value=""> Selecciona un contenido </option>
-                </select>
-                <select id="adviserId" required>
-                    <option value=""> Selecciona un asesor </option>
-                </select>
-                <select id="teacherId">
-                    <option value=""> Selecciona un docente </option>
-                </select>
+
+                <label>Escuela<span class="required">*</span></label>
+                <select id="squadId" required></select>
+
+                <label>Contenido<span class="required">*</span></label>
+                <select id="contentId" required></select>
+
+                <label>Asesor<span class="required">*</span></label>
+                <select id="adviserId" required></select>
+
+                <label>Docente</label>
+                <select id="teacherId"></select>
 
                 <button type="submit">
                     Crear Curso
                 </button>
             </form>
+            <br>
         </section>
 
     </div>
