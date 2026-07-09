@@ -9,9 +9,11 @@ async function loadStudentCourses() {
 
         infoSection.innerHTML = "";
         const modules = response.content.modules.map(
-            (module, index) => `
+            (module, index) => {
+                const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
+                return `
                 <div class="module-card">
-                    <h4>Módulo ${index + 1}: ${module.name} (${response.student.notes?.find(note => note.module === module.name)?.value ?? 0})</h4>
+                    <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
                     <ul>
                         ${module.topics.map(topic => `
                             <li>
@@ -20,17 +22,26 @@ async function loadStudentCourses() {
                                 ${topic.description}
                                 <br>
                                 ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
-                    ? `<button onclick="showVideo('${topic.link}')">
+                        ? `<button onclick="showVideo('${topic.link}')">
                             Ver video
                         </button>`
-                    : ""
-                }
+                        : ""
+                    }
                             </li>
                         `).join("")}
                     </ul>
+                    ${response.student.state === "active" && module.link && module.link.startsWith("EXA_") && note?.state !== "aprobado"
+                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
+                            Presentar examen
+                        </button>`
+                        : ""
+                    }
+                    ${note?.state === "aprobado"
+                        ? `<p class="course-state alert-success">✅ Aprobado</p>`
+                        : ""
+                    }
                 </div>
-            `
-        ).join("");
+            `}).join("");
 
         const documents = response.student.documents.map(
             (document, index) => `
@@ -72,11 +83,11 @@ async function loadStudentCourses() {
                         ${response.student.state === "pending" ? "alert-warning" : ""}
                     ">
                         ${response.student.state === "inactive"
-                                    ? "❌ Este módulo no está disponible. Comunícate con tu coordinador."
-                                    : response.student.state === "pending"
-                                        ? "⚠️ Este módulo no está disponible. Comunícate con tu asesor."
-                                        : ""
-                                }
+                ? "❌ Este módulo no está disponible. Comunícate con tu coordinador."
+                : response.student.state === "pending"
+                    ? "⚠️ Este módulo no está disponible. Comunícate con tu asesor."
+                    : ""
+            }
                          </p>
 
                         <div class="course-actions">
@@ -137,4 +148,8 @@ function showVideo(url) {
         allowfullscreen>
     </iframe>
 `;
+}
+
+function showExam(studentId, courseId, moduleId, examId) {
+    window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&module_id=${moduleId}&id=${examId}`;
 }

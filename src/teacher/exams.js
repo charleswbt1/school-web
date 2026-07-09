@@ -21,6 +21,7 @@ async function loadExams() {
         tbody.innerHTML = exams.map(exam => {
             return `
                 <tr>
+                    <td>${exam.id}</td>
                     <td>${exam.name}</td>
                     <td>${exam.description}</td>
                       <td>

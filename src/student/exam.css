@@ -1,0 +1,93 @@
+body{
+    margin:0;
+    background:url("../images/exam/bosque.png");
+    background-size:cover;
+    background-position:center;
+    transition:1s;
+}
+
+.exam-screen{
+
+    width:900px;
+    margin:auto;
+    padding:40px;
+
+}
+
+.hud{
+
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    margin-bottom:20px;
+
+}
+
+.progress-container{
+
+    width:100%;
+    height:18px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+
+}
+
+#progressBar{
+
+    width:0%;
+    height:100%;
+    background:#3CB371;
+    transition:.6s;
+
+}
+
+.journey{
+
+    margin:40px 0;
+
+}
+
+.journey-line{
+
+    position:relative;
+    width:100%;
+    height:8px;
+    background:white;
+    border-radius:10px;
+
+}
+
+.player{
+
+    position:absolute;
+    top:-18px;
+    left:0;
+    font-size:38px;
+    transition:.8s;
+
+}
+
+.question-card{
+
+    background:white;
+    padding:30px;
+    border-radius:20px;
+
+}
+
+.answer{
+
+    display:block;
+    margin:15px 0;
+    padding:15px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.answer:hover{
+
+    background:#eef5ff;
+
+}

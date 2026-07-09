@@ -93,3 +93,10 @@
     color:#e65100;
     border-left:6px solid #fb8c00;
 }
+
+/* Alerta verde */
+.alert-success{
+    background:#e8f5e9;
+    color:#2e7d32;
+    border-left:6px solid #4caf50;
+}

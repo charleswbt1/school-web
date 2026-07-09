@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+    <link rel="stylesheet" href="exam.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="exam-screen">
+
+            <div class="hud">
+
+                <h2 id="moduleName">
+                    🌳 Bosque del Aprendizaje
+                </h2>
+
+                <span id="questionCounter">
+                    Pregunta 1 / 20
+                </span>
+
+            </div>
+
+            <div class="progress-container">
+                <div id="progressBar"></div>
+            </div>
+
+            <div class="journey">
+
+                <div class="journey-line">
+
+                    <div class="player" id="player">
+                        📍
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="question-card">
+
+                <h3 id="questionText"></h3>
+
+                <div id="answersContainer"></div>
+
+                <div class="exam-buttons">
+                    <button id="prevBtn">Anterior</button>
+                    <button id="nextBtn">Siguiente</button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="exam.js"></script>
+
+</body>
+
+</html>
