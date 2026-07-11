@@ -15,6 +15,7 @@ async function loadExam() {
 
     document.getElementById("examName").value = exam.name;
     document.getElementById("examDescription").value = exam.description;
+    document.getElementById("theme").value = exam.theme;
     questionsContainer.innerHTML = "";
     exam.questions.forEach(question => {
         addQuestion(question);
@@ -77,6 +78,7 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
         teacher_id: role === "teacher" ? sessionStorage.getItem("userId") : "",
         name: document.getElementById("examName").value,
         description: document.getElementById("examDescription").value,
+        theme: document.getElementById("theme").value,
         questions: []
     };
 
