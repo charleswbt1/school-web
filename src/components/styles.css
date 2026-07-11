@@ -103,6 +103,10 @@ button:hover {
     color: #0d2c5a;
 }
 
+.style-select {
+    padding: 12px;
+}
+
 /*VIEW-IMAGE*/
 
 .view-image-container {

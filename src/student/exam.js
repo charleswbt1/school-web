@@ -3,12 +3,14 @@ const studentId = urlParams.get("student_id");
 const examId = urlParams.get("id");
 const courseId = urlParams.get("course_id");
 const moduleId = urlParams.get("module_id");
+let theme = '';
 
 async function loadExam() {
     const response = await fetch(
         `${apiUrl}/api/exams/questions?exam_id=${examId}`
     );
     const exam = await response.json();
+    theme = exam.theme;
 
     document.getElementById("moduleName").innerHTML = exam.name;
     return exam;
@@ -57,7 +59,9 @@ function updateJourney() {
 
 function updateBackground() {
     const stage = Math.min(Math.floor(current / 4) + 1, 5);
-    document.body.style.backgroundImage = `url('../images/exam/bosque.png')`;
+    if (theme) {
+        document.body.style.backgroundImage = `url('../images/exam/${teme}${stage}.jpg')`;
+    }
 }
 
 document.getElementById("nextBtn").addEventListener("click", nextQuestion);
@@ -70,10 +74,8 @@ async function init() {
     exam = await loadExam();
 
     updateJourney();
-    setTimeout(() => {
-        showQuestion();
-        updateBackground();
-    }, 400);
+    showQuestion();
+    updateBackground();
 }
 
 init();
@@ -85,10 +87,8 @@ document.getElementById("prevBtn").onclick = () => {
     current--;
 
     updateJourney();
-    setTimeout(() => {
-        showQuestion();
-        updateBackground();
-    }, 400);
+    showQuestion();
+    updateBackground();
 };
 
 async function nextQuestion() {
@@ -115,10 +115,8 @@ async function nextQuestion() {
     }
 
     updateJourney();
-    setTimeout(() => {
-        showQuestion();
-        updateBackground();
-    }, 400);
+    showQuestion();
+    updateBackground();
 }
 
 async function finishExam() {

@@ -21,6 +21,9 @@ async function loadComponents() {
     if (role === "coordinator") {
         sidebarFile = "../components/sidebar-coordinator.html";
     }
+    if (role === "admin") {
+        sidebarFile = "../components/sidebar-admin.html";
+    }
     const sidebar = await fetch(sidebarFile);
     document.getElementById("sidebar-container").innerHTML = await sidebar.text();
 
@@ -162,7 +165,9 @@ function initializeLoginModal() {
                 window.location.href = "../control/periods.html";
             }
 
-
+            if (data.role === "admin") {
+                window.location.href = "../admin/review.html";
+            }
 
         } catch (error) {
             alert(error);

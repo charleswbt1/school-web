@@ -30,7 +30,7 @@ async function loadStudentCourses() {
                             </li>
                         `).join("")}
                     </ul>
-                    ${response.student.state === "active" && module.link && module.link.startsWith("EXA_") && note?.state !== "aprobado"
+                    ${response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_") && note?.state !== "aprobado"
                         ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
                             Presentar examen
                         </button>`
