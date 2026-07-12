@@ -4,19 +4,45 @@ async function loadCourses() {
         const courses = await response.json();
 
         const container = document.getElementById("coursesContainer");
+
+        const categorias = [
+            { nombre: "BACHILLERATO", icono: "📘" },
+            { nombre: "LICENCIATURA", icono: "🎓" },
+            { nombre: "ESPECIALIDAD", icono: "🏥" },
+            { nombre: "ESPECIALIDAD MAESTRÍA", icono: "🎖️" }
+        ];
+
         container.innerHTML = "";
 
-        courses.forEach(course => {
+        categorias.forEach(categoria => {
+            const cursos = courses.filter(course =>
+                course.type.toUpperCase() === categoria.nombre
+            );
+            if (cursos.length === 0) return;
+
             container.innerHTML += `
+        <section class="category-section">
+            <h2 class="category-title">${categoria.icono} ${categoria.nombre}</h2>
+            <div class="category-grid" id="cat-${categoria.nombre}"></div>
+        </section>
+    `;
+
+            const grid = document.getElementById(`cat-${categoria.nombre}`);
+
+            cursos.forEach(course => {
+
+                grid.innerHTML += `
             <div class="course-card">
-                <img
-                    src="${course.image}"
-                    alt="${course.name}"
-                    class="course-image">
-                <div class="course-body">
-                    <h2>${course.name}</h2>
-                    <p>${course.description}</p>
-                    <p>Clases: ${course.date_init} - ${course.date_end}</p>
+
+                <div class="course-image-container">
+                    <img src="${course.image}" class="course-image">
+                </div>
+
+                <h3>${course.name}</h3>
+
+                <p>${course.description}</p>
+
+                <p>Clases: ${course.date_init} - ${course.date_end}</p>
                     <p>
                         Aprovecha de
                         <span style="text-decoration: line-through; color: #999;">
@@ -33,18 +59,13 @@ async function loadCourses() {
                             data-content="${course.content_id}">
                             Detalles
                         </button>
-
-                    <button 
-                        class="login-btn open-login-btn"
-                        data-content="${course.id}">
-                        Registrate
-                    </button>
                     </div>
-                </div>
-            </div>
-            `;
-        });
 
+            </div>
+        `;
+            });
+
+        });
     } catch (error) {
         alert("Error loading courses:", error);
     }
@@ -102,7 +123,7 @@ document.addEventListener("click", async (event) => {
         }
 
     });
-    
+
     if (button.classList.contains("open-login-btn")) {
         const courseId = button.dataset.content;
         sessionStorage.setItem("courseId", courseId);
