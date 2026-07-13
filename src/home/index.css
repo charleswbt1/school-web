@@ -15,9 +15,20 @@
 
 .category-grid {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;  /* Todas en una sola fila */
     gap: 25px;
-    justify-content: flex-start;
+    overflow-x: auto;  /* Scroll horizontal */
+    overflow-y: hidden;
+    padding-bottom: 10px;
+}
+
+.category-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-grid::-webkit-scrollbar-thumb {
+    background: #1f5bb5;
+    border-radius: 10px;
 }
 
 .courses-section {
@@ -25,9 +36,10 @@
 }
 
 .courses-container {
-    display: grid;
-    gap: 20px;
+    display: flex;
+    gap: 40px;
     margin-top: 20px;
+    flex-direction: column;
 }
 
 .course-card {

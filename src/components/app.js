@@ -62,11 +62,17 @@ function initializeLoginModal() {
     const loginModal = document.getElementById("loginModal");
     const openLogin = document.getElementById("openLogin");
     const closeModal = document.getElementById("closeModal");
+    const nick_name = document.getElementById("nickname");
+    const password = document.getElementById("password");
+    const text_error = document.getElementById("loginError");
 
     openLogin.addEventListener("click", () => {
         loginModal.style.display = "flex";
     });
     closeModal.addEventListener("click", () => {
+        nick_name.value = "";
+        password.value = "";
+        text_error.textContent = ""; 
         loginModal.style.display = "none";
     });
 
@@ -86,11 +92,7 @@ function initializeLoginModal() {
 
         e.preventDefault();
 
-        const nick_name =
-            document.getElementById("nickname").value;
-
-        const password =
-            document.getElementById("password").value;
+        
 
         try {
 
@@ -102,8 +104,8 @@ function initializeLoginModal() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        nick_name,
-                        password
+                        nick_name: nick_name.value,
+                        password: password.value
                     })
                 }
             );
@@ -171,7 +173,7 @@ function initializeLoginModal() {
 
         } catch (error) {
             alert(error);
-            document.getElementById("loginError").textContent = "Error de conexión con el servidor";
+            text_error.textContent = "Error de conexión con el servidor";
         }
     });
 }
