@@ -11,21 +11,44 @@ async function loadCourses() {
         const studentCourses = await studentResponse.json();
 
         const container = document.getElementById("coursesContainer");
+
+        const categorias = [
+            { nombre: "BACHILLERATO", icono: "📘" },
+            { nombre: "LICENCIATURA", icono: "🎓" },
+            { nombre: "ESPECIALIDAD", icono: "🏥" },
+            { nombre: "ESPECIALIDAD MAESTRÍA", icono: "🎖️" }
+        ];
+
         container.innerHTML = "";
 
+        categorias.forEach(categoria => {
+            const cursos = courses.filter(course =>
+                course.type.toUpperCase() === categoria.nombre
+            );
+            if (cursos.length === 0) return;
 
-        courses.forEach(course => {
-            const enrolledStudent = studentCourses.find(student => student.course_id == course.id);
+            container.innerHTML += `
+        <section class="category-section">
+            <h2 class="category-title">${categoria.icono} ${categoria.nombre}</h2>
+            <div class="category-grid" id="cat-${categoria.nombre}"></div>
+        </section>
+    `;
 
-            const buttons = enrolledStudent
-                ? `
+            const grid = document.getElementById(`cat-${categoria.nombre}`);
+
+            cursos.forEach(course => {
+
+                const enrolledStudent = studentCourses.find(student => student.course_id == course.id);
+
+                const buttons = enrolledStudent
+                    ? `
                     <button
                         class="info-btn enter-btn"
                         data-student="${enrolledStudent.id}">
                         Entrar
                     </button>
                 `
-                : `
+                    : `
                     <button
                         class="info-btn content-btn"
                         data-content="${course.content_id}">
@@ -39,37 +62,36 @@ async function loadCourses() {
                     </button>
                 `;
 
-            container.innerHTML += `
-                <div class="course-card">
-                    <img
-                        src="${course.image}"
-                        alt="${course.name}"
-                        class="course-image">
+                grid.innerHTML += `
+            <div class="course-card">
 
-                    <div class="course-body">
-                        <h3>${course.name}</h3>
-
-                        <p>${course.description}</p>
-
-                        <p>
-                            Clases: ${course.date_init} - ${course.date_end}
-                        </p>
-
-                        <p>
-                            Aprovecha de
-                            <span style="text-decoration: line-through; color:#999;">
-                                $${course.cost_quota}
-                            </span>
-                            a:
-                            <strong>$${course.offer_cost_quota}</strong>
-                        </p>
-
-                        <div class="course-actions">
-                            ${buttons}
-                        </div>
-                    </div>
+                <div class="course-image-container">
+                    <img src="${course.image}" class="course-image">
                 </div>
-            `;
+
+                <h3>${course.name}</h3>
+
+                <p>${course.description}</p>
+
+                <p>Clases: ${course.date_init} - ${course.date_end}</p>
+                    <p>
+                        Aprovecha de
+                        <span style="text-decoration: line-through; color: #999;">
+                            $${course.cost_quota}
+                        </span>
+                        a: 
+                        <strong>
+                            $${course.offer_cost_quota}
+                        </strong>
+                    </p>
+                    <div class="course-actions">
+                        ${buttons}
+                    </div>
+
+            </div>
+        `;
+            });
+
         });
 
     } catch (error) {
@@ -121,6 +143,16 @@ document.addEventListener("click", async (event) => {
         }
     }
 
+    const modal = document.getElementById("contentModal");
+
+    modal.addEventListener("click", (e) => {
+
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+
+    });
+
     if (button.classList.contains("register-btn")) {
         const userId = sessionStorage.getItem("userId");
         const courseId = button.dataset.content;
@@ -148,6 +180,7 @@ document.addEventListener("click", async (event) => {
 
 /* ===================== CLOSE MODALS ===================== */
 
-document.getElementById("closeContentModal").addEventListener("click", () => {
-    document.getElementById("contentModal").style.display = "none";
-});
+document.getElementById("closeContentModal")
+    .addEventListener("click", () => {
+        document.getElementById("contentModal").style.display = "none";
+    });
