@@ -79,6 +79,17 @@ button:hover {
     background: #2d4f84;
 }
 
+.button-icon {
+    cursor: pointer;
+    font-size: 15px;
+    user-select: none;
+    transition: transform .2s;
+}
+
+.button-icon:hover {
+    transform: scale(1.2);
+}
+
 /*BOTON LABEL*/
 .file-btn {
     display: inline-block;

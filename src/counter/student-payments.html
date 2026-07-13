@@ -27,13 +27,28 @@
 
     <div id="modal-container"></div>
 
-    <script src="../components/app.js"></script>
-    <script src="student-payments.js"></script>
-
 </body>
 
-<div id="imageModal" class="modal-image">
-    <img id="modalImage">
+<div class="modal" id="contentModal">
+    <div class="modal-content">
+        <h2>Comprobante de Pago</h2>
+        <form class="info-form" id="payForm">
+            <input type="file" id="invoiceImage" accept="image/*,.pdf" required hidden>
+            <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
+            <img id="previewImage" class="preview-image" style="display:none;" alt="Vista previa">
+            <input type="text" id="amount" placeholder="Monto" min="0" required>
+            <button type="submit">
+                Crear Factura
+            </button>
+        </form>
+    </div>
 </div>
+
+<div class="modal-image" id="imageModal">
+    <img id="payImage">
+</div>
+
+<script src="../components/app.js"></script>
+<script src="student-payments.js"></script>
 
 </html>
