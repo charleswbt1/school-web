@@ -100,6 +100,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
 
     const body = {
         name: document.getElementById("name").value,
@@ -143,5 +144,6 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });

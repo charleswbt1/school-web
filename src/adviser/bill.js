@@ -119,6 +119,7 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
 
     const file = document.getElementById("invoiceImage").files[0];
     const [courseId, studentId] = document.getElementById("studentId").value.split("#");
@@ -167,5 +168,6 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
         showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });

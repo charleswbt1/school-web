@@ -72,6 +72,7 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
 
     const submitButton = e.target.querySelector("button[type='submit']");
     submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
 
     const exam = {
         coordinator_id: role === "coordinator" ? sessionStorage.getItem("userId") : "",
@@ -123,12 +124,14 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
         showError("Fallo al registrar el examen");
     } finally {
         submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });
 
 document.getElementById("deleteExamBtn").addEventListener("click", async (e) => {
-    const deleteButton = e.currentTarget;
-    deleteButton.disabled = true;
+    const submitButton = e.currentTarget;
+    submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
     try {
         if (!await showConfirm("¿Deseas eliminar este examen?")) {
             return;
@@ -151,7 +154,8 @@ document.getElementById("deleteExamBtn").addEventListener("click", async (e) => 
         console.error("teacher exam-delete: Error al eliminar el examen:", error);
         showError("Fallo al eliminar el examen");
     } finally {
-        deleteButton.disabled = false;
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });
 

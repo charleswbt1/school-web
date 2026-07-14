@@ -86,6 +86,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
 
     const roleSelected = document.getElementById("role").value;
     const userRequest = {
@@ -144,5 +145,6 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         showError(`Error al registrar ${error}`);
     } finally {
         submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });

@@ -1,9 +1,15 @@
 const roleSession = sessionStorage.getItem('role');
 const courseId = new URLSearchParams(window.location.search).get("id");
 let studentId;
-let year;
-let month;
 let type;
+let students;
+
+async function loadModals() {
+    const receiptModalFile = await fetch("../template/receipt-template.html");
+    const receiptModalHtml = await receiptModalFile.text();
+    document.getElementById("receiptModalTemplate").innerHTML = receiptModalHtml;
+}
+loadModals();
 
 function getMonths(dateInit, dateEnd) {
     const months = [];
@@ -25,19 +31,32 @@ async function loadStudents() {
     try {
         const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
         const data = await response.json();
+        students = data.students;
+        document.getElementById("course-name").textContent = data.course_name;
+        const btnView = roleSession != "coordinator" ? 'hidden' : '';
 
         const months = getMonths(data.date_init, data.date_end);
-        const table = document.getElementById("studentsTable");
-
         const paymentTotals = months.map(period => {
             return data.students.reduce((sum, student) => {
                 const totalPaid = (student.payments || [])
-                    .filter(payment => payment.year === period.year && payment.month === period.month)
-                    .reduce((subtotal, payment) => subtotal + Number(payment.amount || 0), 0);
+                    .filter(payment =>
+                        payment.year === period.year &&
+                        payment.month === period.month &&
+                        payment.type === 'cuota'
+                    ).reduce((subtotal, payment) => subtotal + Number(payment.amount || 0), 0);
                 return sum + totalPaid;
             }, 0);
         });
+        const titlePaymentTotals = data.students.reduce((sum, student) => {
+            const totalPaid = (student.payments || [])
+                .filter(payment =>
+                    payment.type === 'titulo'
+                ).reduce((subtotal, payment) => subtotal + Number(payment.amount || 0), 0);
+            return sum + totalPaid;
+        }, 0);
 
+
+        const table = document.getElementById("studentsTable");
         table.innerHTML = `
             <thead>
                 <tr>
@@ -53,28 +72,25 @@ async function loadStudents() {
                     <th rowspan="2">
                         Teléfono
                     </th>
-                    <th colspan="${months.length}">
+                    <th colspan="${months.length + 1}">
                         Pagos
                     </th>
                 </tr>
                 <tr>
-                    ${months.map(month => `
-                        <th>
-                            ${month.month}
-                            ${month.year}
-                        </th>
-                    `).join("")}
+                    ${months.map(month => `<th>${month.month} ${month.year}</th>`).join("")}
+                    <th>
+                        Pagos Título
+                    </th>
                 </tr>
             </thead>
-
             <tbody>
-                ${data.students.map((student, index) => {
-
+                ${data.students.map((student, studentIndex) => {
             const payments = months.map(period => {
 
                 const monthPayments = student.payments.filter(payment =>
                     payment.year === period.year &&
-                    payment.month === period.month
+                    payment.month === period.month &&
+                    payment.type === 'cuota'
                 );
 
                 const totalPaid = monthPayments.reduce(
@@ -84,28 +100,43 @@ async function loadStudents() {
                 const images = monthPayments.map(payment => `
                     <span class="button-icon"
                         onclick="viewImage('${payment.url}')"
-                        title="Ver comprobante">
+                        title="Ver comprobante $${payment.amount}">
                         🔍
                     </span>
+                    <span class="button-icon" ${btnView}
+                        onclick="viewReceipt('${student.id}','${payment.id}')"
+                        title="Recibo $${payment.amount}">
+                        🧾
+                    </span>                    
                 `).join("");
 
-                return `
-        <td style="text-align:center">
-            ${totalPaid > 0 ? `
-                <div>$${totalPaid.toLocaleString()}</div>
-                <div class="payment-images">${images}</div>
-            ` : ``}
-            ${roleSession === "coordinator" ? `
-                <span class="button-icon"
-                    onclick="viewPayment('${student.id}','${period.year}','${period.month}','cuota')"
-                    title="Registrar pago">
-                    ⬆️
-                </span>
-            ` : ``}
-        </td>
-    `;
-
+                return `<td style="text-align:center">
+                    <div>${formatAmount(totalPaid)}</div>
+                    <div class="payment-images">${images}</div>
+                    <span class="button-icon" ${btnView}
+                        onclick="viewPayment('${studentIndex}','${period.year}','${period.month}','cuota')"
+                        title="Registrar pago">
+                        ⬆️
+                    </span>
+                </td>`;
             }).join("");
+
+            const titlePayments = student.payments.filter(payment => payment.type === 'titulo');
+            const totalTitlePaid = titlePayments.reduce(
+                (sum, payment) => sum + Number(payment.amount || 0), 0
+            );
+            const titleImages = titlePayments.map(payment => `
+                <span class="button-icon"
+                    onclick="viewImage('${payment.url}')"
+                    title="Ver comprobante $${payment.amount}">
+                    🔍
+                </span>
+                <span class="button-icon" ${btnView}
+                    onclick="viewReceipt('${student.id}','${payment.id}')"
+                    title="Recibo $${payment.amount}">
+                    🧾
+                </span>                    
+            `).join("");
 
             let rowClass = '';
             switch (student.state?.toLowerCase()) {
@@ -117,7 +148,7 @@ async function loadStudents() {
             return `
                     <tr class="${rowClass}">
                         <td>
-                            ${index + 1}
+                            ${studentIndex + 1}
                         </td>
                         <td>
                             ${student.name}
@@ -129,6 +160,15 @@ async function loadStudents() {
                             ${student.phone}
                         </td>
                         ${payments}
+                        <td style="text-align:center">
+                            <div>${formatAmount(totalTitlePaid)}</div>
+                            <div class="payment-images">${titleImages}</div>
+                            <span class="button-icon" ${btnView}
+                                onclick="viewPayment('${studentIndex}','${months.at(-1).year}','${months.at(-1).month}','titulo')"
+                                title="Registrar pago">
+                                ⬆️
+                            </span>
+                        </td>
                     </tr>
                     `;
         }).join("")}
@@ -141,6 +181,9 @@ async function loadStudents() {
                             $${total.toLocaleString()}
                         </td>
                     `).join("")}
+                    <td style="background:#17c669;">
+                        ${formatAmount(titlePaymentTotals)}
+                    </td>
                 </tr>
             </tbody>
         `;
@@ -148,9 +191,33 @@ async function loadStudents() {
         alert(error);
     }
 }
-
 loadStudents();
 
+function formatAmount(amount) {
+    if (amount) {
+        return `$${amount.toLocaleString()}`;
+    }
+    return '';
+}
+
+function formatDate(value) {
+    if (!value) return "";
+    if (value.toDate) {
+        return value.toDate().toISOString().split("T")[0];
+    }
+    if (value._seconds || value.seconds) {
+        return new Date((value._seconds ?? value.seconds) * 1000)
+            .toISOString()
+            .split("T")[0];
+    }
+    if (typeof value === "string") {
+        return value.split("T")[0];
+    }
+    if (value instanceof Date) {
+        return value.toISOString().split("T")[0];
+    }
+    return "";
+}
 
 const modalImage = document.getElementById("imageModal");
 const payImage = document.getElementById("payImage");
@@ -173,10 +240,11 @@ modalPay.addEventListener("click", (e) => {
     }
 });
 
-function viewPayment(si, y, m, t) {
-    studentId = si;
-    year = y;
-    month = m;
+function viewPayment(index, y, m, t) {
+    studentId = students[index].id;
+    document.getElementById("bill-year").textContent = y;
+    document.getElementById("bill-month").textContent = m;
+    document.getElementById("student-name").textContent = students[index].name;
     type = t;
     modalPay.style.display = "flex";
 }
@@ -202,7 +270,6 @@ payForm.addEventListener("submit", async (e) => {
     const submitButton = e.target.querySelector('button[type="submit"]');
     try {
         submitButton.disabled = true;
-        submitButton.textContent = "Subiendo...";
         submitButton.style.opacity = ".7";
         const file = invoiceImage.files[0];
         if (!file) {
@@ -235,8 +302,8 @@ payForm.addEventListener("submit", async (e) => {
             url: uploadData.url,
             student_id: studentId,
             amount,
-            year,
-            month,
+            year: document.getElementById("bill-year").textContent,
+            month: document.getElementById("bill-month").textContent,
             type,
             source: "coordinator"
         }
@@ -260,7 +327,6 @@ payForm.addEventListener("submit", async (e) => {
         showError(`Error al Registrar - ${error.message}`);
     } finally {
         submitButton.disabled = false;
-        submitButton.textContent = "Crear Factura";
         submitButton.style.opacity = "1";
     }
 });
@@ -277,7 +343,50 @@ function closePaymentModal() {
     preview.style.display = "none";
 
     studentId = null;
-    year = null;
-    month = null;
     type = null;
+}
+
+const modalReceipt = document.getElementById("receiptModal");
+modalReceipt.addEventListener("click", (e) => {
+    if (e.target === modalReceipt) {
+        closeReceiptModal();
+    }
+});
+
+function viewReceipt(studentId, paymentId) {
+    const student = students.find(student => student.id === studentId);
+    const payment = student.payments.find(payment => payment.id === paymentId);
+    document.getElementById("receiptNumber").textContent = payment.id.replace('PAY_', '') ?? "000000";
+    document.getElementById("date").textContent = formatDate(payment.date);
+    document.getElementById("total").textContent = `$${Number(payment.amount).toLocaleString()}`;
+    document.getElementById("customer").textContent = student.name;
+    document.getElementById("document").textContent = student.curp;
+    document.getElementById("code").textContent = student.school_id ?? '';
+    document.getElementById("concept").textContent = payment.type === 'cuota' ? 'Colegiatura' : 'Documento'
+    document.getElementById("program").textContent = document.getElementById("course-name").textContent;
+    document.getElementById("paymentTable").innerHTML = `
+            <tr>
+                <td>Colegiatura</td>
+                <td>$${Number(payment.amount).toLocaleString()}</td>
+            </tr>
+            `;
+    modalReceipt.style.display = "flex";
+}
+
+function downloadReceipt() {
+    const receipt = document.getElementById("receiptContainer");
+    html2canvas(receipt, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff"
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "Recibo.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
+}
+
+function closeReceiptModal() {
+    modalReceipt.style.display = "none";
 }

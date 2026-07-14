@@ -7,26 +7,21 @@
     <title>Inicio</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
+    <link rel="stylesheet" href="../adviser/receipt.css">
 </head>
 
 <body>
 
     <div id="sidebar-container"></div>
-
     <div class="main-container">
-
         <div id="header-container"></div>
-
         <section class="info-section">
-
+            <h2 id="course-name"></h2>
+            <br>
             <table id="studentsTable" class="style-table"></table>
-
         </section>
-
     </div>
-
     <div id="modal-container"></div>
-
 </body>
 
 <div class="modal" id="contentModal">
@@ -37,6 +32,9 @@
             <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
             <img id="previewImage" class="preview-image" style="display:none;" alt="Vista previa">
             <input type="text" id="amount" placeholder="Monto" min="0" required>
+            <label id="bill-year"></label>
+            <label id="bill-month"></label>
+            <label id="student-name"></label>
             <button type="submit">
                 Crear Factura
             </button>
@@ -44,10 +42,15 @@
     </div>
 </div>
 
+<div class="modal" id="receiptModal">
+    <div class="modal-content-receipt" id="receiptModalTemplate"></div>
+</div>
+
 <div class="modal-image" id="imageModal">
     <img id="payImage">
 </div>
 
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="../components/app.js"></script>
 <script src="student-payments.js"></script>
 

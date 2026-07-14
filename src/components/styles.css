@@ -288,6 +288,16 @@ button:hover {
     cursor: pointer;
 }
 
+.modal-content-receipt {
+    background: rgb(238, 244, 245);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
 .modal-content form {
     display: flex;
     flex-direction: column;

@@ -120,8 +120,9 @@ async function nextQuestion() {
 }
 
 async function finishExam() {
-    const btn = document.getElementById("nextBtn");
-    btn.disabled = true;
+    const submitButton = document.getElementById("nextBtn");
+    submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
     try {
 
         const response = await fetch(
@@ -178,6 +179,7 @@ async function finishExam() {
         }
         window.location.href = `course.html?id=${studentId}`;
     } finally {
-        btn.disabled = false;
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 }

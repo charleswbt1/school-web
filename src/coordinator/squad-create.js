@@ -11,6 +11,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
     submitButton.disabled = true;
+    submitButton.style.opacity = ".7";
 
     const file = document.getElementById("squadImage").files[0];
     const name = document.getElementById("name").value;
@@ -53,5 +54,6 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
+        submitButton.style.opacity = "1";
     }
 });
