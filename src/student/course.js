@@ -73,7 +73,6 @@ async function loadStudentCourses() {
                         </p>
 
                         <p>
-                        <br>
                             <strong>Promedio:</strong>
                             ${response.student.average}
                         </p>
@@ -103,6 +102,16 @@ async function loadStudentCourses() {
                             </a>`
                 : ""
             }
+
+            <div class="loading-container">
+                            <div class="loading-bar">
+                                    <div class="loading-fill" id="loadingFill">
+                                        <span id="loadingText">0%</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
                             
                         </div>
 
@@ -120,6 +129,30 @@ async function loadStudentCourses() {
 
                 </div>
             `;
+
+        // Barra de progreso
+        const fill = document.getElementById("loadingFill");
+        const text = document.getElementById("loadingText");
+
+        const totalModules = response.content.modules.length;
+        const completedModules = response.student.notes?.length || 0;
+
+        const finalProgress = Math.round((completedModules / totalModules) * 100);
+
+        let progress = 0;
+
+        const interval = setInterval(() => {
+
+            progress++;
+
+            fill.style.width = progress + "%";
+            text.textContent = progress + "%";
+
+            if (progress >= finalProgress) {
+                clearInterval(interval);
+            }
+
+        }, 20);
     } catch (error) {
         alert(error);
     }

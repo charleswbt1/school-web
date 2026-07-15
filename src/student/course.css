@@ -1,47 +1,47 @@
-.student-course-card{
-    background:white;
-    border-radius:12px;
-    padding:20px;
-    margin-bottom:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.1);
+.student-course-card {
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
 }
 
-.course-image{
-    width:100%;
-    max-width:300px;
-    border-radius:12px;
-    margin-bottom:15px;
+.course-image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px;
+    margin-bottom: 15px;
 }
 
-.course-info h2{
-    color:#1e3a5f;
-    margin-bottom:15px;
+.course-info h2 {
+    color: #1e3a5f;
+    margin-bottom: 15px;
 }
 
-.modules-container{
-    margin-top:20px;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+.modules-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.module-card{
-    background:#f5f7fb;
-    padding:15px;
-    border-radius:10px;
+.module-card {
+    background: #f5f7fb;
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.module-card h4{
-    color:#1e3a5f;
-    margin-bottom:10px;
+.module-card h4 {
+    color: #1e3a5f;
+    margin-bottom: 10px;
 }
 
-.module-card ul{
-    padding-left:20px;
+.module-card ul {
+    padding-left: 20px;
 }
 
-.module-card li{
-    margin-bottom:10px;
+.module-card li {
+    margin-bottom: 10px;
 }
 
 
@@ -50,7 +50,7 @@
     background: #1e3a5f;
     color: white;
     text-decoration: none;
-    padding: 12px 20px;
+    padding: 10px 10px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color .3s;
@@ -64,39 +64,110 @@
 .course-actions {
     display: flex;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 10px;
     flex-wrap: wrap;
 }
 
 /* Estilos para el estado del curso */
-.course-state{
-    margin:20px 0;
-    padding:15px 20px;
-    border-radius:8px;
-    font-weight:bold;
-    font-size:15px;
-    display:flex;
-    align-items:center;
-    gap:10px;
+.course-state {
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* Alerta roja */
-.alert-danger{
-    background:#fdeaea;
-    color:#b71c1c;
-    border-left:6px solid #e53935;
+.alert-danger {
+    background: #fdeaea;
+    color: #b71c1c;
+    border-left: 6px solid #e53935;
 }
 
 /* Alerta naranja */
-.alert-warning{
-    background:#fff3e0;
-    color:#e65100;
-    border-left:6px solid #fb8c00;
+.alert-warning {
+    background: #fff3e0;
+    color: #e65100;
+    border-left: 6px solid #fb8c00;
 }
 
 /* Alerta verde */
-.alert-success{
-    background:#e8f5e9;
-    color:#2e7d32;
-    border-left:6px solid #4caf50;
+.alert-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 6px solid #4caf50;
+}
+
+/* ===================== BARRA DE PROGRESO ===================== */
+
+.loading-container{
+    width:100%;
+    display:flex;
+    justify-content: flex-start;
+    margin:10px 0;
+}
+
+.loading-bar{
+    width:100%;
+    max-width:500px;
+    height:40px;
+
+    background:#b87418;
+    border:4px solid #f7b13c;
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+        inset 0 3px 6px rgba(255,255,255,.35),
+        0 3px 10px rgba(0,0,0,.25);
+}
+
+.loading-fill{
+    width:0%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        to bottom,
+        #cfff66,
+        #83e842,
+        #42c62b
+    );
+
+    border-radius:25px;
+    transition:width .4s ease;
+}
+
+.loading-fill span{
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+/* Celulares */
+
+@media (max-width:768px){
+
+    .loading-bar{
+        max-width:100%;
+        height:32px;
+    }
+
+    .loading-fill span{
+        font-size:15px;
+    }
+
 }
