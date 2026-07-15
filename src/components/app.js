@@ -156,7 +156,7 @@ function initializeLoginModal() {
             }
 
             if (data.role === "adviser") {
-                window.location.href = "../adviser/bill.html";
+                window.location.href = "../adviser/students.html";
             }
 
             if (data.role === "counter") {

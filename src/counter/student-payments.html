@@ -7,7 +7,7 @@
     <title>Inicio</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
-    <link rel="stylesheet" href="../adviser/receipt.css">
+    <link rel="stylesheet" href="../template/receipt.css">
 </head>
 
 <body>
@@ -35,6 +35,9 @@
             <label id="bill-year"></label>
             <label id="bill-month"></label>
             <label id="student-name"></label>
+            <label id="bill-type" hidden></label>
+            <label id="student-id-pay" hidden></label>
+            <label id="course-id" hidden></label>
             <button type="submit">
                 Crear Factura
             </button>
@@ -46,12 +49,13 @@
     <div class="modal-content-receipt" id="receiptModalTemplate"></div>
 </div>
 
-<div class="modal-image" id="imageModal">
+<div class="modal-image" id="imageModal" onclick="closeImage()">
     <img id="payImage">
 </div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="../components/app.js"></script>
 <script src="student-payments.js"></script>
+<script src="../template/student-payments.js"></script>
 
 </html>

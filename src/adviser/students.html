@@ -7,6 +7,7 @@
     <title>Inicio</title>
     <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
     <link rel="stylesheet" href="../components/styles.css">
+    <link rel="stylesheet" href="../template/receipt.css">
 </head>
 
 <body>
@@ -30,8 +31,8 @@
                             <th>Nombre</th>
                             <th>Nombre Curso</th>
                             <th>Telefono</th>
-                            <th>Pagos</th>
                             <th>Asesor</th>
+                            <th>Pagos</th>
                         </tr>
                     </thead>
                     <tbody id="students-table-body">
@@ -46,12 +47,42 @@
 
     </div>
 
-    <!-- MODAL LOGIN -->
     <div id="modal-container"></div>
 
-    <script src="../components/app.js"></script>
-    <script src="students.js"></script>
-
 </body>
+
+<div class="modal" id="contentModal">
+    <div class="modal-content">
+        <h2>Comprobante de Pago</h2>
+        <form class="info-form" id="payForm">
+            <input type="file" id="invoiceImage" accept="image/*,.pdf" required hidden>
+            <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
+            <img id="previewImage" class="preview-image" style="display:none;" alt="Vista previa">
+            <input type="text" id="amount" placeholder="Monto" min="0" required>
+            <label id="bill-year"></label>
+            <label id="bill-month"></label>
+            <label id="student-name"></label>
+            <label id="bill-type" hidden></label>
+            <label id="student-id-pay" hidden></label>
+            <label id="course-id" hidden></label>
+            <button type="submit">
+                Crear Factura
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="receiptModal">
+    <div class="modal-content-receipt" id="receiptModalTemplate"></div>
+</div>
+
+<div class="modal-image" id="imageModal" onclick="closeImage()">
+    <img id="payImage">
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="../components/app.js"></script>
+<script src="students.js"></script>
+<script src="../template/student-payments.js"></script>
 
 </html>
