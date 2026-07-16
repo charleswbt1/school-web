@@ -25,11 +25,32 @@
 
     </div>
 
-    <div id="modal-container"></div>
-
-    <script src="../components/app.js"></script>
-    <script src="control-students.js"></script>
-
 </body>
+
+<div class="modal" id="contentModal">
+    <div class="modal-content">
+        <h2>Documento</h2>
+        <form class="info-form" id="documentForm">
+            <input type="file" id="invoiceImage" accept="image/*,.pdf" required hidden>
+            <label for="invoiceImage" class="file-btn">Seleccionar Archivo</label>
+            <img id="previewImage" class="preview-image" style="display:none;" alt="Vista previa">
+            <label id="student-name"></label>
+            <label id="document-type"></label>
+            <label id="student-id"></label>
+            <button type="submit">
+                Subir Documento
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-image" id="imageModal" onclick="closeImage()">
+    <img id="payImage">
+</div>
+
+<div id="modal-container"></div>
+
+<script src="../components/app.js"></script>
+<script src="control-students.js"></script>
 
 </html>
