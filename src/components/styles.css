@@ -384,6 +384,27 @@ button:hover {
     padding: 12px;
 }
 
+.info-form .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+}
+
+.info-form .checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.info-form .checkbox-container label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 500;
+    user-select: none;
+}
+
 .required-note {
     margin-bottom: 15px;
     color: #555;

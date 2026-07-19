@@ -72,7 +72,7 @@ function initializeLoginModal() {
     closeModal.addEventListener("click", () => {
         nick_name.value = "";
         password.value = "";
-        text_error.textContent = ""; 
+        text_error.textContent = "";
         loginModal.style.display = "none";
     });
 
@@ -91,8 +91,6 @@ function initializeLoginModal() {
     loginForm.addEventListener("submit", async (e) => {
 
         e.preventDefault();
-
-        
 
         try {
 

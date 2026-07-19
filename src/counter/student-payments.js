@@ -97,12 +97,12 @@ async function loadStudents() {
                     <span class="button-icon"
                         onclick="viewImage('${payment.url}')"
                         title="Ver comprobante $${payment.amount}">
-                        🔍
+                        ${payment.amount > 0 ? `🔍` : `⚠️`}
                     </span>
                     <span class="button-icon" ${btnView}
                         onclick="viewReceipt('${student.id}','${payment.id}','${data.course_name}')"
                         title="Recibo $${payment.amount}">
-                        🧾
+                        ${payment.amount > 0 ? `🧾` : ``}
                     </span>                    
                 `).join("");
 

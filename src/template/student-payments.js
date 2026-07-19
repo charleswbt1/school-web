@@ -109,7 +109,8 @@ payForm.addEventListener("submit", async (e) => {
             year: document.getElementById("bill-year").textContent,
             month: document.getElementById("bill-month").textContent,
             type: document.getElementById("bill-type").textContent,
-            source: roleSession
+            source: roleSession,
+            is_refund: document.getElementById("refund").checked
         }
         const invoiceResponse = await fetch(
             `${apiUrl}/api/students/bill`,
