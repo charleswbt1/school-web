@@ -47,8 +47,6 @@
 
     </div>
 
-    <div id="modal-container"></div>
-
 </body>
 
 <div class="modal" id="contentModal">
@@ -62,6 +60,10 @@
             <label id="bill-year"></label>
             <label id="bill-month"></label>
             <label id="student-name"></label>
+            <div class="checkbox-container" hidden>
+                <input type="checkbox" id="refund">
+                <label for="refund">Es una devolución</label>
+            </div>
             <label id="bill-type" hidden></label>
             <label id="student-id-pay" hidden></label>
             <label id="course-id" hidden></label>
@@ -79,6 +81,8 @@
 <div class="modal-image" id="imageModal" onclick="closeImage()">
     <img id="payImage">
 </div>
+
+<div id="modal-container"></div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="../components/app.js"></script>

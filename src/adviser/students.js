@@ -9,6 +9,7 @@ loadModals();
 
 async function loadStudents() {
     try {
+        const tbody = document.getElementById('students-table-body');
         const result = await fetch(`${apiUrl}/api/students/data?adviser_id=${userId}`);
         const response = await result.json();
         if (!result.ok) {
@@ -27,7 +28,6 @@ async function loadStudents() {
         const advisersResponse = await fetch(`${apiUrl}/api/users?role=adviser`);
         const advisers = await advisersResponse.json();
 
-        const tbody = document.getElementById('students-table-body');
         tbody.innerHTML = response.map(student => {
             let rowClass = '';
             switch (student.state?.toLowerCase()) {
