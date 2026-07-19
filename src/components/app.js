@@ -124,6 +124,7 @@ function initializeLoginModal() {
 
             sessionStorage.setItem("userId", data.user_id);
             sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("team_id", data.team_id);
 
             const courseid = sessionStorage.getItem("courseId");
 

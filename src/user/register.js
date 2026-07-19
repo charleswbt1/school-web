@@ -1,5 +1,6 @@
 const roleRegister = new URLSearchParams(window.location.search).get('roleRegister');
 const roleSession = sessionStorage.getItem("role");
+const teamSession = sessionStorage.getItem("team_id");
 
 async function loadRoles() {
     try {
@@ -98,7 +99,8 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         curp: document.getElementById("curp").value,
         email: document.getElementById("email").value,
         phone: document.getElementById("phone").value,
-        role: roleSelected
+        role: roleSelected,
+        team_id: teamSession
     }
     try {
         const userResponse = await fetch(
