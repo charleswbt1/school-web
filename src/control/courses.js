@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../coordinator/course-create.html';
+            window.location.href = '../coordinator/course-register.html';
         });
     }
 });
@@ -93,5 +93,5 @@ function viewPayments(id) {
 }
 
 function update(id) {
-    window.location.href = `../coordinator/course-edit.html?id=${id}`;
+    window.location.href = `../coordinator/course-register.html?id=${id}`;
 }

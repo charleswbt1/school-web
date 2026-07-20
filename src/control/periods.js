@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-add-course');
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../coordinator/course-create.html';
+            window.location.href = '../coordinator/course-register.html';
         });
     }
 });
