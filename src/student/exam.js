@@ -60,7 +60,7 @@ function updateJourney() {
 function updateBackground() {
     const stage = Math.min(Math.floor(current / 4) + 1, 5);
     if (theme) {
-        document.body.style.backgroundImage = `url('../images/exam/${teme}${stage}.jpg')`;
+        document.body.style.backgroundImage = `url('https://storage.googleapis.com/school-source/web/exam/${theme}${stage}.jpg')`;
     }
 }
 

@@ -23,7 +23,7 @@ async function loadStudentCourses() {
                                 <br>
                                 ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
                         ? `<button onclick="showVideo('${topic.link}')">
-                            Ver video
+                            Ver contenido
                         </button>`
                         : ""
                     }
@@ -161,6 +161,10 @@ async function loadStudentCourses() {
 loadStudentCourses();
 
 function showVideo(url) {
+    if (url.includes(".pdf")) {
+        window.open(url, "_blank");
+        return;
+    }
     let videoId = "";
 
     if (url.includes("youtube.com/watch?v=")) {
