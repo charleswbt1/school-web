@@ -44,6 +44,33 @@
     </div>
 </div>
 
+
+<div id="editStudentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditStudent()">&times;</span>
+        <h2>Editar Alumno</h2>
+        <form id="editStudentForm">
+            <input type="hidden" id="editStudentId">
+            <label>Nombre</label>
+            <input type="text" id="editName" required>
+            <label>CURP</label>
+            <input type="text" id="editCurp" maxlength="18" required>
+            <label>Teléfono</label>
+            <input type="text" id="editPhone" required>
+            <label>Clave</label>
+            <input type="text" id="editSchoolId">
+            <br><br>
+            <button type="submit">
+                Guardar Cambios
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
 <div class="modal-image" id="imageModal" onclick="closeImage()">
     <img id="payImage">
 </div>

@@ -42,6 +42,10 @@ async function loadStudents() {
                         clave
                     </th>
 
+                    <th rowspan="2">
+                        IUC
+                    </th>
+
                     <th colspan="${documentTypes.length}">
                         Documentos
                     </th>
@@ -74,7 +78,10 @@ async function loadStudents() {
                         ⬆️
                     </span>
                     </td>`;
+
+
             }).join("");
+
 
             let rowClass = '';
             switch (student.state?.toLowerCase()) {
@@ -99,6 +106,29 @@ async function loadStudents() {
                             </td>
                             <td>
                                 ${student.school_id || '-'}
+                            </td>
+
+                             <td class="iuc-cell">
+                                <div class="iuc-actions">
+                                    <span
+                                        class="button-icon credential-icon"
+                                        onclick="generateCredential('${student.id}', this)"
+                                        title="Credencial">
+                                        🪪
+                                    </span>
+                                    <span
+                                        class="button-icon certificate-icon"
+                                        onclick="generateCertificate('${student.id}', this)"
+                                        title="Constancia">
+                                        📄
+                                    </span>
+                                    <span
+                                        class="button-icon"
+                                        onclick="editStudent('${student.id}')"
+                                        title="Editar Alumno">
+                                        ✏️
+                                    </span>
+                                </div>
                             </td>
                             ${documents}
                         </tr>
@@ -230,3 +260,147 @@ function closeDocumentModal() {
     preview.src = "";
     preview.style.display = "none";
 }
+
+
+
+async function generateCredential(studentId, button) {
+    try {
+        button.style.pointerEvents = "none";
+        button.style.opacity = ".5";
+        const response = await fetch(
+            `${apiUrl}/api/files/pdf`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    student_id: studentId,
+                    type: "credential"
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error((await response.json()).message);
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "credencial.pdf";
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+    } catch (error) {
+        showError(`Error al Generar Credencial - ${error.message}`);
+    } finally {
+        button.style.pointerEvents = "auto";
+        button.style.opacity = "1";
+    }
+}
+
+
+async function generateCertificate(studentId, button) {
+
+    try {
+        button.style.pointerEvents = "none";
+        button.style.opacity = ".5";
+        const response = await fetch(
+            `${apiUrl}/api/files/pdf`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    student_id: studentId,
+                    type: "constancy"
+                })
+            }
+        );
+        if (!response.ok) {
+            throw new Error((await response.json()).message);
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "constancia.pdf";
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+    } catch (error) {
+        showError(`Error al Generar Constancia - ${error.message}`);
+    }finally {
+        button.style.pointerEvents = "auto";
+        button.style.opacity = "1";
+    }
+}
+
+/*Editar Alumno*/
+
+function editStudent(studentId) {
+
+    const student = students.find(s => s.id === studentId);
+
+    document.getElementById("editStudentId").value = student.id;
+    document.getElementById("editName").value = student.name;
+    document.getElementById("editCurp").value = student.curp;
+    document.getElementById("editPhone").value = student.phone;
+    document.getElementById("editSchoolId").value = student.school_id;
+
+    document.getElementById("editStudentModal").style.display = "flex";
+
+}
+
+function closeEditStudent() {
+
+    document.getElementById("editStudentModal").style.display = "none";
+
+}
+document
+    .getElementById("editStudentForm")
+    .addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const studentId = document.getElementById("editStudentId").value;
+
+        const body = {
+
+            name: document.getElementById("editName").value,
+
+            curp: document.getElementById("editCurp").value,
+
+            phone: document.getElementById("editPhone").value,
+
+            school_id: document.getElementById("editSchoolId").value
+
+        };
+
+        const response = await fetch(
+            `${apiUrl}/api/students?id=${studentId}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+        );
+
+        if (!response.ok) {
+
+            alert("No se pudo actualizar");
+
+            return;
+        }
+
+        closeEditStudent();
+
+        loadStudents();
+
+    });
