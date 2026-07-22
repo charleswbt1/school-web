@@ -70,7 +70,13 @@ async function loadStudents() {
                         onclick="viewImage('${document.url}')"
                         title="Ver Documento ${type}">
                         🔍
+                    </span>
+                    <span class="button-icon"
+                        onclick="deleteDocument('${student.id}','${type}',this)"
+                        title="Eliminar Documento ${type}">
+                        ❌
                     </span>` : ``
+
                     }
                     <span class="button-icon"
                         onclick="viewDocument('${student.id}','${type}')"
@@ -261,8 +267,7 @@ function closeDocumentModal() {
     preview.style.display = "none";
 }
 
-
-
+/*CREDENCIAL/CONSTANCIA*/
 async function generateCredential(studentId, button) {
     try {
         button.style.pointerEvents = "none";
@@ -303,7 +308,6 @@ async function generateCredential(studentId, button) {
 
 
 async function generateCertificate(studentId, button) {
-
     try {
         button.style.pointerEvents = "none";
         button.style.opacity = ".5";
@@ -331,19 +335,16 @@ async function generateCertificate(studentId, button) {
         a.click();
 
         URL.revokeObjectURL(url);
-
     } catch (error) {
         showError(`Error al Generar Constancia - ${error.message}`);
-    }finally {
+    } finally {
         button.style.pointerEvents = "auto";
         button.style.opacity = "1";
     }
 }
 
 /*Editar Alumno*/
-
 function editStudent(studentId) {
-
     const student = students.find(s => s.id === studentId);
 
     document.getElementById("editStudentId").value = student.id;
@@ -351,56 +352,75 @@ function editStudent(studentId) {
     document.getElementById("editCurp").value = student.curp;
     document.getElementById("editPhone").value = student.phone;
     document.getElementById("editSchoolId").value = student.school_id;
-
     document.getElementById("editStudentModal").style.display = "flex";
-
 }
-
 function closeEditStudent() {
-
     document.getElementById("editStudentModal").style.display = "none";
-
 }
-document
-    .getElementById("editStudentForm")
-    .addEventListener("submit", async (e) => {
+document.getElementById("editStudentForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const studentId = document.getElementById("editStudentId").value;
 
-        e.preventDefault();
+    const body = {
+        name: document.getElementById("editName").value,
+        curp: document.getElementById("editCurp").value,
+        phone: document.getElementById("editPhone").value,
+        school_id: document.getElementById("editSchoolId").value
+    };
 
-        const studentId = document.getElementById("editStudentId").value;
+    const response = await fetch(
+        `${apiUrl}/api/students?id=${studentId}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }
+    );
 
-        const body = {
+    if (!response.ok) {
+        await showError("No se pudo actualizar");
+        return;
+    }
 
-            name: document.getElementById("editName").value,
+    closeEditStudent();
+    loadStudents();
+});
 
-            curp: document.getElementById("editCurp").value,
+/*ELIMINAR DOCUMENTO*/
+async function deleteDocument(studentId, type, button) {
+    if (!await showConfirm("¿Deseas eliminar este Documento?")) {
+        return;
+    }
 
-            phone: document.getElementById("editPhone").value,
-
-            school_id: document.getElementById("editSchoolId").value
-
-        };
-
+    try {
+        button.style.pointerEvents = "none";
+        button.style.opacity = ".5";
         const response = await fetch(
-            `${apiUrl}/api/students?id=${studentId}`,
+            `${apiUrl}/api/students/document`,
             {
-                method: "PATCH",
+                method: "DELETE",
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(body)
+                body: JSON.stringify({
+                    student_id: studentId,
+                    type: type
+                })
             }
         );
 
         if (!response.ok) {
-
-            alert("No se pudo actualizar");
-
-            return;
+            throw new Error("No se pudo eliminar el documento");
         }
 
-        closeEditStudent();
-
+        await showSuccess("Documento eliminado");
         loadStudents();
-
-    });
+    } catch (error) {
+        showError(error.message);
+    } finally {
+        button.style.pointerEvents = "auto";
+        button.style.opacity = "1";
+    }
+}

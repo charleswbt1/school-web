@@ -784,12 +784,12 @@ input:checked+.slider {
 
 /*ICONOS*/
 
-.iuc-cell{
+.iuc-cell {
     text-align: center;
     padding: 0 !important;
 }
 
-.iuc-actions{
+.iuc-actions {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -866,4 +866,15 @@ input:checked+.slider {
     float: right;
     cursor: pointer;
     font-size: 28px;
+}
+
+/*icono de eliminar*/
+.delete-icon {
+    background: #f04657;
+    color: #fff; 
+}
+
+.delete-icon:hover {
+    background: #c5414e;
+    transform: scale(1.1);
 }
