@@ -199,9 +199,7 @@ function showSuccess(message) {
             closeAlert();
             resolve();
         };
-
     });
-
 }
 
 function showConfirm(message) {
@@ -239,20 +237,30 @@ function showConfirm(message) {
 }
 
 function showError(message) {
-    document.getElementById("alertOverlay").style.display = "block";
-    document.getElementById("customAlert").style.display = "block";
-    document.getElementById("alertCancelButton").style.display = "none";
+    return new Promise(resolve => {
 
-    const icon = document.getElementById("alertIcon");
+        document.getElementById("alertOverlay").style.display = "block";
+        document.getElementById("customAlert").style.display = "block";
+        document.getElementById("alertCancelButton").style.display = "none";
 
-    icon.className = "alert-icon error";
-    icon.innerHTML = "✕";
+        const icon = document.getElementById("alertIcon");
 
-    document.getElementById("alertTitle").innerHTML = "ERROR";
-    document.getElementById("alertMessage").innerHTML = message;
+        icon.className = "alert-icon error";
+        icon.innerHTML = "✕";
 
-    document.getElementById("alertButton").style.background = "#F44336";
-    document.getElementById("alertButton").innerHTML = "ACEPTAR";
+        document.getElementById("alertTitle").innerHTML = "ERROR";
+        document.getElementById("alertMessage").innerHTML = message;
+
+        const button = document.getElementById("alertButton");
+        button.style.background = "#F44336";
+        button.innerHTML = "ACEPTAR";
+
+        button.onclick = () => {
+            document.getElementById("alertOverlay").style.display = "none";
+            document.getElementById("customAlert").style.display = "none";
+            resolve();
+        };
+    });
 }
 
 function closeAlert() {
