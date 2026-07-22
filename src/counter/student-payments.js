@@ -94,26 +94,35 @@ async function loadStudents() {
                 );
 
                 const images = monthPayments.map(payment => `
-                    <span class="button-icon"
-                        onclick="viewImage('${payment.url}')"
-                        title="Ver comprobante $${payment.amount}">
-                        ${payment.amount > 0 ? `🔍` : `⚠️`}
-                    </span>
-                    <span class="button-icon" ${btnView}
-                        onclick="viewReceipt('${student.id}','${payment.id}','${data.course_name}')"
-                        title="Recibo $${payment.amount}">
-                        ${payment.amount > 0 ? `🧾` : ``}
-                    </span>                    
+                    <div class="iuc-actions">
+                        <span class="button-icon"
+                            onclick="viewImage('${payment.url}')"
+                            title="Ver comprobante $${payment.amount}">
+                            ${payment.amount > 0 ? `🔍` : `⚠️`}
+                        </span>
+                        <span class="button-icon" ${btnView}
+                            onclick="viewReceipt('${student.id}','${payment.id}','${data.course_name}')"
+                            title="Recibo $${payment.amount}">
+                            ${payment.amount > 0 ? `🧾` : ``}
+                        </span>  
+                        <span class="button-icon" ${btnView}
+                            onclick="deletePayment('${student.id}','${payment.id}',this)"
+                            title="Eliminar $${payment.amount}">
+                            ✖️
+                        </span>
+                    </div>
                 `).join("");
 
                 return `<td style="text-align:center">
                     <div>${formatAmount(totalPaid)}</div>
-                    <div class="payment-images">${images}</div>
-                    <span class="button-icon" ${btnView}
-                        onclick="viewPayment('${courseId}','${student.id}','${period.year}','${period.month}','cuota')"
-                        title="Registrar pago">
-                        ⬆️
-                    </span>
+                    ${images}
+                    <div class="iuc-actions">
+                        <span class="button-icon" ${btnView}
+                            onclick="viewPayment('${courseId}','${student.id}','${period.year}','${period.month}','cuota')"
+                            title="Registrar pago">
+                            ⬆️
+                        </span>
+                    </div>
                 </td>`;
             }).join("");
 
@@ -188,3 +197,38 @@ async function loadStudents() {
     }
 }
 loadStudents();
+
+
+async function deletePayment(studentId, paymentId, button) {
+    button.style.pointerEvents = "none";
+    button.style.opacity = ".5";
+    try {
+        if (!await showConfirm("¿Deseas eliminar este pago?")) {
+            return;
+        }
+        const response = await fetch(
+            `${apiUrl}/api/students/bill`,
+            {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    student_id: studentId,
+                    payment_id: paymentId
+                })
+            }
+        );
+        if (!response.ok) {
+            throw new Error();
+        }
+        await showSuccess("Pago eliminado correctamente");
+        loadStudents();
+    } catch (error) {
+        console.error("student payment delete: Error al eliminar el pago:", error);
+        showError("Fallo al eliminar el pago");
+    } finally {
+        button.style.pointerEvents = "auto";
+        button.style.opacity = "1";
+    }
+}
