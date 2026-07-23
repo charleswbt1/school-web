@@ -135,10 +135,11 @@ async function loadStudentCourses() {
         const text = document.getElementById("loadingText");
 
         const totalModules = response.content.modules.length;
-        const completedModules = response.student.notes?.length || 0;
-
-        const finalProgress = Math.round((completedModules / totalModules) * 100);
-
+        const approvedModules = response.student.notes?.filter(
+            note => note.state === "aprobado"
+        ).length || 0;
+        const finalProgress = Math.round((approvedModules / totalModules) * 100);
+        
         let progress = 0;
 
         const interval = setInterval(() => {
