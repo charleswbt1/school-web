@@ -345,22 +345,31 @@ async function generateCertificate(studentId, button) {
 }
 
 /*Editar Alumno*/
+const editStudentModal = document.getElementById("editStudentModal");
 function editStudent(studentId) {
     const student = students.find(s => s.id === studentId);
 
     document.getElementById("editStudentId").value = student.id;
+    document.getElementById("editUserId").value = student.user_id;
     document.getElementById("editName").value = student.name;
     document.getElementById("editCurp").value = student.curp;
     document.getElementById("editPhone").value = student.phone;
     document.getElementById("editSchoolId").value = student.school_id;
-    document.getElementById("editStudentModal").style.display = "flex";
+    document.getElementById("studentState").value = student.state;
+    editStudentModal.style.display = "flex";
 }
 function closeEditStudent() {
-    document.getElementById("editStudentModal").style.display = "none";
+    editStudentModal.style.display = "none";
 }
+editStudentModal.addEventListener("click", (e) => {
+    if (e.target === editStudentModal) {
+        closeEditStudent();
+    }
+});
 document.getElementById("editStudentForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const studentId = document.getElementById("editStudentId").value;
+    const userId = document.getElementById("editUserId").value;
 
     const userBody = {
         name: document.getElementById("editName").value,
@@ -369,8 +378,9 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
     };
 
     const studentBody = {
-        school_id: document.getElementById("editSchoolId").value
-    };
+        school_id: document.getElementById("editSchoolId").value,
+        state: document.getElementById("studentState").value
+    }
 
     const response = await fetch(
         `${apiUrl}/api/students?id=${studentId}`,
@@ -380,6 +390,17 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(studentBody)
+        }
+    );
+
+    const userResponse = await fetch(
+        `${apiUrl}/api/users?id=${userId}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userBody)
         }
     );
 

@@ -49,8 +49,9 @@
     <div class="modal-content">
         <span class="close" onclick="closeEditStudent()">&times;</span>
         <h2>Editar Alumno</h2>
-        <form id="editStudentForm">
+        <form class="info-form" id="editStudentForm">
             <input type="hidden" id="editStudentId">
+            <input type="hidden" id="editUserId">
             <label>Nombre</label>
             <input type="text" id="editName" required>
             <label>CURP</label>
@@ -59,6 +60,12 @@
             <input type="text" id="editPhone" required>
             <label>Clave</label>
             <input type="text" id="editSchoolId">
+            <label>Estado</label>
+            <select id="studentState">
+                <option value="active">Activo</option>
+                <option value="inactive">Inactivo</option>
+                <option value="pending">Pendiente</option>
+            </select>
             <br><br>
             <button type="submit">
                 Guardar Cambios

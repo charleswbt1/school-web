@@ -866,12 +866,13 @@ input:checked+.slider {
     float: right;
     cursor: pointer;
     font-size: 28px;
+    display: none;
 }
 
 /*icono de eliminar*/
 .delete-icon {
     background: #f04657;
-    color: #fff; 
+    color: #fff;
 }
 
 .delete-icon:hover {
