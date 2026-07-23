@@ -27,25 +27,23 @@ async function loadStudents() {
                         #
                     </th>
                     <th rowspan="2">
+                        NickName
+                    </th>
+                    <th rowspan="2">
                         Alumno
                     </th>
-
                     <th rowspan="2">
                         CURP
                     </th>
-
                     <th rowspan="2">
                         Teléfono
                     </th>
-
                     <th rowspan="2">
                         clave
                     </th>
-
                     <th rowspan="2">
                         IUC
                     </th>
-
                     <th colspan="${documentTypes.length}">
                         Documentos
                     </th>
@@ -100,6 +98,9 @@ async function loadStudents() {
                         <tr class="${rowClass}">
                             <td>
                                 ${index + 1}
+                            </td>
+                            <td>
+                                ${student.nick_name}
                             </td>
                             <td>
                                 ${student.name}
@@ -361,10 +362,13 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
     e.preventDefault();
     const studentId = document.getElementById("editStudentId").value;
 
-    const body = {
+    const userBody = {
         name: document.getElementById("editName").value,
         curp: document.getElementById("editCurp").value,
-        phone: document.getElementById("editPhone").value,
+        phone: document.getElementById("editPhone").value
+    };
+
+    const studentBody = {
         school_id: document.getElementById("editSchoolId").value
     };
 
@@ -375,7 +379,7 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(studentBody)
         }
     );
 
