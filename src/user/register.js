@@ -21,7 +21,6 @@ async function loadRoles() {
         alert("Error cargando: ", error);
     }
 }
-
 loadRoles();
 
 async function loadCourses() {
@@ -46,13 +45,11 @@ async function loadCourses() {
                 </option>
             `;
             });
-            select.style.display = "block";
         }
     } catch (error) {
         alert("Error cargando cursos:", error);
     }
 }
-
 loadCourses();
 
 async function loadAdvisers() {
@@ -74,14 +71,30 @@ async function loadAdvisers() {
                 </option>
             `;
             });
-            adviserSelect.style.display = "block";
         }
     } catch (error) {
         alert("Error cargando cursos:", error);
     }
 }
-
 loadAdvisers();
+
+document.getElementById("role").addEventListener("change", toggleStudentFields);
+function toggleStudentFields() {
+    const role = document.getElementById("role").value;
+    const course = document.getElementById("courseId");
+    const adviser = document.getElementById("adviserId");
+
+    if (role === "student") {
+        course.style.display = "block";
+        adviser.style.display = "block";
+    } else {
+        course.style.display = "none";
+        adviser.style.display = "none";
+        course.value = "";
+        adviser.value = "";
+    }
+}
+toggleStudentFields();
 
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
