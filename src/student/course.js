@@ -103,6 +103,16 @@ async function loadStudentCourses() {
                 : ""
             }
 
+                        <div class="course-actions">
+
+                        <button
+                            class="btn-primary"
+                            onclick="openInfoModal()">
+                            📢 Informes
+                        </button>
+
+                        </div>
+                        
             <div class="loading-container">
                             <div class="loading-bar">
                                     <div class="loading-fill" id="loadingFill">
@@ -139,7 +149,7 @@ async function loadStudentCourses() {
             note => note.state === "aprobado"
         ).length || 0;
         const finalProgress = Math.round((approvedModules / totalModules) * 100);
-        
+
         let progress = 0;
 
         const interval = setInterval(() => {
@@ -160,6 +170,20 @@ async function loadStudentCourses() {
 }
 
 loadStudentCourses();
+
+function openInfoModal() {
+    document.getElementById("infoModal").style.display = "flex";
+}
+function closeInfoModal() {
+    document.getElementById("infoModal").style.display = "none";
+}
+const infoModal = document.getElementById("infoModal");
+infoModal.addEventListener("click", (e) => {
+    if (e.target === infoModal) {
+        closeInfoModal();
+    }
+});
+
 
 function showVideo(url) {
     if (url.includes(".pdf")) {

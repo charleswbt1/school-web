@@ -128,11 +128,7 @@ async function loadStudents() {
                     <div>${formatAmount(totalPaid)}</div>
                     ${images}
                     <div class="iuc-actions">
-                        <span class="button-icon" ${btnView}span class="button-icon" ${btnView}
-                                    onclick="viewPayment('${courseId}','${student.id}','${months.at(-1).year}','${months.at(-1).month}','titulo')"
-                                    title="Registrar pago">
-                                    ⬆️
-                                </s
+                        <span class="button-icon" ${btnView}
                             onclick="viewPayment('${courseId}','${student.id}','${period.year}','${period.month}','cuota')"
                             title="Registrar pago">
                             ⬆️
