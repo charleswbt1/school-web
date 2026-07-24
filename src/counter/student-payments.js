@@ -29,7 +29,7 @@ async function loadStudents() {
         const data = await response.json();
         students = data.students;
         document.getElementById("course-name").textContent = data.course_name;
-        const btnView = roleSession != "coordinator" ? 'hidden' : '';
+        const btnView = roleSession != "coordinator" ? 'style="display:none;"' : 'style="display:block;"';
 
         let modules;
         if (data.model === 'async') {
@@ -128,7 +128,11 @@ async function loadStudents() {
                     <div>${formatAmount(totalPaid)}</div>
                     ${images}
                     <div class="iuc-actions">
-                        <span class="button-icon" ${btnView}
+                        <span class="button-icon" ${btnView}span class="button-icon" ${btnView}
+                                    onclick="viewPayment('${courseId}','${student.id}','${months.at(-1).year}','${months.at(-1).month}','titulo')"
+                                    title="Registrar pago">
+                                    ⬆️
+                                </s
                             onclick="viewPayment('${courseId}','${student.id}','${period.year}','${period.month}','cuota')"
                             title="Registrar pago">
                             ⬆️
