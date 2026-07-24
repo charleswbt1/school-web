@@ -31,6 +31,13 @@ async function loadStudents() {
         document.getElementById("course-name").textContent = data.course_name;
         const btnView = roleSession != "coordinator" ? 'hidden' : '';
 
+        let modules;
+        if (data.model === 'async') {
+            const contentResponse = await fetch(`${apiUrl}/api/contents?id=${data.content_id}`);
+            const contentData = await contentResponse.json();
+            modules = contentData[0].modules;
+        }
+
         const months = getMonths(data.date_init, data.date_end);
         const paymentTotals = months.map(period => {
             return data.students.reduce((sum, student) => {
@@ -73,7 +80,11 @@ async function loadStudents() {
                     </th>
                 </tr>
                 <tr>
-                    ${months.map(month => `<th>${month.month} ${month.year}</th>`).join("")}
+                    ${months.map((month, index) => `
+                    <th>
+                        ${modules ? `${modules[index].name}` : `${month.month} ${month.year}`}
+                    </th>
+                    `).join("")}
                     <th>
                         Pagos Título
                     </th>
@@ -131,16 +142,23 @@ async function loadStudents() {
                 (sum, payment) => sum + Number(payment.amount || 0), 0
             );
             const titleImages = titlePayments.map(payment => `
-                <span class="button-icon"
-                    onclick="viewImage('${payment.url}')"
-                    title="Ver comprobante $${payment.amount}">
-                    🔍
-                </span>
-                <span class="button-icon" ${btnView}
-                    onclick="viewReceipt('${student.id}','${payment.id}','${data.course_name}')"
-                    title="Recibo $${payment.amount}">
-                    🧾
-                </span>                    
+                    <div class="iuc-actions">
+                        <span class="button-icon"
+                            onclick="viewImage('${payment.url}')"
+                            title="Ver comprobante $${payment.amount}">
+                            🔍
+                        </span>
+                        <span class="button-icon" ${btnView}
+                            onclick="viewReceipt('${student.id}','${payment.id}','${data.course_name}')"
+                            title="Recibo $${payment.amount}">
+                            🧾
+                        </span>  
+                        <span class="button-icon" ${btnView}
+                            onclick="deletePayment('${student.id}','${payment.id}',this)"
+                            title="Eliminar $${payment.amount}">
+                            ✖️
+                        </span>   
+                    </div>               
             `).join("");
 
             let rowClass = '';
@@ -168,11 +186,13 @@ async function loadStudents() {
                         <td style="text-align:center">
                             <div>${formatAmount(totalTitlePaid)}</div>
                             <div class="payment-images">${titleImages}</div>
-                            <span class="button-icon" ${btnView}
-                                onclick="viewPayment('${courseId}','${student.id}','${months.at(-1).year}','${months.at(-1).month}','titulo')"
-                                title="Registrar pago">
-                                ⬆️
-                            </span>
+                            <div class="iuc-actions">
+                                <span class="button-icon" ${btnView}
+                                    onclick="viewPayment('${courseId}','${student.id}','${months.at(-1).year}','${months.at(-1).month}','titulo')"
+                                    title="Registrar pago">
+                                    ⬆️
+                                </span>
+                            </div>
                         </td>
                     </tr>
                     `;
