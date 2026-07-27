@@ -8,9 +8,10 @@ async function loadStudentCourses() {
         const infoSection = document.getElementById("courseContainer");
 
         infoSection.innerHTML = "";
-        const modules = response.content.modules.map(
-            (module, index) => {
+        const modules = await Promise.all(
+            response.content.modules.map(async (module, index) => {
                 const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
+                const classeMedia = await getClassMedia(response.student.state, response.course.id, module.id);
                 return `
                 <div class="module-card">
                     <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
@@ -30,6 +31,11 @@ async function loadStudentCourses() {
                             </li>
                         `).join("")}
                     </ul>
+                    ${classeMedia.map(media => `                        
+                        <button onclick="showVideo('${media.link}')">
+                            Ver
+                        </button>
+                    `).join("")}
                     ${response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_") && note?.state !== "aprobado"
                         ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
                             Presentar examen
@@ -41,7 +47,9 @@ async function loadStudentCourses() {
                         : ""
                     }
                 </div>
-            `}).join("");
+                `;
+            })
+        );
 
         const documents = response.student.documents.map(
             (document, index) => `
@@ -170,6 +178,20 @@ async function loadStudentCourses() {
 }
 
 loadStudentCourses();
+
+async function getClassMedia(studentState, courseId, moduleId) {
+    if (studentState === "active") {
+        const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${courseId}&module_id=${moduleId}`);
+        if (!classesResponse.ok) {
+            return [];
+        }
+        const classesJson = await classesResponse.json();
+        if (classesJson.length > 0 && classesJson[0].medias.length > 0) {
+            return classesJson[0].medias.filter(media => media.link.startsWith("http"));
+        }
+    }
+    return [];
+}
 
 function openInfoModal() {
     document.getElementById("infoModal").style.display = "flex";

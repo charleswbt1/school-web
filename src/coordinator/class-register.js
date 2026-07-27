@@ -29,7 +29,7 @@ async function loadClasses() {
     const data = await response.json();
 
     mediaContainer.innerHTML = "";
-    if (!data || data.length === 0 || data[0].medias.length === 0) {
+    if (!data || data.length === 0) {
         addMedia();
         return;
     }
