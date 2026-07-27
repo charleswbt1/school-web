@@ -123,20 +123,4 @@ document.addEventListener("click", async (event) => {
         }
 
     });
-
-    if (button.classList.contains("open-login-btn")) {
-        const courseId = button.dataset.content;
-        sessionStorage.setItem("courseId", courseId);
-
-        document.getElementById("loginModal").style.display = "flex";
-
-        return;
-    }
 });
-
-/* ===================== CLOSE MODALS ===================== */
-
-document.getElementById("closeContentModal")
-    .addEventListener("click", () => {
-        document.getElementById("contentModal").style.display = "none";
-    });

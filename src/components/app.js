@@ -55,13 +55,21 @@ function initializeMenu() {
     hamburger.addEventListener("click", () => {
         sidebar.classList.toggle("active");
     });
+    document.addEventListener("click", (e) => {
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !hamburger.contains(e.target)
+        ) {
+            sidebar.classList.remove("active");
+        }
+    });
 }
 
 function initializeLoginModal() {
     /* ========================= MODAL ========================= */
     const loginModal = document.getElementById("loginModal");
     const openLogin = document.getElementById("openLogin");
-    const closeModal = document.getElementById("closeModal");
     const nick_name = document.getElementById("nickname");
     const password = document.getElementById("password");
     const text_error = document.getElementById("loginError");
@@ -69,11 +77,13 @@ function initializeLoginModal() {
     openLogin.addEventListener("click", () => {
         loginModal.style.display = "flex";
     });
-    closeModal.addEventListener("click", () => {
-        nick_name.value = "";
-        password.value = "";
-        text_error.textContent = "";
-        loginModal.style.display = "none";
+    loginModal.addEventListener("click", (e) => {
+        if (e.target === loginModal) {
+            nick_name.value = "";
+            password.value = "";
+            text_error.textContent = "";
+            loginModal.style.display = "none";
+        }
     });
 
     // BOTÓN REGISTRO
