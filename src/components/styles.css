@@ -416,6 +416,26 @@ button:hover {
     font-weight: bold;
 }
 
+.media-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+.media-item input {
+    flex: 1;
+}
+
+.delete-media {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
 /* CURSES INFO MODAL */
 .course-actions {
     display: flex;

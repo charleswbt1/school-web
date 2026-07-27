@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+            <div class="section-header">
+                <h2>Clases</h2>
+            </div>
+            <form class="info-form" id="classForm">
+                <select id="moduleSelect" required>
+                    <option value="">Selecciona un módulo</option>
+                </select>
+                <div id="mediaContainer"></div>
+                <div class="button-container">
+                    <button type="button" id="addMediaBtn">
+                        + Agregar Clase
+                    </button>
+                </div>
+                <button type="submit">
+                    Guardar
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="class-register.js"></script>
+
+</body>
+
+</html>

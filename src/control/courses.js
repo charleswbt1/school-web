@@ -48,6 +48,10 @@ async function loadCourses() {
                             Conteo
                         </button>
                         <button
+                            onclick="viewClass('${course.id}','${course.content_id}')" ${btnView}>
+                            Clases
+                        </button>
+                        <button
                             onclick="update('${course.id}')" ${btnView}>
                             Editar
                         </button>
@@ -90,6 +94,10 @@ function viewCount(id) {
 
 function viewPayments(id) {
     window.location.href = `../counter/student-payments.html?id=${id}`;
+}
+
+function viewClass(courseId, contentId) {
+    window.location.href = `../coordinator/class-register.html?course_id=${courseId}&content_id=${contentId}`;
 }
 
 function update(id) {
