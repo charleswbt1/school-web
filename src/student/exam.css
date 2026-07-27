@@ -7,11 +7,10 @@ body {
 }
 
 .exam-screen {
-
-    width: 900px;
+    width: min(900px, 100%);
     margin: auto;
     padding: 40px;
-
+    box-sizing: border-box;
 }
 
 .hud {
@@ -92,3 +91,54 @@ body {
     background: #eef5ff;
 
 }
+
+/* ===========================
+   Responsive para celulares
+=========================== */
+@media screen and (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .exam-screen {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    .hud {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .journey {
+        margin: 20px 0;
+    }
+
+    .journey-line {
+        height: 6px;
+    }
+
+    .player {
+        font-size: 28px;
+        top: -14px;
+    }
+
+    .question-card {
+        padding: 18px;
+        border-radius: 15px;
+    }
+
+    .answer {
+        padding: 14px;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .progress-container {
+        height: 14px;
+    }

@@ -234,25 +234,6 @@ body {
 
 }
 
-@media print {
-
-    body {
-
-        background: #fff;
-
-    }
-
-    .receipt {
-
-        width: 100%;
-        margin: 0;
-        box-shadow: none;
-        border-radius: 0;
-
-    }
-
-}
-
 /* Botón de descarga */
 
 .button-container {
@@ -285,6 +266,10 @@ body {
 
 @media print {
 
+    body {
+        background: #fff;
+    }
+
     body * {
         visibility: hidden;
     }
@@ -296,20 +281,81 @@ body {
 
     .receipt {
         position: absolute;
-        top: 0;
         left: 0;
+        top: 0;
         width: 100%;
+        margin: 0;
+        border-radius: 0;
         box-shadow: none;
     }
 
-    .button-container {
-        display: none;
-    }
-
+    .button-container,
     #sidebar-container,
     #header-container,
     .info-form,
     h2 {
-        display: none;
+        display: none !important;
+    }
+}
+
+/* Diseño para celulares */
+@media screen and (max-width: 768px) {
+
+    .receipt {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .receipt-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .logo {
+        width: 180px;
+        margin: 0 0 15px;
+    }
+
+    .header-right {
+        align-items: center;
+    }
+
+    .header-right h1 {
+        font-size: 30px;
+    }
+
+    .receipt-row {
+        flex-direction: column;
+        margin: 15px;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .receipt-row div {
+        width: 100%;
+    }
+
+    .receipt-grid {
+        grid-template-columns: 1fr;
+        margin: 15px;
+    }
+
+    .payment-table {
+        width: 100%;
+        margin: 15px 0;
+        font-size: 14px;
+    }
+
+    .payment-table th,
+    .payment-table td {
+        padding: 10px;
+    }
+
+    .receipt-footer {
+        justify-content: center;
     }
 }
