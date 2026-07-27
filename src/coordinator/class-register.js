@@ -20,6 +20,7 @@ const mediaContainer = document.getElementById("mediaContainer");
 document.getElementById("addMediaBtn").addEventListener("click", addMedia);
 
 async function loadClasses() {
+    classeId = null;
     const moduleId = document.getElementById("moduleSelect").value;
     if (!moduleId) return;
 
