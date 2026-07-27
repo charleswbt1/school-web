@@ -113,11 +113,13 @@ async function loadStudentCourses() {
 
                         <div class="course-actions">
 
-                        <button
-                            class="btn-primary"
-                            onclick="openInfoModal()">
-                            📢 Informes
-                        </button>
+                            ${response.course.model === "async" ? `
+                                <button
+                                    class="btn-primary"
+                                    onclick="openInfoModal()">
+                                    📢 Informes
+                                </button>
+                            ` : ""}
 
                         </div>
                         
