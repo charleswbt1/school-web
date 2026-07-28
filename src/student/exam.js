@@ -174,13 +174,39 @@ async function finishExam() {
 
         } else {
 
-            showCelebration(
-                exam.name,
-                result.score,
-                exam.questions.length,
-                result.average,
-                `course.html?id=${studentId}`
+            // Obtener nuevamente el curso del alumno
+            const courseResponse = await fetch(
+                `${apiUrl}/api/courses/student?student_id=${studentId}`
             );
+
+            const courseInfo = await courseResponse.json();
+
+            const totalModules = courseInfo.content.modules.length;
+
+            const approvedModules = courseInfo.student.notes.filter(
+                note => note.state === "aprobado"
+            ).length;
+
+            if (approvedModules === totalModules) {
+
+                showFinalCelebration(
+                    result.score,
+                    exam.questions.length,
+                    result.average,
+                    `course.html?id=${studentId}`
+                );
+
+            } else {
+
+                showCelebration(
+                    exam.name,
+                    result.score,
+                    exam.questions.length,
+                    result.average,
+                    `course.html?id=${studentId}`
+                );
+
+            }
 
         }
     } finally {
@@ -191,20 +217,20 @@ async function finishExam() {
 
 let redirectUrl = "";
 
-const messages=[
-"🚀 ¡Cada módulo terminado te acerca a tu meta!",
-"🏅 Los grandes profesionales nunca se rindieron.",
-"🎓 Sigue así, tu título está cada vez más cerca.",
-"💪 Excelente trabajo. Continúa aprendiendo.",
-"🌟 Hoy eres mejor que ayer.",
-"🔥 Tu esfuerzo dará grandes resultados.",
-"👏 Cada examen aprobado fortalece tu futuro."
+const messages = [
+    "🚀 ¡Cada módulo terminado te acerca a tu meta!",
+    "🏅 Los grandes profesionales nunca se rindieron.",
+    "🎓 Sigue así, tu título está cada vez más cerca.",
+    "💪 Excelente trabajo. Continúa aprendiendo.",
+    "🌟 Hoy eres mejor que ayer.",
+    "🔥 Tu esfuerzo dará grandes resultados.",
+    "👏 Cada examen aprobado fortalece tu futuro."
 ];
 
 function showCelebration(moduleName, score, total, average, url) {
 
     redirectUrl = url;
-    const message = messages[Math.floor(Math.random()*messages.length)];
+    const message = messages[Math.floor(Math.random() * messages.length)];
 
     document.getElementById("celebrationTitle").innerHTML =
         "🎉 ¡Felicidades!";
@@ -215,7 +241,7 @@ function showCelebration(moduleName, score, total, average, url) {
     document.getElementById("celebrationAverage").innerHTML =
         average;
 
-    document.getElementById("motivation").innerHTML=message;
+    document.getElementById("motivation").innerHTML = message;
 
     document.getElementById("celebrationModal").style.display = "flex";
 
@@ -254,4 +280,15 @@ function startConfetti() {
         });
     }, 150);
 
+}
+/*FIN*/
+function showFinalCelebration(score, total, average, url) {
+    redirectUrl = url;
+    document.getElementById("finalCelebrationModal").style.display = "flex";
+    startConfetti();
+}
+
+function closeFinalCelebration() {
+    document.getElementById("finalCelebrationModal").style.display = "none";
+    window.location.href = redirectUrl;
 }

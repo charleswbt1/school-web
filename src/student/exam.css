@@ -243,3 +243,132 @@ body {
     }
 
 }
+
+/*FIN DE MODULOS*/
+.final-card {
+
+    max-width: 700px;
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+
+}
+
+.final-card h1 {
+
+    font-size: 48px;
+    color: #f39c12;
+    margin-bottom: 10px;
+
+}
+
+.final-card h2 {
+
+    color: #173b73;
+    margin-bottom: 30px;
+
+}
+
+.graduation-message {
+
+    font-size: 20px;
+    color: #444;
+    margin-bottom: 30px;
+
+}
+
+.letter {
+
+    background: #f9fbff;
+    border-left: 6px solid #173b73;
+    padding: 25px;
+    text-align: left;
+    border-radius: 15px;
+
+}
+
+.letter h3 {
+
+    color: #173b73;
+    text-align: center;
+
+}
+
+.letter p {
+
+    line-height: 1.8;
+    margin-bottom: 15px;
+
+}
+
+.letter h4 {
+
+    text-align: center;
+    color: #0d8b39;
+
+}
+
+.final-card button {
+
+    margin-top: 30px;
+    background: #173b73;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+}
+
+@media (max-width:768px) {
+
+    .celebration-modal {
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        inset: 0;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    .celebration-card.final-card {
+
+        width: 95%;
+        max-width: 360px;
+
+        max-height: 90vh;
+        overflow-y: auto;
+
+        padding: 22px 18px;
+
+        border-radius: 20px;
+
+        margin: 0;
+    }
+
+    .celebration-card.final-card h1 {
+        font-size: 32px;
+        line-height: 1.1;
+        margin-bottom: 12px;
+    }
+
+    .celebration-card.final-card h2 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .celebration-card.final-card p {
+        font-size: 17px;
+        line-height: 1.6;
+    }
+
+    .celebration-card.final-card h4 {
+        font-size: 22px;
+    }
+
+    .celebration-card.final-card button {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
