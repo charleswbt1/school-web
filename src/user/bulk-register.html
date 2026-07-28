@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+    <div class="main-container">
+        <div id="header-container"></div>
+        <section class="info-section">
+            <div class="section-header">
+                <h2>Registro Masivo</h2>
+                <button id="downloadTemplate" class="btn-secondary">
+                    📄 Descargar Plantilla
+                </button>
+            </div>
+            <form class="info-form" id="csvForm">
+                <select id="courseId"></select>
+                <input type="file" id="csvFile" accept=".csv" required>
+                <button type="submit">
+                    Importar alumnos
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <script src="../components/app.js"></script>
+    <script src="bulk-register.js"></script>
+
+</body>
+
+</html>

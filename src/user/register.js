@@ -163,3 +163,12 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         submitButton.style.opacity = "1";
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnBulk = document.getElementById('btn-bulk');
+    if (btnBulk) {
+        btnBulk.addEventListener('click', () => {
+            window.location.href = 'bulk-register.html';
+        });
+    }
+});

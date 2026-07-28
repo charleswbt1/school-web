@@ -1,5 +1,7 @@
-const courseId = new URLSearchParams(window.location.search).get("course_id");
-const contentId = new URLSearchParams(window.location.search).get("content_id");
+const params = new URLSearchParams(window.location.search);
+const courseId = params.get("course_id");
+const contentId = params.get("content_id");
+const teacherId = params.get("teacher_id");
 let classeId;
 
 async function loadModules() {
@@ -81,6 +83,7 @@ async function saveClasses(e) {
     const request = {
         course_id: courseId,
         content_id: contentId,
+        teacher_id: teacherId,
         module_id: document.getElementById("moduleSelect").value,
         medias
     };

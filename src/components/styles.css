@@ -253,6 +253,7 @@ button:hover {
 
 .info-section {
     margin-left: 10px;
+    margin-right: 10px;
     /* ancho del menú lateral */
     padding-top: 30px;
 }
