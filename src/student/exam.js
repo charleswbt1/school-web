@@ -165,21 +165,93 @@ async function finishExam() {
         );
 
         if (!result.approved) {
+
             await showError(`
-                Obtuviste ${result.score} de ${exam.questions.length}
-                <br>
-                Calificación: ${result.average.toFixed(1)}
-            `);
+        Obtuviste ${result.score} de ${exam.questions.length}
+        <br>
+        Calificación: ${result.average.toFixed(1)}
+    `);
+
         } else {
-            await showSuccess(`
-                Obtuviste ${result.score} de ${exam.questions.length}
-                <br>
-                Calificación: ${result.average}
-            `);
+
+            showCelebration(
+                exam.name,
+                result.score,
+                exam.questions.length,
+                result.average,
+                `course.html?id=${studentId}`
+            );
+
         }
-        window.location.href = `course.html?id=${studentId}`;
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";
     }
+}
+
+let redirectUrl = "";
+
+const messages=[
+"🚀 ¡Cada módulo terminado te acerca a tu meta!",
+"🏅 Los grandes profesionales nunca se rindieron.",
+"🎓 Sigue así, tu título está cada vez más cerca.",
+"💪 Excelente trabajo. Continúa aprendiendo.",
+"🌟 Hoy eres mejor que ayer.",
+"🔥 Tu esfuerzo dará grandes resultados.",
+"👏 Cada examen aprobado fortalece tu futuro."
+];
+
+function showCelebration(moduleName, score, total, average, url) {
+
+    redirectUrl = url;
+    const message = messages[Math.floor(Math.random()*messages.length)];
+
+    document.getElementById("celebrationTitle").innerHTML =
+        "🎉 ¡Felicidades!";
+
+    document.getElementById("celebrationScore").innerHTML =
+        `${score} de ${total}`;
+
+    document.getElementById("celebrationAverage").innerHTML =
+        average;
+
+    document.getElementById("motivation").innerHTML=message;
+
+    document.getElementById("celebrationModal").style.display = "flex";
+
+    startConfetti();
+
+}
+
+function closeCelebration() {
+    document.getElementById("celebrationModal").style.display = "none";
+    window.location.href = redirectUrl;
+}
+
+function startConfetti() {
+    const duration = 5000;
+    const animationEnd = Date.now() + duration;
+    const defaults = {
+        startVelocity: 40,
+        spread: 360,
+        ticks: 80,
+        zIndex: 99999
+    };
+
+    const interval = setInterval(() => {
+        if (Date.now() > animationEnd) {
+            clearInterval(interval);
+            return;
+        }
+
+        confetti({
+            ...defaults,
+            particleCount: 8,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+    }, 150);
+
 }

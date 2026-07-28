@@ -142,3 +142,104 @@ body {
     .progress-container {
         height: 14px;
     }
+}
+
+
+
+/*celebracion*/
+.celebration-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .75);
+    z-index: 99999;
+}
+
+.celebration-card {
+    width: 520px;
+    max-width: 95%;
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    text-align: center;
+    animation: zoom .6s;
+}
+
+.celebration-card h1 {
+    color: #ff9800;
+    font-size: 50px;
+}
+
+.celebration-card h2 {
+    color: #173b73;
+    margin: 25px 0;
+}
+
+.celebration-card p {
+    font-size: 22px;
+}
+
+.celebration-card h3 {
+    margin-top: 30px;
+    color: #0d8b39;
+}
+
+.celebration-card button {
+    margin-top: 30px;
+    background: #173b73;
+    color: white;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(.3);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .celebration-card {
+        width: 90%;
+        padding: 25px 20px;
+    }
+
+    .celebration-card h1 {
+        font-size: 38px;
+        line-height: 1.1;
+        word-break: break-word;
+    }
+
+    .celebration-card h2 {
+        font-size: 24px;
+    }
+
+    .celebration-card p {
+        font-size: 18px;
+    }
+
+    .celebration-card button {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .medal {
+        font-size: 70px;
+    }
+
+    .stars {
+        font-size: 30px;
+    }
+
+}
