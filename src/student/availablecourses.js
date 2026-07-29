@@ -73,7 +73,10 @@ async function loadCourses() {
 
                 <p>${course.description}</p>
 
-                <p>Clases: ${course.date_init} - ${course.date_end}</p>
+                ${course.model === 'sync'
+                    ? `<p>Clases: ${course.date_init} - ${course.date_end}</p>`
+                    : ``
+                }  
                     <p>
                         Aprovecha de
                         <span style="text-decoration: line-through; color: #999;">

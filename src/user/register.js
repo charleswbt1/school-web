@@ -28,10 +28,10 @@ loadRoles();
 
 async function loadCourses() {
     try {
-        const select = document.getElementById("courseId");
         if (roleRegister) {
             return;
         }
+        const select = document.getElementById("courseId");
         if (roleSession === 'adviser' || roleSession === 'coordinator') {
             const response = await fetch(`${apiUrl}/api/courses`);
             const courses = await response.json();
@@ -57,8 +57,8 @@ loadCourses();
 
 async function loadAdvisers() {
     try {
-        const adviserSelect = document.getElementById("adviserId");
         if (roleSession === 'adviser' || roleSession === 'coordinator') {
+            const adviserSelect = document.getElementById("adviserId");
             const response = await fetch(`${apiUrl}/api/users?role=adviser`);
             const advisers = await response.json();
 
@@ -87,7 +87,7 @@ function toggleStudentFields() {
     const course = document.getElementById("courseId");
     const adviser = document.getElementById("adviserId");
 
-    if (role === "student") {
+    if (role === "student" && (roleSession === 'adviser' || roleSession === 'coordinator')) {
         course.style.display = "block";
         adviser.style.display = "block";
     } else {
