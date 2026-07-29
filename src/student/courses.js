@@ -3,6 +3,9 @@ async function loadCourses() {
         const userId = sessionStorage.getItem("userId");
         const response = await fetch(`${apiUrl}/api/students/courses?user_id=${userId}`);
         const courses = await response.json();
+        if (courses.length === 0) {
+            window.location.href = `../student/availablecourses.html`;
+        }
         const container = document.getElementById("studentCoursesContainer");
         container.innerHTML = "";
         courses.forEach(course => {
@@ -48,5 +51,5 @@ document.addEventListener("click", async (event) => {
             alert("Error setting student ID:", error);
         }
     }
-  
+
 });

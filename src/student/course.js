@@ -71,6 +71,13 @@ async function loadStudentCourses() {
             `
         ).join("");
 
+        const paymentTitle = response.student.payments.filter(payment => payment.type === 'titulo');
+        const totalModules = response.content.modules.length;
+        const approvedModules = response.student.notes?.filter(
+            note => note.state === "aprobado"
+        ).length || 0;
+        const finalProgress = Math.round((approvedModules / totalModules) * 100);
+
         infoSection.innerHTML += `
                 <div class="student-course-card">
 
@@ -159,20 +166,20 @@ async function loadStudentCourses() {
                             ${modules}
                         </div>
 
+                        ${paymentTitle.length === 0 && finalProgress > 99
+                ? `<br><button onclick="paymentLinkTitle('${response.student.id}')">
+                        PAGAR TÍTULO
+                    </button>`
+                : ``
+            }
+
                     </div>
 
                 </div>
             `;
-
         // Barra de progreso
         const fill = document.getElementById("loadingFill");
         const text = document.getElementById("loadingText");
-
-        const totalModules = response.content.modules.length;
-        const approvedModules = response.student.notes?.filter(
-            note => note.state === "aprobado"
-        ).length || 0;
-        const finalProgress = Math.round((approvedModules / totalModules) * 100);
 
         let progress = 0;
 
@@ -279,6 +286,32 @@ async function paymentLink(studentId, moduleIndex) {
                 year: '2030',
                 month: months[index],
                 type: 'cuota'
+            })
+        }
+    );
+    const result = await response.json();
+    if (!response.ok) {
+        await showError(`No se genero la liga correctamente comunicate con tu asesor ${result.message}`)
+        return;
+    }
+
+    window.location.href = result.url;
+}
+
+async function paymentLinkTitle(studentId) {
+    const response = await fetch(
+        `${apiUrl}/api/payments/checkout`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                student_id: studentId,
+                amount: 6000,
+                year: '2030',
+                month: 'MAYO',
+                type: 'titulo'
             })
         }
     );
