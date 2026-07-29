@@ -5,6 +5,8 @@ const teamSession = sessionStorage.getItem("team_id");
 async function loadRoles() {
     try {
         const roleSelect = document.getElementById("role");
+        const btnBulk = document.getElementById('btn-bulk');
+
         roleSelect.innerHTML = `
             <option value="">Selecciona Rol</option>            
             <option value="student">Estudiante</option>
@@ -16,6 +18,7 @@ async function loadRoles() {
         roleSelect.value = roleRegister || "student";
         if (roleSession === 'coordinator') {
             roleSelect.style.display = "block";
+            btnBulk.style.display = "block";
         }
     } catch (error) {
         alert("Error cargando: ", error);
@@ -156,6 +159,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
 
         await showSuccess("Registro exitoso");
         registerForm.reset();
+        window.location.href = '/';
     } catch (error) {
         showError(`Error al registrar ${error}`);
     } finally {

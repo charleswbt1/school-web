@@ -19,7 +19,7 @@
 
         <section class="info-section">
             <div class="section-header">
-                <h2>Bienvenido</h2> <button id="btn-bulk" class="btn-primary"> Registro Masivo </button>
+                <h2>Bienvenido</h2> <button id="btn-bulk" class="btn-primary" style="display:none;"> Registro Masivo </button>
             </div>
             <form class="info-form" id="registerForm">
                 <input type="text" id="nick_name" placeholder="Nombre de usuario" required>
@@ -30,9 +30,9 @@
                 <input type="text" id="curp" placeholder="CURP" required>
                 <input type="tel" id="phone" placeholder="Teléfono" required>
                 <input type="email" id="email" placeholder="Correo Electrónico">
-                <select id="role" required hidden></select>
-                <select id="courseId" hidden></select>
-                <select id="adviserId" hidden></select>
+                <select id="role" required style="display:none;"></select>
+                <select id="courseId" style="display:none;"></select>
+                <select id="adviserId" style="display:none;"></select>
                 <button type="submit">
                     Registrar
                 </button>
