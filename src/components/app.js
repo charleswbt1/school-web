@@ -112,8 +112,8 @@ function initializeLoginModal() {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        nick_name: nick_name.value,
-                        password: password.value
+                        nick_name: nick_name.value.trim(),
+                        password: password.value.trim()
                     })
                 }
             );

@@ -107,8 +107,8 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
 
     const roleSelected = document.getElementById("role").value;
     const userRequest = {
-        nick_name: document.getElementById("nick_name").value,
-        password: document.getElementById("password").value,
+        nick_name: document.getElementById("nick_name").value.trim(),
+        password: document.getElementById("password").value.trim(),
         first_name: document.getElementById("first_name").value,
         last_name: document.getElementById("last_name").value,
         second_last_name: document.getElementById("second_last_name").value,

@@ -110,9 +110,9 @@ async function loadStudentCourses() {
                         ${response.student.state === "inactive" ? "alert-danger" : ""}
                         ${response.student.state === "pending" ? "alert-warning" : ""}
                     ">
-                        ${response.student.state === "inactive"
+                        ${response.student.state === "inactive" && response.course.model === "sync"
                 ? "❌ Este módulo no está disponible. Comunícate con tu coordinador."
-                : response.student.state === "pending"
+                : response.student.state === "pending" && response.course.model === "sync"
                     ? "⚠️ Este módulo no está disponible. Comunícate con tu asesor."
                     : ""
             }
@@ -168,7 +168,7 @@ async function loadStudentCourses() {
 
                         ${paymentTitle.length === 0 && finalProgress > 99
                 ? `<br><button onclick="paymentLinkTitle('${response.student.id}')">
-                        PAGAR TÍTULO
+                        Pagar Certificación
                     </button>`
                 : ``
             }
