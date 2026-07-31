@@ -406,6 +406,31 @@ button:hover {
     user-select: none;
 }
 
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding: 12px 45px 12px 12px;
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+}
+
+.toggle-password:hover {
+    opacity: .7;
+}
+
 .required-note {
     margin-bottom: 15px;
     color: #555;
