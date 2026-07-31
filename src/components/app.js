@@ -98,7 +98,7 @@ function initializeLoginModal() {
 
     /* ========================= LOGIN ========================= */
 
-    loginForm.addEventListener("submit", async (e) => {
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
