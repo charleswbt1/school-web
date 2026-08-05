@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function togglePassword() {
-    const password = document.getElementById("password");
+    const password = document.getElementById("register_password");
     const icon = document.getElementById("togglePassword");
 
     if (password.type === "password") {
