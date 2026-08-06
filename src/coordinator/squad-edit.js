@@ -57,10 +57,11 @@ async function loadSquad() {
 async function updateSquad(event) {
     event.preventDefault();
     try {
+        const cct = document.getElementById('cct').value;
         const request = {
             name: document.getElementById('name').value,
             description: document.getElementById('description').value,
-            cct: document.getElementById('cct').value
+            cct: cct
         }
 
         const preview = document.getElementById("newLogoPreview");
