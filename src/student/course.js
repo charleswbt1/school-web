@@ -5,72 +5,6 @@ async function loadStudentCourses() {
         const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
         const response = await responseService.json();
 
-        const infoSection = document.getElementById("courseContainer");
-        let paymentButtonShown = false;
-
-        infoSection.innerHTML = "";
-        const modules = await Promise.all(
-            response.content.modules.map(async (module, index) => {
-                const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
-                return `
-                <div class="module-card">
-                    <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
-                    <ul>
-                        ${module.topics.map(topic => `
-                            <li>
-                                <strong>${topic.name}</strong>
-                                <br>
-                                ${topic.description}
-                                <br>
-                                ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
-                        ? `<button onclick="showVideo('${topic.link}')">
-                            Ver contenido
-                        </button>`
-                        : ""
-                    }
-                            </li>
-                        `).join("")}
-                    </ul>
-                    ${await getClassesMediaSync(response, module.id)}
-                    ${(() => {
-                        const showButton =
-                            !paymentButtonShown &&
-                            (response.student.state !== "active" || !module.available) &&
-                            module.link &&
-                            module.link.startsWith("EXA_");
-
-                        if (showButton) {
-                            paymentButtonShown = true;
-                            return `
-                                <button onclick="paymentLink('${response.student.id}', '${index}')">
-                                    Realizar Pago
-                                </button>
-                            `;
-                        }
-
-                        return "";
-                    })()}
-                    ${response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_") && note?.state !== "aprobado"
-                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
-                            Presentar Examen
-                        </button>`
-                        : ``
-                    }
-                    ${note?.state === "aprobado"
-                        ? `<p class="course-state alert-success">✅ Aprobado</p>`
-                        : ""
-                    }
-                </div>
-                `;
-            })
-        );
-
-        const documents = response.student.documents.map(
-            (document, index) => `
-                <a href="${document.url}" target="_blank" rel="noopener noreferrer">${document.type}</a>
-            `
-        ).join("");
-
         const paymentTitle = response.student.payments.filter(payment => payment.type === 'titulo');
         const totalModules = response.content.modules.length;
         const approvedModules = response.student.notes?.filter(
@@ -78,129 +12,140 @@ async function loadStudentCourses() {
         ).length || 0;
         const finalProgress = Math.round((approvedModules / totalModules) * 100);
 
-        infoSection.innerHTML += `
-                <div class="student-course-card">
+        const studentCourseImage = document.getElementById("studentCourseImage");
+        studentCourseImage.src = response.course.image;
+        studentCourseImage.alt = response.course.name;
 
-                    <img
-                        src="${response.course.image}"
-                        alt="${response.course.course_name}"
-                        class="course-image"
-                    >
-
-                    <div class="course-info">
-
-                        <h2>${response.course.name}</h2>
-
-                        <p>
-                            <strong>Contenido:</strong>
-                            ${response.content.description}
-                        </p>
-
-                        <p>
-                            <strong>Módulos:</strong>
-                            ${response.student.notes?.length ?? 0} / ${response.content.modules.length}
-                        </p>
-
-                        <p>
-                            <strong>Promedio:</strong>
-                            ${response.student.average}
-                        </p>
-                     <p class="
-                        course-state
-                        ${response.student.state === "inactive" ? "alert-danger" : ""}
-                        ${response.student.state === "pending" ? "alert-warning" : ""}
-                    ">
-                        ${response.student.state === "inactive" && response.course.model === "sync"
-                ? "❌ Este módulo no está disponible. Comunícate con tu coordinador."
-                : response.student.state === "pending" && response.course.model === "sync"
-                    ? "⚠️ Este módulo no está disponible. Comunícate con tu asesor."
+        const studentCourseInfo = document.getElementById("studentCourseInfo");
+        studentCourseInfo.innerHTML = `
+            <h2>${response.course.name}</h2>
+            <p>
+                <strong>Contenido:</strong>
+                ${response.content.description}
+            </p>
+            <p>
+                <strong>Módulos:</strong>
+                ${response.student.notes?.length ?? 0} / ${response.content.modules.length}
+            </p>
+            <p>
+                <strong>Promedio:</strong>
+                ${response.student.average}
+            </p>
+            ${response.course.model === "sync"
+                ? response.student.state === "inactive"
+                    ? `<p class="course-state alert-danger">❌ Este módulo no está disponible. Comunícate con tu coordinador.</p>`
+                    : response.student.state === "pending"
+                        ? `<p class="course-state alert-warning">⚠️ Este módulo no está disponible. Comunícate con tu asesor.</p>`
+                        : response.student.state === "active" && response.course.call_link && response.course.call_link.startsWith("http")
+                            ? `<a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                                Clase en línea
+                            </a>`
+                            : ''
+                : response.course.model === "async"
+                    ? `<button class="btn-primary" onclick="openInfoModal()">
+                        📢 Informes
+                    </button>`
                     : ""
             }
-                         </p>
+        `;
 
-                        <div class="course-actions">
-                            ${response.student.state === "active" && response.course.call_link && response.course.call_link.startsWith("http")
-                ? `<a href="${response.course.call_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                            Clase en línea
-                            </a>`
-                : ""
-            }
-                            ${response.student.state === "active" && response.course.class_link && response.course.class_link.startsWith("http")
-                ? `<a href="${response.course.class_link}" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                            Clases grabadas
-                            </a>`
-                : ""
-            }
+        animateProgressBar(finalProgress);
 
-                        <div class="course-actions">
+        const studentModulesContainer = document.getElementById("studentModulesContainer");
+        studentModulesContainer.innerHTML = await getModules(response);
 
-                            ${response.course.model === "async" ? `
-                                <button
-                                    class="btn-primary"
-                                    onclick="openInfoModal()">
-                                    📢 Informes
-                                </button>
-                            ` : ""}
-
-                        </div>
-                        
-            <div class="loading-container">
-                            <div class="loading-bar">
-                                    <div class="loading-fill" id="loadingFill">
-                                        <span id="loadingText">0%</span>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            
-                        </div>
-
-                        <div class="modules-container">
-                            ${documents}
-                        </div>
-
-                        <div id="videoContainer"></div>
-
-                        <div class="modules-container">
-                            ${modules}
-                        </div>
-
-                        ${paymentTitle.length === 0 && finalProgress > 99
-                ? `<br><button onclick="paymentLinkTitle('${response.student.id}')">
-                        Pagar Certificación
-                    </button>`
-                : ``
-            }
-
-                    </div>
-
-                </div>
-            `;
-        // Barra de progreso
-        const fill = document.getElementById("loadingFill");
-        const text = document.getElementById("loadingText");
-
-        let progress = 0;
-
-        const interval = setInterval(() => {
-
-            progress++;
-
-            fill.style.width = progress + "%";
-            text.textContent = progress + "%";
-
-            if (progress >= finalProgress) {
-                clearInterval(interval);
-            }
-
-        }, 20);
+        if (paymentTitle.length === 0 && finalProgress > 99) {
+            const studentPaymentContainer = document.getElementById("studentPaymentContainer");
+            studentPaymentContainer.innerHTML = `
+                <button onclick="paymentLink('${response.student.id}', '0', 'titulo')">
+                    Pagar Certificación
+                </button>`;
+        }
     } catch (error) {
         alert(error);
     }
 }
 
 loadStudentCourses();
+
+function animateProgressBar(finalProgress) {
+    const studentLoadingContainer = document.getElementById("studentLoadingContainer");
+    studentLoadingContainer.innerHTML = `
+        <div class="loading-bar">
+            <div id="loadingFill" class="loading-fill">
+                <span id="loadingText">0%</span>
+            </div>
+        </div>`;
+
+    const fill = document.getElementById("loadingFill");
+    const text = document.getElementById("loadingText");
+
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress++;
+        fill.style.width = progress + "%";
+        text.textContent = progress + "%";
+        if (progress >= finalProgress) {
+            clearInterval(interval);
+        }
+    }, 20);
+}
+
+async function getModules(response) {
+    let paymentButtonShown = false;
+    const modules = await Promise.all(
+        response.content.modules.map(async (module, index) => {
+            const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
+            return `
+                <div class="module-card">
+                    <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
+                    <ul>
+                        ${module.topics.map(topic => `
+                        <li>
+                            <strong>${topic.name}</strong>
+                            <br>
+                            ${topic.description}
+                            <br>
+                            ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
+                    ? `<button onclick="showVideo('${topic.link}')">Ver contenido</button>`
+                    : ""
+                }
+                        </li>
+                        `).join("")}
+                    </ul>
+                    ${await getClassesMediaSync(response, module.id)}
+                    ${(() => {
+                    const showButton =
+                        !paymentButtonShown &&
+                        (response.student.state !== "active" || !module.available) &&
+                        module.link &&
+                        module.link.startsWith("EXA_");
+
+                    if (showButton) {
+                        paymentButtonShown = true;
+                        return `
+                                <button onclick="paymentLink('${response.student.id}', '${index}', 'couta')">
+                                    Realizar Pago
+                                </button>
+                            `;
+                    }
+
+                    return "";
+                })()}                 
+                    ${note?.state === "aprobado"
+                    ? `<p class="course-state alert-success">✅ Aprobado</p>`
+                    : response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_")
+                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
+                                Presentar Examen
+                            </button>`
+                        : ``
+                }
+                </div>
+            `;
+        })
+    );
+    return modules.join("");
+}
 
 async function getClassesMediaSync(data, moduleId) {
     if (data.student.state === "active" && data.course.model === "sync") {
@@ -213,7 +158,7 @@ async function getClassesMediaSync(data, moduleId) {
             const classesMedia = classesJson[0].medias.filter(media => media.link.startsWith("http"));
             return classesMedia.map(media => `                        
                 <button onclick="showVideo('${media.link}')">
-                    Ver
+                    Ver Clase
                 </button>
             `).join("")
         }
@@ -221,16 +166,13 @@ async function getClassesMediaSync(data, moduleId) {
     return '';
 }
 
-function openInfoModal() {
-    document.getElementById("infoModal").style.display = "flex";
-}
-function closeInfoModal() {
-    document.getElementById("infoModal").style.display = "none";
-}
 const infoModal = document.getElementById("infoModal");
+function openInfoModal() {
+    infoModal.style.display = "flex";
+}
 infoModal.addEventListener("click", (e) => {
     if (e.target === infoModal) {
-        closeInfoModal();
+        infoModal.style.display = "none";
     }
 });
 
@@ -249,7 +191,7 @@ function showVideo(url) {
     }
     videoId = `https://www.youtube.com/embed/${videoId}`;
 
-    document.getElementById("videoContainer").innerHTML = `
+    document.getElementById("studentVideoContainer").innerHTML = `
     <iframe
         width="100%"
         height="450"
@@ -266,13 +208,12 @@ function showExam(studentId, courseId, moduleId, examId) {
     window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&module_id=${moduleId}&id=${examId}`;
 }
 
-async function paymentLink(studentId, moduleIndex) {
+async function paymentLink(studentId, moduleIndex, paymentType) {
     const index = Number(moduleIndex);
     const months = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO'];
-    let cuota = 500;
-    if (index === 0) {
-        cuota = 1000;
-    }
+    const cuota = paymentType === 'titulo' ? 6000 : index === 0 ? 1000 : 500;
+    const month = paymentType === 'titulo' ? 'MAYO' : months[index];
+
     const response = await fetch(
         `${apiUrl}/api/payments/checkout`,
         {
@@ -284,34 +225,8 @@ async function paymentLink(studentId, moduleIndex) {
                 student_id: studentId,
                 amount: cuota,
                 year: '2030',
-                month: months[index],
-                type: 'cuota'
-            })
-        }
-    );
-    const result = await response.json();
-    if (!response.ok) {
-        await showError(`No se genero la liga correctamente comunicate con tu asesor ${result.message}`)
-        return;
-    }
-
-    window.location.href = result.url;
-}
-
-async function paymentLinkTitle(studentId) {
-    const response = await fetch(
-        `${apiUrl}/api/payments/checkout`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                student_id: studentId,
-                amount: 6000,
-                year: '2030',
-                month: 'MAYO',
-                type: 'titulo'
+                month: month,
+                type: paymentType
             })
         }
     );
