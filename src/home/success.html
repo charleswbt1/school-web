@@ -88,12 +88,24 @@
             La información se registró de manera exitosa.
         </p>
 
-        <a href="/" class="button">
+        <a href="#" id="homeButton" class="button">
             Volver al inicio
         </a>
 
     </div>
 
 </body>
+<script>
+    const studentId = new URLSearchParams(window.location.search).get('student_id');
+    const homeButton = document.getElementById('homeButton');
+    homeButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (studentId) {
+            window.location.href = `../student/course.html?id=${encodeURIComponent(studentId)}`;
+        } else {
+            window.location.href = "/";
+        }
+    });
+</script>
 
 </html>
