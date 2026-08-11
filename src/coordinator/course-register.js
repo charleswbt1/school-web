@@ -143,7 +143,6 @@ async function loadCourse() {
         document.getElementById("dateEnd").value = course.date_end
         document.getElementById("hours_week").value = course.hours_week
         document.getElementById("call_link").value = course.call_link
-        document.getElementById("class_link").value = course.class_link
 
     } catch (error) {
         alert('Error al cargar la escuela', error);
@@ -191,8 +190,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         date_init: document.getElementById("dateInit").value,
         date_end: document.getElementById("dateEnd").value,
         hours_week: document.getElementById("hours_week").value,
-        call_link: document.getElementById("call_link").value,
-        class_link: document.getElementById("class_link").value
+        call_link: document.getElementById("call_link").value
     };
 
     try {
