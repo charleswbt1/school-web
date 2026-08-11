@@ -105,20 +105,31 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     submitButton.disabled = true;
     submitButton.style.opacity = ".7";
 
-    const roleSelected = document.getElementById("role").value;
-    const userRequest = {
-        nick_name: document.getElementById("register_nick_name").value.trim(),
-        password: document.getElementById("register_password").value.trim(),
-        first_name: document.getElementById("first_name").value,
-        last_name: document.getElementById("last_name").value,
-        second_last_name: document.getElementById("second_last_name").value,
-        curp: document.getElementById("curp").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        role: roleSelected,
-        team_id: teamSession
-    }
     try {
+        const roleSelected = document.getElementById("role").value;
+        if (roleSelected === 'student') {
+            if (!document.getElementById("courseId").value) {
+                showError("Selecciona un curso para el estudiante");
+                return;
+            }
+            if (!document.getElementById("adviserId").value) {
+                showError("Selecciona un asesor para el estudiante");
+                return;
+            }
+        }
+
+        const userRequest = {
+            nick_name: document.getElementById("register_nick_name").value.trim(),
+            password: document.getElementById("register_password").value.trim(),
+            first_name: document.getElementById("first_name").value,
+            last_name: document.getElementById("last_name").value,
+            second_last_name: document.getElementById("second_last_name").value,
+            curp: document.getElementById("curp").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            role: roleSelected,
+            team_id: teamSession
+        }
         const userResponse = await fetch(
             `${apiUrl}/api/users`,
             {
