@@ -1,6 +1,6 @@
 const roleRegister = new URLSearchParams(window.location.search).get('roleRegister');
 const roleSession = sessionStorage.getItem("role");
-const teamSession = sessionStorage.getItem("team_id");
+const userSession = sessionStorage.getItem("userId");
 
 async function loadRoles() {
     try {
@@ -33,7 +33,9 @@ async function loadCourses() {
         }
         const select = document.getElementById("courseId");
         if (roleSession === 'adviser' || roleSession === 'coordinator') {
-            const query = `?available=true&team_id=${teamSession}`;
+            const query = roleSession === 'adviser'
+                ? `?available=true&adviser_id=${userSession}`
+                : `?available=true&coordinator_id=${userSession}`;
             const response = await fetch(`${apiUrl}/api/courses${query}`);
             const courses = await response.json();
 
