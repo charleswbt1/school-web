@@ -1,10 +1,12 @@
 const studentId = new URLSearchParams(window.location.search).get('id');
-
-async function loadStudentCourses() {
+const students = [];
+async function loadPage() {
     try {
         const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
         const response = await responseService.json();
 
+        response.student.name = response.name;
+        students.push(response.student);
         const paymentTitle = response.student.payments.filter(payment => payment.type === 'titulo');
         const totalModules = response.content.modules.length;
         const approvedModules = response.student.notes?.filter(
@@ -49,6 +51,7 @@ async function loadStudentCourses() {
             }
         `;
 
+        createDocumentTable(response.student);
         animateProgressBar(finalProgress);
 
         const studentModulesContainer = document.getElementById("studentModulesContainer");
@@ -66,7 +69,61 @@ async function loadStudentCourses() {
     }
 }
 
-loadStudentCourses();
+loadPage();
+
+function createDocumentTable(student) {
+    const documentTypes = [
+        "curp",
+        "acta",
+        "certificado",
+        "titulo",
+        "cedula",
+        "ine",
+        "certificado-curso",
+        "titulo-curso",
+        "cedula-curso"
+    ];
+    const studentDocumentTable = document.getElementById("studentDocumentTable");
+    studentDocumentTable.innerHTML = `
+        <table class="style-table">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${documentTypes.map(type => {
+        const document = student.documents.find(document => document.type === type);
+        return `<tr>
+                    <td>
+                        ${type.toUpperCase()}
+                    </td>
+                    <td>
+                ${document
+                ? `<span class="button-icon"
+                        onclick="viewImage('${document.url}')"
+                        title="Ver Documento ${type}">
+                        🔍
+                    </span>
+                    <span class="button-icon"
+                        onclick="deleteDocument('${student.id}','${type}',this)"
+                        title="Eliminar Documento ${type}">
+                        ❌
+                    </span>`
+                : `<span class="button-icon"
+                        onclick="viewDocument('${student.id}', '${type}')"
+                        title="Registrar Documento">
+                        ⬆️
+                    </span>`
+            }
+                    </td>
+                    </tr>`;
+    }).join("")}
+            </tbody>
+        </table>
+    `;
+}
 
 function animateProgressBar(finalProgress) {
     const studentLoadingContainer = document.getElementById("studentLoadingContainer");

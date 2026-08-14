@@ -33,7 +33,8 @@ async function loadCourses() {
         }
         const select = document.getElementById("courseId");
         if (roleSession === 'adviser' || roleSession === 'coordinator') {
-            const response = await fetch(`${apiUrl}/api/courses`);
+            const query = `?available=true&team_id=${teamSession}`;
+            const response = await fetch(`${apiUrl}/api/courses${query}`);
             const courses = await response.json();
 
             select.innerHTML = `
