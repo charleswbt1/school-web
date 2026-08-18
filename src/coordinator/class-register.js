@@ -8,18 +8,24 @@ async function loadModules() {
     const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`);
     const content = (await response.json())[0];
     const select = document.getElementById("moduleSelect");
-    content.modules.forEach(module => {
+    select.innerHTML = '';
+    content.modules.forEach((module, index) => {
         select.innerHTML += `
-            <option value="${module.id}">
+            <option value="${module.id}" ${index === 0 ? "selected" : ""}>
                 ${module.name}
             </option>
         `;
     });
+    loadClasses();
 }
 loadModules();
 
-const mediaContainer = document.getElementById("mediaContainer");
-document.getElementById("addMediaBtn").addEventListener("click", addMedia);
+
+const mediaClassContainer = document.getElementById("mediaClassContainer");
+document.getElementById("addClassBtn").addEventListener("click", addMedia);
+
+const mediaClassJobContainer = document.getElementById("mediaClassJobContainer");
+document.getElementById("addClassJobBtn").addEventListener("click", addClassJob);
 
 async function loadClasses() {
     classeId = null;
@@ -31,15 +37,17 @@ async function loadClasses() {
 
     const data = await response.json();
 
-    mediaContainer.innerHTML = "";
+    mediaClassContainer.innerHTML = "";
+    mediaClassJobContainer.innerHTML = "";
     if (!data || data.length === 0) {
         addMedia();
+        addClassJob();
         return;
     }
     classeId = data[0].id;
     data[0].medias.forEach(media => addMedia(media));
+    data[0].jobs.forEach(job => addClassJob(job));
 }
-
 document.getElementById("moduleSelect").addEventListener("change", loadClasses);
 
 function addMedia(media = {}) {
@@ -63,45 +71,154 @@ function addMedia(media = {}) {
             🗑️
         </button>
     `;
+    div.querySelector(".delete-media").addEventListener("click", () => div.remove());
+    mediaClassContainer.appendChild(div);
+}
+function addClassJob(classJob = {}) {
+    const div = document.createElement("div");
+    div.className = "media-item";
+    div.innerHTML = `
+        <label class="id-label">${classJob?.id || ""}</label>
+        <label class="link-label">${classJob?.link || ""}</label>
+        <input class="job-file" type="file" accept="image/*,.pdf" hidden>
+        <label class="file-btn">Seleccionar Archivo</label>
+        <img 
+            class="preview-image" 
+            style="display:${classJob?.link ? "block" : "none"};" 
+            alt="Vista previa"
+            src=${classJob?.link
+            ? classJob?.link.endsWith(".pdf")
+                ? "https://storage.googleapis.com/school-source/web/pdf_image.png"
+                : classJob.link
+            : ""}
+        >
+        <label>Descripción</label>
+        <input
+            type="text"
+            class="media-text"
+            value="${classJob?.description || ""}"
+            required>
+        <button
+            type="button"
+            class="delete-media">
+            🗑️
+        </button>
+    `;
+
+    const fileInput = div.querySelector(".job-file");
+    const fileButton = div.querySelector(".file-btn");
+    const preview = div.querySelector(".preview-image");
+
+    fileButton.addEventListener("click", () => { fileInput.click(); });
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        if (file.type === "application/pdf") {
+            preview.src = "https://storage.googleapis.com/school-source/web/pdf_image.png";
+            preview.style.display = "block";
+            preview.onclick = () => { window.open(URL.createObjectURL(file), "_blank"); };
+        } else {
+            const url = URL.createObjectURL(file);
+            preview.src = url;
+            preview.style.display = "block";
+            preview.onclick = () => viewImage(url);
+        }
+    });
 
     div.querySelector(".delete-media").addEventListener("click", () => div.remove());
-    mediaContainer.appendChild(div);
+    mediaClassJobContainer.appendChild(div);
 }
-addMedia();
 
 document.getElementById("classForm").addEventListener("submit", saveClasses);
-
 async function saveClasses(e) {
     e.preventDefault();
+    const button = document.getElementById("saveClassBtn");
+    try {
+        button.style.pointerEvents = "none";
+        button.style.opacity = ".5";
+        const moduleId = document.getElementById("moduleSelect").value;
+        const medias = [...document.querySelectorAll("#mediaClassContainer .media-item")]
+            .map(item => ({
+                date: item.querySelector(".media-date").value,
+                link: item.querySelector(".media-link").value
+            }));
+        const jobs = await Promise.all(
+            [...document.querySelectorAll("#mediaClassJobContainer .media-item")]
+                .map(async item => ({
+                    link: item.querySelector(".link-label").value
+                        || await updateFile(
+                            item.querySelector(".job-file").files[0]
+                        ),
+                    description: item.querySelector(".media-text").value
+                })));
 
-    const medias = [...document.querySelectorAll(".media-item")]
-        .map(item => ({
-            date: item.querySelector(".media-date").value,
-            link: item.querySelector(".media-link").value
-        }));
+        const request = {
+            course_id: courseId,
+            content_id: contentId,
+            teacher_id: teacherId,
+            module_id: moduleId,
+            medias,
+            jobs
+        };
+        const query = classeId ? `?id=${classeId}` : ``;
+        const response = await fetch(
+            `${apiUrl}/api/classes${query}`,
+            {
+                method: query ? 'PATCH' : "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(request)
+            }
+        );
+        if (!response.ok) {
+            await showError("No se pudieron guardar las clases.");
+            return;
+        }
+        await showSuccess("Clases guardadas correctamente.");
+    } catch (error) {
+        showError(`Error al guardar clases - ${error.message}`);
+    } finally {
+        button.style.pointerEvents = "auto";
+        button.style.opacity = "1";
+    }
+}
 
-    const request = {
-        course_id: courseId,
-        content_id: contentId,
-        teacher_id: teacherId,
-        module_id: document.getElementById("moduleSelect").value,
-        medias
-    };
-    const query = classeId ? `?id=${classeId}` : ``;
-    const response = await fetch(
-        `${apiUrl}/api/classes${query}`,
+// Documents
+const modalImage = document.getElementById("imageModal");
+const payImage = document.getElementById("payImage");
+function closeImage() {
+    payImage.src = '';
+    modalImage.style.display = "none";
+}
+function viewImage(imageUrl) {
+    if (!imageUrl) return;
+    if (imageUrl.endsWith(".pdf")) {
+        window.open(imageUrl, "_blank");
+    } else {
+        payImage.src = imageUrl;
+        modalImage.style.display = "flex";
+    }
+}
+
+async function updateFile(file) {
+    if (!file) {
+        throw new Error("Selecciona un documento.");
+    }
+
+    const formData = new FormData();
+    formData.append("reqFile", file);
+    formData.append("directory", `courses/${courseId}/jobs`);
+    const uploadResponse = await fetch(
+        `${apiUrl}/api/files`,
         {
-            method: query ? 'PATCH' : "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(request)
+            method: "POST",
+            body: formData
         }
     );
-
-    if (!response.ok) {
-        showError("No se pudieron guardar las clases.");
-        return;
+    if (!uploadResponse.ok) {
+        throw new Error("Fallo al subir documento");
     }
-    showSuccess("Clases guardadas correctamente.");
+    const uploadData = await uploadResponse.json();
+    return uploadData.url;
 }

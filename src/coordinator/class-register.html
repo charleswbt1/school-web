@@ -22,16 +22,22 @@
                 <h2>Clases</h2>
             </div>
             <form class="info-form" id="classForm">
-                <select id="moduleSelect" required>
-                    <option value="">Selecciona un módulo</option>
-                </select>
-                <div id="mediaContainer"></div>
+                <select id="moduleSelect" required></select>
+                Clases Grabadas:
+                <div id="mediaClassContainer"></div>
                 <div class="button-container">
-                    <button type="button" id="addMediaBtn">
-                        + Agregar Clase
+                    <button type="button" id="addClassBtn">
+                        + Agregar Clase Grabada
                     </button>
                 </div>
-                <button type="submit">
+                Trabajos de Clase:
+                <div id="mediaClassJobContainer"></div>
+                <div class="button-container">
+                    <button type="button" id="addClassJobBtn">
+                        + Agregar Trabajo de Clase
+                    </button>
+                </div>
+                <button type="submit" id="saveClassBtn">
                     Guardar
                 </button>
             </form>
@@ -40,6 +46,10 @@
 
     <!-- MODAL LOGIN -->
     <div id="modal-container"></div>
+
+    <div class="modal-image" id="imageModal" onclick="closeImage()">
+        <img id="payImage">
+    </div>
 
     <script src="../components/app.js"></script>
     <script src="class-register.js"></script>

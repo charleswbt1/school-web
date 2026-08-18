@@ -1,6 +1,7 @@
 const roleRegister = new URLSearchParams(window.location.search).get('roleRegister');
 const roleSession = sessionStorage.getItem("role");
 const userSession = sessionStorage.getItem("userId");
+const teamSession = sessionStorage.getItem("team_id");
 
 async function loadRoles() {
     try {
