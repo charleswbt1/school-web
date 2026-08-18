@@ -45,8 +45,8 @@ async function loadClasses() {
         return;
     }
     classeId = data[0].id;
-    data[0].medias.forEach(media => addMedia(media));
-    data[0].jobs.forEach(job => addClassJob(job));
+    data[0].medias?.forEach(media => addMedia(media));
+    data[0].jobs?.forEach(job => addClassJob(job));
 }
 document.getElementById("moduleSelect").addEventListener("change", loadClasses);
 
@@ -78,13 +78,17 @@ function addClassJob(classJob = {}) {
     const div = document.createElement("div");
     div.className = "media-item";
     div.innerHTML = `
-        <label class="id-label">${classJob?.id || ""}</label>
-        <label class="link-label">${classJob?.link || ""}</label>
+        <label class="link-label" hidden>${classJob?.link || ""}</label>
         <input class="job-file" type="file" accept="image/*,.pdf" hidden>
-        <label class="file-btn">Seleccionar Archivo</label>
+        <label 
+            class="file-btn"
+            style="display:${classJob.link ? "none" : "block"};"
+        >
+            Seleccionar Archivo
+        </label>
         <img 
             class="preview-image" 
-            style="display:${classJob?.link ? "block" : "none"};" 
+            style="display:${classJob.link ? "block" : "none"};" 
             alt="Vista previa"
             src=${classJob?.link
             ? classJob?.link.endsWith(".pdf")
@@ -100,7 +104,7 @@ function addClassJob(classJob = {}) {
             required>
         <button
             type="button"
-            class="delete-media">
+            class="delete-job">
             🗑️
         </button>
     `;
@@ -124,8 +128,29 @@ function addClassJob(classJob = {}) {
             preview.onclick = () => viewImage(url);
         }
     });
+    preview.addEventListener("click", () => {
+        if (classJob.link) {
+            viewImage(classJob.link);
+        }
+    });
 
-    div.querySelector(".delete-media").addEventListener("click", () => div.remove());
+    div.querySelector(".delete-job").addEventListener("click", async () => {
+        if (classJob.link) {
+            const response = await fetch(`${apiUrl}/api/files`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: classJob.link
+                })
+            });
+            if (response.ok) {
+                await showSuccess("Documento eliminado del servidor. no olvides guardar los cambios.");
+            }
+        }
+        div.remove();
+    });
     mediaClassJobContainer.appendChild(div);
 }
 
@@ -145,7 +170,7 @@ async function saveClasses(e) {
         const jobs = await Promise.all(
             [...document.querySelectorAll("#mediaClassJobContainer .media-item")]
                 .map(async item => ({
-                    link: item.querySelector(".link-label").value
+                    link: item.querySelector(".link-label").textContent
                         || await updateFile(
                             item.querySelector(".job-file").files[0]
                         ),

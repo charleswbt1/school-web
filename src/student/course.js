@@ -205,20 +205,31 @@ async function getModules(response) {
 }
 
 async function getClassesMediaSync(data, moduleId) {
-    if (data.student.state === "active" && data.course.model === "sync") {
+    if (data.student.state === "active") {
         const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${data.course.id}&module_id=${moduleId}`);
-        if (!classesResponse.ok) {
+        const classesJson = await classesResponse.json();
+        if (!classesResponse.ok || classesJson.length < 1) {
             return '';
         }
-        const classesJson = await classesResponse.json();
-        if (classesJson.length > 0 && classesJson[0].medias.length > 0) {
-            const classesMedia = classesJson[0].medias.filter(media => media.link.startsWith("http"));
-            return classesMedia.map(media => `                        
-                <button onclick="showVideo('${media.link}')">
-                    Ver Clase
-                </button>
-            `).join("")
-        }
+
+        const classesMedia = classesJson[0].medias.filter(media => media.link.startsWith("http"));
+        const mediaButtons = classesMedia.map(media => `
+            <button onclick="showVideo('${media.link}')">
+                Ver Clase
+            </button>
+        `).join("")
+        const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
+        const jobButtons = classesJob.map(job => `
+            <button onclick="showVideo('${job.link}')">
+                Ver Trabajo
+            </button>
+        `).join("")
+        return `
+            <div class="class-media-container">
+                ${mediaButtons}
+                ${jobButtons}
+            </div>
+        `;
     }
     return '';
 }
