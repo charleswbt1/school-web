@@ -107,7 +107,7 @@ function createDocumentTable(student) {
                         🔍
                     </span>
                     <span class="button-icon"
-                        onclick="deleteDocument('${student.id}','${type}',this)"
+                        onclick="deleteDocument('${student.id}','${type}','',this)"
                         title="Eliminar Documento ${type}">
                         ❌
                     </span>`
@@ -220,9 +220,15 @@ async function getClassesMediaSync(data, moduleId) {
         `).join("")
         const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
         const jobButtons = classesJob.map(job => `
-            <button onclick="showVideo('${job.link}')">
-                Ver Trabajo
-            </button>
+            <div class="buttons-job-container">
+                <button onclick="showVideo('${job.link}')">
+                    Trabajo ${job.description}
+                </button>
+                <button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
+                    Evidencia
+                </button>
+            </div>
+            <br>
         `).join("")
         return `
             <div class="class-media-container">

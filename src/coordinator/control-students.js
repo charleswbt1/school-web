@@ -70,7 +70,7 @@ async function loadPage() {
                         🔍
                     </span>
                     <span class="button-icon"
-                        onclick="deleteDocument('${student.id}','${type}',this)"
+                        onclick="deleteDocument('${student.id}','${type}','',this)"
                         title="Eliminar Documento ${type}">
                         ❌
                     </span>` : ``

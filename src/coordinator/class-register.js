@@ -201,6 +201,7 @@ async function saveClasses(e) {
             return;
         }
         await showSuccess("Clases guardadas correctamente.");
+        loadClasses();
     } catch (error) {
         showError(`Error al guardar clases - ${error.message}`);
     } finally {

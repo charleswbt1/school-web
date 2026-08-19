@@ -20,8 +20,9 @@ modalDocument.addEventListener("click", (e) => {
         closeDocumentModal();
     }
 });
-function viewDocument(studentId, type) {
+function viewDocument(studentId, type, documentId) {
     const student = students.find(student => student.id === studentId);
+    document.getElementById("document-id").textContent = documentId;
     document.getElementById("document-type").textContent = type;
     document.getElementById("student-name").textContent = student.name;
     document.getElementById("student-id").textContent = studentId;
@@ -61,10 +62,12 @@ documentForm.addEventListener("submit", async (e) => {
         }
         const studentId = document.getElementById("student-id").textContent;
         const courseId = document.getElementById("course-id").textContent;
+        const documentType = document.getElementById("document-type").textContent;
+        const destiny = documentType === 'job' ? 'jobs' : 'document';
 
         const formData = new FormData();
         formData.append("reqFile", file);
-        formData.append("directory", `courses/${courseId}/${studentId}/document`);
+        formData.append("directory", `courses/${courseId}/${studentId}/${destiny}`);
         const uploadResponse = await fetch(
             `${apiUrl}/api/files`,
             {
@@ -80,7 +83,8 @@ documentForm.addEventListener("submit", async (e) => {
         const documentRequest = {
             url: imageUrl,
             student_id: studentId,
-            type: document.getElementById("document-type").textContent
+            type: documentType,
+            job_id: document.getElementById("document-id").textContent
         }
         const invoiceResponse = await fetch(
             `${apiUrl}/api/students/document`,
@@ -93,7 +97,7 @@ documentForm.addEventListener("submit", async (e) => {
             }
         );
         if (!invoiceResponse.ok) {
-            throw new Error("No se pudo registrar el documento");
+            throw new Error("No se pudo registrar el archivo");
         }
         closeDocumentModal();
         await showSuccess("Registro Exitoso");
@@ -117,7 +121,7 @@ function closeDocumentModal() {
     preview.style.display = "none";
 }
 
-async function deleteDocument(studentId, type, button) {
+async function deleteDocument(studentId, type, jobId, button) {
     if (!await showConfirm("¿Deseas eliminar este Documento?")) {
         return;
     }
@@ -134,7 +138,8 @@ async function deleteDocument(studentId, type, button) {
                 },
                 body: JSON.stringify({
                     student_id: studentId,
-                    type: type
+                    type: type,
+                    job_id: jobId
                 })
             }
         );
