@@ -12,13 +12,16 @@ async function loadQualifications() {
         const content = contentJsonResponse[0];
 
         const tbody = document.getElementById('qualificationsTableBody');
+        const jobTable = document.getElementById('jobsTableBody');
+        tbody.innerHTML = '';
+        jobTable.innerHTML = '';
 
-        tbody.innerHTML = content.modules.map((module, index) => {
+        content.modules.forEach(async (module, index) => {
             const note = student.notes?.find(
                 note => note.module_id === module.id
             );
 
-            return `
+            tbody.innerHTML += `
                 <tr>
                     <td>${module.name}</td>
 
@@ -40,7 +43,49 @@ async function loadQualifications() {
                     </td>
                 </tr>
             `;
-        }).join('');
+
+            const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${student.course_id}&module_id=${module.id}`);
+            const classesData = await classesResponse.json();
+            if (classesData.length > 0) {
+                classesData[0].jobs?.forEach(job => {
+                    const studentJob = student.jobs?.find(
+                        studentJob => studentJob.id === job.id
+                    );
+                    jobTable.innerHTML += `
+                    <tr>
+                        <td>${module.name}</td>
+                        <td>${job.description || "Trabajo no especificado"}</td>
+                        <td>${studentJob
+                            ? `<button onclick="viewImage('${studentJob.link}')">
+                                    Ver
+                                </button>`
+                            : `Sin evidencia`
+                        }
+
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                id="score-${job.id}"
+                                value="${studentJob?.score ?? 0}"
+                                min="0"
+                                max="10"
+                            >
+                        </td>
+                        <td>
+                            ${studentJob
+                            ? `<button
+                                onclick="saveJobQualification('${student.id}', '${studentJob.id}', this)">
+                                Guardar
+                            </button>`
+                            : `<span>No hay evidencia</span>`
+                        }                            
+                        </td>
+                    </tr>
+                `;
+                });
+            }
+        });
     } catch (error) {
         document.getElementById('qualificationsTableBody').innerHTML = `
             <tr>
@@ -56,7 +101,7 @@ loadQualifications();
 
 async function saveQualification(moduleId, umbral, index) {
 
-    if (!confirm("¿Confirmar calificación?")) {
+    if (!await showConfirm("¿Confirmar calificación?")) {
         return;
     }
 
@@ -91,5 +136,56 @@ async function saveQualification(moduleId, umbral, index) {
         await showSuccess("Actualizacion exitosa");
     } catch (error) {
         showError("No fue posible guardar la calificación");
+    }
+}
+
+async function saveJobQualification(studentId, jobId) {
+
+    if (!await showConfirm("¿Confirmar calificación?")) {
+        return;
+    }
+
+    const qualification = Number(
+        document.getElementById(`score-${jobId}`).value
+    );
+
+    try {
+        const response = await fetch(
+            `${apiUrl}/api/students/job-qualification`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    student_id: studentId,
+                    job_id: jobId,
+                    qualification: Number(qualification)
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error();
+        }
+        await showSuccess("Actualizacion exitosa");
+    } catch (error) {
+        showError("No fue posible guardar la calificación");
+    }
+}
+
+const modalImage = document.getElementById("imageModal");
+const payImage = document.getElementById("payImage");
+function closeImage() {
+    payImage.src = '';
+    modalImage.style.display = "none";
+}
+function viewImage(imageUrl) {
+    if (!imageUrl) return;
+    if (imageUrl.endsWith(".pdf")) {
+        window.open(imageUrl, "_blank");
+    } else {
+        payImage.src = imageUrl;
+        modalImage.style.display = "flex";
     }
 }

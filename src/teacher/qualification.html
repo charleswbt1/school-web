@@ -43,6 +43,35 @@
                     </tbody>
 
                 </table>
+                <br>
+            </div>
+
+            <div class="section-header">
+                <h2>Trabajos de Alumno</h2>
+            </div>
+
+            <div class="table-container">
+
+                <table class="style-table">
+                    <thead>
+                        <tr>
+                            <th>Modulo</th>
+                            <th>Trabajo</th>
+                            <th>Evidencia</th>
+                            <th>Calificación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="jobsTableBody">
+                        <tr>
+                            <td colspan="5">
+                                Cargando trabajos...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
 
             </div>
 
@@ -52,6 +81,10 @@
 
     <!-- MODAL LOGIN -->
     <div id="modal-container"></div>
+
+    <div class="modal-image" id="imageModal" onclick="closeImage()">
+        <img id="payImage">
+    </div>
 
     <script src="../components/app.js"></script>
     <script src="qualification.js"></script>

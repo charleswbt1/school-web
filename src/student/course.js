@@ -219,17 +219,30 @@ async function getClassesMediaSync(data, moduleId) {
             </button>
         `).join("")
         const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
-        const jobButtons = classesJob.map(job => `
-            <div class="buttons-job-container">
+
+        const jobButtons = classesJob.map(job => {
+            const studentJob = data.student.jobs?.find(studentJob => studentJob.id === job.id);
+            return `<div class="buttons-job-container">
                 <button onclick="showVideo('${job.link}')">
                     Trabajo ${job.description}
                 </button>
-                <button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
-                    Evidencia
-                </button>
+                ${studentJob
+                    ? `<button onclick="showVideo('${studentJob.link}')">
+                        Ver
+                    </button>
+                    <button onclick="deleteDocument('${data.student.id}','job','${job.id}',this)">
+                        Eliminar
+                    </button>
+                    <label>
+                    Calificación: ${studentJob.score ?? 'Sin calificar'}
+                    </label>`
+                    : `<button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
+                        Subir Evidencia ${job.description}
+                    </button>`
+                }
             </div>
             <br>
-        `).join("")
+        `}).join("")
         return `
             <div class="class-media-container">
                 ${mediaButtons}

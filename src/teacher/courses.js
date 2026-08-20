@@ -27,6 +27,10 @@ async function loadCourses() {
                         onclick="viewStudents('${course.id}')">
                         Alumnos
                     </button>
+                    <button
+                        onclick="viewJobs('${course.id}','${course.content_id}')">
+                        Trabajos
+                    </button>
                 </td>
             </tr>
         `).join('');
@@ -44,4 +48,7 @@ loadCourses();
 
 function viewStudents(id) {
     window.location.href = `students.html?id=${id}`;
+}
+function viewJobs(courseId, contentId) {
+    window.location.href = `jobs.html?course_id=${courseId}&content_id=${contentId}`;
 }

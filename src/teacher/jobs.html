@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
+    <link rel="stylesheet" href="../components/styles.css">
+</head>
+
+<body>
+
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <section class="info-section">
+
+            <div class="section-header">
+                <h2>Trabajos</h2>
+            </div>
+            Trabajos de Clase:
+            <form class="info-form" id="classForm">
+                <select id="moduleSelect" required></select>
+                <div id="mediaClassJobContainer"></div>
+                <div class="button-container">
+                    <button type="button" id="addClassJobBtn">
+                        + Agregar Trabajo de Clase
+                    </button>
+                </div>
+                <button type="submit" id="saveClassBtn">
+                    Guardar
+                </button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+
+    <div class="modal-image" id="imageModal" onclick="closeImage()">
+        <img id="payImage">
+    </div>
+
+    <script src="../components/app.js"></script>
+    <script src="jobs.js"></script>
+
+</body>
+
+</html>
