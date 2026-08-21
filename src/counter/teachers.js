@@ -14,11 +14,12 @@ async function loadTable() {
 
         tbody.innerHTML = jsonResponse.map(element => `
             <tr>
+                <td>${element.nick_name}</td>
                 <td>${element.first_name} ${element.last_name} ${element.second_last_name}</td>
                 <td>${element.phone}</td>
                 <td>${element.email}</td>
                 <td>${element.courses.map(course => `(${course.hours_week ?? 0}) ${course.name}`).join('<br>')}</td>
-                <td>${element.courses.reduce((total, course) => total + (course.hours_week ?? 0), 0)}</td>
+                <td>${element.courses.reduce((total, course) => total + Number(course.hours_week ?? 0), 0)}</td>
                 <td>
                     ${roleSession === 'coordinator'
                 ? `

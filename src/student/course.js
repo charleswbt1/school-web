@@ -73,15 +73,15 @@ loadPage();
 
 function createDocumentTable(student) {
     const documentTypes = [
-        "curp",
-        "acta",
-        "certificado",
-        "titulo",
-        "cedula",
-        "ine",
-        "certificado-curso",
-        "titulo-curso",
-        "cedula-curso"
+        { "type": "curp", "button": true },
+        { "type": "acta", "button": true },
+        { "type": "ine", "button": true },
+        { "type": "certificado", "button": true },
+        { "type": "titulo", "button": true },
+        { "type": "cedula", "button": true },        
+        { "type": "certificado-curso", "button": false },
+        { "type": "titulo-curso", "button": false },
+        { "type": "cedula-curso", "button": false }
     ];
     const studentDocumentTable = document.getElementById("studentDocumentTable");
     studentDocumentTable.innerHTML = `
@@ -93,26 +93,26 @@ function createDocumentTable(student) {
                 </tr>
             </thead>
             <tbody>
-                ${documentTypes.map(type => {
-        const document = student.documents.find(document => document.type === type);
+                ${documentTypes.map(d => {
+        const document = student.documents.find(document => document.type === d.type);
         return `<tr>
                     <td>
-                        ${type.toUpperCase()}
+                        ${d.type.toUpperCase()}
                     </td>
                     <td>
                 ${document
                 ? `<span class="button-icon"
                         onclick="viewImage('${document.url}')"
-                        title="Ver Documento ${type}">
+                        title="Ver Documento ${d.type}">
                         🔍
                     </span>
-                    <span class="button-icon"
-                        onclick="deleteDocument('${student.id}','${type}','',this)"
-                        title="Eliminar Documento ${type}">
+                    <span class="button-icon" style="display:${d.button ? "block" : "none"};"
+                        onclick="deleteDocument('${student.id}','${d.type}','',this)"
+                        title="Eliminar Documento ${d.type}">
                         ❌
                     </span>`
-                : `<span class="button-icon"
-                        onclick="viewDocument('${student.id}', '${type}')"
+                : `<span class="button-icon" style="display:${d.button ? "block" : "none"};"
+                        onclick="viewDocument('${student.id}', '${d.type}')"
                         title="Registrar Documento">
                         ⬆️
                     </span>`
