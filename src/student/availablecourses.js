@@ -1,3 +1,4 @@
+const showPrice = false;
 async function loadCourses() {
     try {
 
@@ -74,10 +75,10 @@ async function loadCourses() {
                 <p>${course.description}</p>
 
                 ${course.model === 'sync'
-                    ? `<p>Clases: ${course.date_init} - ${course.date_end}</p>`
-                    : ``
-                }  
-                    <p>
+                        ? `<p>Clases: ${course.date_init} - ${course.date_end}</p>`
+                        : ``
+                    }  
+                    <p style="display: ${showPrice ? 'block' : 'none'};">
                         Aprovecha de
                         <span style="text-decoration: line-through; color: #999;">
                             $${course.cost_quota}

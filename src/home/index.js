@@ -1,3 +1,4 @@
+const showPrice = false;
 async function loadCourses() {
     try {
         const response = await fetch(`${apiUrl}/api/courses?available=true`);
@@ -45,7 +46,7 @@ async function loadCourses() {
                         ? `<p>Clases: ${course.date_init} - ${course.date_end}</p>`
                         : ``
                     }                
-                <p>
+                <p style="display: ${showPrice ? 'block' : 'none'};">
                     Aprovecha de
                     <span style="text-decoration: line-through; color: #999;">
                         $${course.cost_quota}
