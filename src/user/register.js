@@ -106,12 +106,11 @@ toggleStudentFields();
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.style.opacity = ".7";
-
     try {
+        submitButton.disabled = true;
+        submitButton.style.opacity = ".7";
         const roleSelected = document.getElementById("role").value;
-        if (roleSelected === 'student') {
+        if (roleSelected === 'student' && (roleSession === 'adviser' || roleSession === 'coordinator')) {
             if (!document.getElementById("courseId").value) {
                 showError("Selecciona un curso para el estudiante");
                 return;
