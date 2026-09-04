@@ -61,8 +61,8 @@ async function loadQualifications() {
                                 </button>`
                             : `Sin evidencia`
                         }
-
                         </td>
+                        <td>${studentJob.date.replace('T', ' ').replace('Z', '')}</td>
                         <td>
                             <input
                                 type="number"
