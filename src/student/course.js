@@ -78,7 +78,7 @@ function createDocumentTable(student) {
         { "type": "ine", "button": true },
         { "type": "certificado", "button": true },
         { "type": "titulo", "button": true },
-        { "type": "cedula", "button": true },        
+        { "type": "cedula", "button": true },
         { "type": "certificado-curso", "button": false },
         { "type": "titulo-curso", "button": false },
         { "type": "cedula-curso", "button": false }
@@ -215,16 +215,24 @@ async function getClassesMediaSync(data, moduleId) {
         const classesMedia = classesJson[0].medias.filter(media => media.link.startsWith("http"));
         const mediaButtons = classesMedia.map(media => `
             <button onclick="showVideo('${media.link}')">
-                Ver Clase
+                Ver Clase ${media.date}
             </button>
-        `).join("")
-        const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
+        `).join("");
 
-        const jobButtons = classesJob.map(job => {
+        const materialButtons = classesJson[0].materials.map(material => {
+            return `<div class="buttons-material-container">
+                <button onclick="showVideo('${material.link}')" alt="Trabajo ${material.description}">
+                    Material ${material.name}
+                </button>
+            </div>
+        `}).join("")
+
+        const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
+        const jobButtons = classesJob.map((job, index) => {
             const studentJob = data.student.jobs?.find(studentJob => studentJob.id === job.id);
             return `<div class="buttons-job-container">
-                <button onclick="showVideo('${job.link}')">
-                    Trabajo ${job.description}
+                <button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
+                    Trabajo ${job.name ?? index + 1}
                 </button>
                 ${studentJob
                     ? `<button onclick="showVideo('${studentJob.link}')">
@@ -242,10 +250,11 @@ async function getClassesMediaSync(data, moduleId) {
                 }
             </div>
             <br>
-        `}).join("")
+        `}).join("");
         return `
             <div class="class-media-container">
                 ${mediaButtons}
+                ${materialButtons}
                 ${jobButtons}
             </div>
         `;

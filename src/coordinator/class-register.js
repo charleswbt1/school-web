@@ -24,6 +24,9 @@ loadModules();
 const mediaClassContainer = document.getElementById("mediaClassContainer");
 document.getElementById("addClassBtn").addEventListener("click", addMedia);
 
+const materialClassContainer = document.getElementById("materialClassContainer");
+document.getElementById("addMaterialClassBtn").addEventListener("click", addMaterialClass);
+
 const mediaClassJobContainer = document.getElementById("mediaClassJobContainer");
 document.getElementById("addClassJobBtn").addEventListener("click", addClassJob);
 
@@ -38,15 +41,18 @@ async function loadClasses() {
     const data = await response.json();
 
     mediaClassContainer.innerHTML = "";
+    materialClassContainer.innerHTML = "";
     mediaClassJobContainer.innerHTML = "";
     if (!data || data.length === 0) {
         addMedia();
         addClassJob();
+        addMaterialClass();
         return;
     }
     classeId = data[0].id;
     data[0].medias?.forEach(media => addMedia(media));
     data[0].jobs?.forEach(job => addClassJob(job));
+    data[0].materials?.forEach(material => addMaterialClass(material));
 }
 document.getElementById("moduleSelect").addEventListener("change", loadClasses);
 
@@ -96,6 +102,12 @@ function addClassJob(classJob = {}) {
                 : classJob.link
             : ""}
         >
+        <label>Nombre</label>
+        <input
+            type="text"
+            class="media-name-text"
+            value="${classJob?.name || ""}"
+            required>
         <label>Descripción</label>
         <input
             type="text"
@@ -153,6 +165,91 @@ function addClassJob(classJob = {}) {
     });
     mediaClassJobContainer.appendChild(div);
 }
+function addMaterialClass(material = {}) {
+    const div = document.createElement("div");
+    div.className = "media-item";
+    div.innerHTML = `
+        <label class="material-label" hidden>${material?.link || ""}</label>
+        <input class="material-file" type="file" accept="image/*,.pdf" hidden>
+        <label 
+            class="file-btn"
+            style="display:${material.link ? "none" : "block"};"
+        >
+            Seleccionar Archivo
+        </label>
+        <img 
+            class="preview-image" 
+            style="display:${material.link ? "block" : "none"};" 
+            alt="Vista previa"
+            src=${material?.link
+            ? material?.link.endsWith(".pdf")
+                ? "https://storage.googleapis.com/school-source/web/pdf_image.png"
+                : material.link
+            : ""}
+        >
+        <label>Nombre</label>
+        <input
+            type="text"
+            class="material-name-text"
+            value="${material?.name || ""}"
+            required>
+        <label>Descripción</label>
+        <input
+            type="text"
+            class="material-text"
+            value="${material?.description || ""}"
+            required>
+        <button
+            type="button"
+            class="material-delete">
+            🗑️
+        </button>
+    `;
+
+    const fileInput = div.querySelector(".material-file");
+    const fileButton = div.querySelector(".file-btn");
+    const preview = div.querySelector(".preview-image");
+
+    fileButton.addEventListener("click", () => { fileInput.click(); });
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        if (file.type === "application/pdf") {
+            preview.src = "https://storage.googleapis.com/school-source/web/pdf_image.png";
+            preview.style.display = "block";
+            preview.onclick = () => { window.open(URL.createObjectURL(file), "_blank"); };
+        } else {
+            const url = URL.createObjectURL(file);
+            preview.src = url;
+            preview.style.display = "block";
+            preview.onclick = () => viewImage(url);
+        }
+    });
+    preview.addEventListener("click", () => {
+        if (material.link) {
+            viewImage(material.link);
+        }
+    });
+
+    div.querySelector(".material-delete").addEventListener("click", async () => {
+        if (material.link) {
+            const response = await fetch(`${apiUrl}/api/files`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: material.link
+                })
+            });
+            if (response.ok) {
+                await showSuccess("Documento eliminado del servidor. no olvides guardar los cambios.");
+            }
+        }
+        div.remove();
+    });
+    materialClassContainer.appendChild(div);
+}
 
 document.getElementById("classForm").addEventListener("submit", saveClasses);
 async function saveClasses(e) {
@@ -172,9 +269,22 @@ async function saveClasses(e) {
                 .map(async item => ({
                     link: item.querySelector(".link-label").textContent
                         || await updateFile(
-                            item.querySelector(".job-file").files[0]
+                            item.querySelector(".job-file").files[0],
+                            "jobs"
                         ),
+                    name: item.querySelector(".media-name-text").value,
                     description: item.querySelector(".media-text").value
+                })));
+        const materials = await Promise.all(
+            [...document.querySelectorAll("#materialClassContainer .media-item")]
+                .map(async item => ({
+                    link: item.querySelector(".material-label").textContent
+                        || await updateFile(
+                            item.querySelector(".material-file").files[0],
+                            "materials"
+                        ),
+                    name: item.querySelector(".material-name-text").value,
+                    description: item.querySelector(".material-text").value
                 })));
 
         const request = {
@@ -183,7 +293,8 @@ async function saveClasses(e) {
             teacher_id: teacherId,
             module_id: moduleId,
             medias,
-            jobs
+            jobs,
+            materials
         };
         const query = classeId ? `?id=${classeId}` : ``;
         const response = await fetch(
@@ -227,14 +338,14 @@ function viewImage(imageUrl) {
     }
 }
 
-async function updateFile(file) {
+async function updateFile(file, type) {
     if (!file) {
         throw new Error("Selecciona un documento.");
     }
 
     const formData = new FormData();
     formData.append("reqFile", file);
-    formData.append("directory", `courses/${courseId}/jobs`);
+    formData.append("directory", `courses/${courseId}/${type}`);
     const uploadResponse = await fetch(
         `${apiUrl}/api/files`,
         {
