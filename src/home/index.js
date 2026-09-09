@@ -126,3 +126,69 @@ document.addEventListener("click", async (event) => {
 
     });
 });
+
+/* =========================
+   CARRUSEL DE EVENTOS
+========================= */
+
+const eventSlides = document.querySelectorAll(".event-slide");
+const eventPrev = document.getElementById("eventPrev");
+const eventNext = document.getElementById("eventNext");
+const eventIndicators = document.getElementById("eventIndicators");
+
+let currentEvent = 0;
+let eventInterval;
+
+/* Crear indicadores */
+eventSlides.forEach((slide, index) => {
+    const indicator = document.createElement("button");
+    indicator.classList.add("event-indicator");
+    if (index === 0) {
+        indicator.classList.add("active");
+    }
+    indicator.addEventListener("click", () => {
+        showEvent(index);
+        restartEventInterval();
+    });
+    eventIndicators.appendChild(indicator);
+});
+function showEvent(index) {
+    if (index >= eventSlides.length) {
+        currentEvent = 0;
+    } else if (index < 0) {
+        currentEvent = eventSlides.length - 1;
+    } else {
+        currentEvent = index;
+    }
+    eventSlides.forEach((slide, index) => {
+        slide.classList.toggle(
+            "active",
+            index === currentEvent
+        );
+    });
+    const indicators = document.querySelectorAll(".event-indicator");
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle(
+            "active",
+            index === currentEvent
+        );
+    });
+}
+eventPrev.addEventListener("click", () => {
+    showEvent(currentEvent - 1);
+    restartEventInterval();
+});
+eventNext.addEventListener("click", () => {
+    showEvent(currentEvent + 1);
+    restartEventInterval();
+});
+function startEventInterval() {
+    eventInterval = setInterval(() => {
+        showEvent(currentEvent + 1);
+    }, 5000);
+}
+function restartEventInterval() {
+    clearInterval(eventInterval);
+    startEventInterval();
+}
+startEventInterval();

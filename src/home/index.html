@@ -18,14 +18,29 @@
 
         <div id="header-container"></div>
 
-        <section class="courses-section">
-
-            <h2>Cursos Disponibles</h2>
-
-            <div class="courses-container" id="coursesContainer">
-
+        <!-- CARRUSEL DE EVENTOS -->
+        <section class="events-section">
+            <div class="events-carousel">
+                <button class="event-carousel-btn event-prev" id="eventPrev">
+                    ‹
+                </button>
+                <div class="events-slider" id="eventsSlider">
+                    <div class="event-slide active">
+                        <a href="https://storage.googleapis.com/school-source/web/event/event1.jpeg" target="_blank">
+                            <img src="https://storage.googleapis.com/school-source/web/event/event1.jpeg" alt="Evento">
+                        </a>
+                    </div>
+                </div>
+                <button class="event-carousel-btn event-next" id="eventNext">
+                    ›
+                </button>
             </div>
+            <div class="event-indicators" id="eventIndicators"></div>
+        </section>
 
+        <section class="courses-section">
+            <h2>Cursos Disponibles</h2>
+            <div class="courses-container" id="coursesContainer"></div>
         </section>
 
     </div>
