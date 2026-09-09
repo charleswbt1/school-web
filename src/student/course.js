@@ -232,7 +232,7 @@ async function getClassesMediaSync(data, moduleId) {
             const studentJob = data.student.jobs?.find(studentJob => studentJob.id === job.id);
             return `<div class="buttons-job-container">
                 <button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
-                    Trabajo ${job.name ?? index + 1}
+                    ${job.name ?? 'Trabajo' + (index + 1)} (${job.delivery_date ?? ''})
                 </button>
                 ${studentJob
                     ? `<button onclick="showVideo('${studentJob.link}')">
@@ -245,7 +245,7 @@ async function getClassesMediaSync(data, moduleId) {
                     Calificación: ${studentJob.score ?? 'Sin calificar'}
                     </label>`
                     : `<button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
-                        Subir Evidencia ${job.description}
+                        Subir Evidencia
                     </button>`
                 }
             </div>

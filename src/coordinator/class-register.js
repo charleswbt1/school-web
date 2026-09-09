@@ -114,6 +114,12 @@ function addClassJob(classJob = {}) {
             class="media-text"
             value="${classJob?.description || ""}"
             required>
+        <label>Fecha de Entrega</label>
+        <input
+            type="date"
+            class="media-date"
+            value="${classJob?.delivery_date || ""}"
+            required>
         <button
             type="button"
             class="delete-job">
@@ -273,7 +279,8 @@ async function saveClasses(e) {
                             "jobs"
                         ),
                     name: item.querySelector(".media-name-text").value,
-                    description: item.querySelector(".media-text").value
+                    description: item.querySelector(".media-text").value,
+                    delivery_date: item.querySelector(".media-date").value
                 })));
         const materials = await Promise.all(
             [...document.querySelectorAll("#materialClassContainer .media-item")]

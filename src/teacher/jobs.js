@@ -156,11 +156,23 @@ function addClassJob(classJob = {}) {
                 : classJob.link
             : ""}
         >
+        <label>Nombre</label>
+        <input
+            type="text"
+            class="media-name-text"
+            value="${classJob?.name || ""}"
+            required>
         <label>Descripción</label>
         <input
             type="text"
             class="media-text"
             value="${classJob?.description || ""}"
+            required>
+        <label>Fecha de Entrega</label>
+        <input
+            type="date"
+            class="media-date"
+            value="${classJob?.delivery_date || ""}"
             required>
         <button
             type="button"
@@ -235,7 +247,9 @@ async function saveClasses(e) {
                             item.querySelector(".job-file").files[0],
                             "jobs"
                         ),
-                    description: item.querySelector(".media-text").value
+                    name: item.querySelector(".media-name-text").value,
+                    description: item.querySelector(".media-text").value,
+                    delivery_date: item.querySelector(".media-date").value
                 })));
         const materials = await Promise.all(
             [...document.querySelectorAll("#materialClassContainer .media-item")]
