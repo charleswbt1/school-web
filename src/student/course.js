@@ -234,16 +234,16 @@ async function getClassesMediaSync(data, moduleId) {
                 <button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
                     ${job.name ?? 'Trabajo' + (index + 1)} (${job.delivery_date ?? ''})
                 </button>
-                ${studentJob
+                <label>
+                    Calificación: ${studentJob?.score ?? 'Sin calificar'}
+                </label>
+                ${studentJob && studentJob.link
                     ? `<button onclick="showVideo('${studentJob.link}')">
                         Ver
                     </button>
                     <button onclick="deleteDocument('${data.student.id}','job','${job.id}',this)">
                         Eliminar
-                    </button>
-                    <label>
-                    Calificación: ${studentJob.score ?? 'Sin calificar'}
-                    </label>`
+                    </button>`
                     : `<button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
                         Subir Evidencia
                     </button>`

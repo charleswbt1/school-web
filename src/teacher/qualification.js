@@ -55,14 +55,14 @@ async function loadQualifications() {
                     <tr>
                         <td>${module.name}</td>
                         <td>${job.description || "Trabajo no especificado"}</td>
-                        <td>${studentJob
+                        <td>${studentJob && studentJob.link
                             ? `<button onclick="viewImage('${studentJob.link}')">
                                     Ver
                                 </button>`
                             : `Sin evidencia`
                         }
                         </td>
-                        <td>${studentJob.date.replace('T', ' ').replace('Z', '')}</td>
+                        <td>${studentJob?.date?.replace('T', ' ')?.replace('Z', '') || ''}</td>
                         <td>
                             <input
                                 type="number"
@@ -73,13 +73,10 @@ async function loadQualifications() {
                             >
                         </td>
                         <td>
-                            ${studentJob
-                            ? `<button
-                                onclick="saveJobQualification('${student.id}', '${studentJob.id}', this)">
+                            <button
+                                onclick="saveJobQualification('${student.id}', '${job.id}', this)">
                                 Guardar
-                            </button>`
-                            : `<span>No hay evidencia</span>`
-                        }                            
+                            </button>                            
                         </td>
                     </tr>
                 `;
