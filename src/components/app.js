@@ -86,16 +86,6 @@ function initializeLoginModal() {
         }
     });
 
-    // BOTÓN REGISTRO
-    const registerBtn = document.getElementById("registerBtn");
-
-    if (registerBtn) {
-        registerBtn.addEventListener("click", () => {
-            window.location.href = "../user/register.html";
-        });
-    }
-
-
     /* ========================= LOGIN ========================= */
 
     document.getElementById("loginForm").addEventListener("submit", async (e) => {

@@ -52,14 +52,8 @@ async function loadCourses() {
                     : `
                     <button
                         class="info-btn content-btn"
-                        data-content="${course.content_id}">
+                        data-content="${course.content_id}--${course.adviser_id}">
                         Detalles
-                    </button>
-
-                    <button
-                        class="info-btn register-btn"
-                        data-content="${course.id}">
-                        Registrarse
                     </button>
                 `;
 
@@ -113,14 +107,17 @@ document.addEventListener("click", async (event) => {
     /* ===================== CONTENT ===================== */
 
     if (button.classList.contains("content-btn")) {
-        const contentId = button.dataset.content;
+        const [contentId, adviserId] = button.dataset.content.split("--");
 
         try {
             const response = await fetch(
                 `${apiUrl}/api/contents?id=${contentId}`
             );
-
             const data = await response.json();
+            const adviserResponse = await fetch(
+                `${apiUrl}/api/users?id=${adviserId}`
+            );
+            const adviserData = await adviserResponse.json();
 
             const modules = data[0].modules.map(module => {
                 const topics = module.topics.map(topic => `
@@ -138,7 +135,14 @@ document.addEventListener("click", async (event) => {
 
             document.getElementById("contentData").innerHTML = `
             <h2>${data[0].name}</h2>
-            <div class="modules-container">${modules}</div>
+            <div class="modules-container">
+                ${modules}
+                <div class="module-card">
+                <h3>Inscripción</h3>
+                Para poder incribirte es necesario que te pongas en contacto con el asesor:                
+                <p><strong>${adviserData[0].phone}</strong></p>
+                </div>
+            </div>
             `;
 
             document.getElementById("contentModal").style.display = "flex";
@@ -156,25 +160,6 @@ document.addEventListener("click", async (event) => {
         }
 
     });
-
-    if (button.classList.contains("register-btn")) {
-        const userId = sessionStorage.getItem("userId");
-        const courseId = button.dataset.content;
-        const student = await fetch(
-            `${apiUrl}/api/students`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: userId,
-                    course_id: courseId
-                })
-            }
-        );
-        window.location.href = "../student/courses.html";
-    }
 
     if (button.classList.contains("enter-btn")) {
         const studentId = button.dataset.student;

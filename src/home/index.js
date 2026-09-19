@@ -59,7 +59,7 @@ async function loadCourses() {
                 <div class="course-actions">
                     <button 
                         class="info-btn content-btn"
-                        data-content="${course.content_id}">
+                        data-content="${course.content_id}--${course.adviser_id}">
                         Detalles
                     </button>
                 </div>
@@ -83,14 +83,18 @@ document.addEventListener("click", async (event) => {
     /* ===================== CONTENT ===================== */
 
     if (button.classList.contains("content-btn")) {
-        const contentId = button.dataset.content;
+        const [contentId, adviserId] = button.dataset.content.split("--");
 
         try {
             const response = await fetch(
                 `${apiUrl}/api/contents?id=${contentId}`
             );
-
             const data = await response.json();
+
+            const adviserResponse = await fetch(
+                `${apiUrl}/api/users?id=${adviserId}`
+            );
+            const adviserData = await adviserResponse.json();
 
             const modules = data[0].modules.map(module => {
                 const topics = module.topics.map(topic => `
@@ -108,7 +112,14 @@ document.addEventListener("click", async (event) => {
 
             document.getElementById("contentData").innerHTML = `
             <h2>Plan de estudios</h2>
-            <div class="modules-container">${modules}</div>
+            <div class="modules-container">
+                ${modules}
+                <div class="module-card">
+                <h3>Inscripción</h3>
+                Para poder incribirte es necesario que te pongas en contacto con el asesor:                
+                <p><strong>${adviserData[0].phone}</strong></p>
+                </div>
+            </div>
             `;
 
             document.getElementById("contentModal").style.display = "flex";
