@@ -110,14 +110,19 @@ document.addEventListener("click", async (event) => {
             })
                 .join("");
 
+            const adviserPhone = adviserData[0].phone.replace(/\D/g, '');
             document.getElementById("contentData").innerHTML = `
             <h2>Plan de estudios</h2>
             <div class="modules-container">
                 ${modules}
                 <div class="module-card">
-                <h3>Inscripción</h3>
-                Para poder incribirte es necesario que te pongas en contacto con el asesor:                
-                <p><strong>${adviserData[0].phone}</strong></p>
+                    <h3>Inscripción</h3>
+                    <p>Para poder incribirte es necesario que te pongas en contacto con el asesor:</p>
+                    <p><strong>${adviserPhone}</strong></p>
+                    <br>
+                    <button class="info-btn" onclick="openWhatsApp('${adviserPhone}')">
+                        Contactar por WhatsApp
+                    </button>
                 </div>
             </div>
             `;
@@ -203,3 +208,12 @@ function restartEventInterval() {
     startEventInterval();
 }
 startEventInterval();
+
+function openWhatsApp(phone) {
+    const message = "Solicito información sobre el curso.";
+    const webUrl =
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    setTimeout(() => {
+        window.open(webUrl, "_blank");
+    }, 100);
+}
