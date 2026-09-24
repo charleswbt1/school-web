@@ -26,6 +26,12 @@ document.getElementById("addMaterialClassBtn").addEventListener("click", addMate
 const mediaClassJobContainer = document.getElementById("mediaClassJobContainer");
 document.getElementById("addClassJobBtn").addEventListener("click", addClassJob);
 
+document.getElementById("addExamJobBtn").addEventListener("click", () => {
+    addClassJob({
+        name: 'EXAMEN'
+    });
+});
+
 async function loadClasses() {
     classeId = null;
     const moduleId = document.getElementById("moduleSelect").value;
@@ -135,6 +141,7 @@ function addMaterialClass(material = {}) {
     materialClassContainer.appendChild(div);
 }
 function addClassJob(classJob = {}) {
+    const isExam = classJob?.name === 'EXAMEN';
     const div = document.createElement("div");
     div.className = "media-item";
     div.innerHTML = `
@@ -142,13 +149,13 @@ function addClassJob(classJob = {}) {
         <input class="job-file" type="file" accept="image/*,.pdf" hidden>
         <label 
             class="file-btn"
-            style="display:${classJob.link ? "none" : "block"};"
+            style="display:${classJob.link || isExam ? "none" : "block"};"
         >
             Seleccionar Archivo
         </label>
         <img 
             class="preview-image" 
-            style="display:${classJob.link ? "block" : "none"};" 
+            style="display:${classJob.link && !isExam ? "block" : "none"};" 
             alt="Vista previa"
             src=${classJob?.link
             ? classJob?.link.endsWith(".pdf")
@@ -156,13 +163,14 @@ function addClassJob(classJob = {}) {
                 : classJob.link
             : ""}
         >
-        <label>Nombre</label>
+        <label style="display:${!isExam ? "block" : "none"};">Nombre</label>
         <input
             type="text"
             class="media-name-text"
+            style="display:${!isExam ? "block" : "none"};"
             value="${classJob?.name || ""}"
             required>
-        <label>Descripción</label>
+        <label>${isExam ? "Examen_ID" : "Descripción"}</label>
         <input
             type="text"
             class="media-text"
@@ -242,7 +250,9 @@ async function saveClasses(e) {
         const jobs = await Promise.all(
             [...document.querySelectorAll("#mediaClassJobContainer .media-item")]
                 .map(async item => ({
-                    link: item.querySelector(".link-label").textContent
+                    link: item.querySelector(".media-text").value.startsWith('EXA_')
+                        ? item.querySelector(".media-text").value
+                        : item.querySelector(".link-label").textContent
                         || await updateFile(
                             item.querySelector(".job-file").files[0],
                             "jobs"

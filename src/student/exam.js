@@ -3,6 +3,7 @@ const studentId = urlParams.get("student_id");
 const examId = urlParams.get("id");
 const courseId = urlParams.get("course_id");
 const moduleId = urlParams.get("module_id");
+const jobId = urlParams.get("job_id");
 let theme = '';
 
 async function loadExam() {
@@ -109,7 +110,6 @@ async function nextQuestion() {
     current++;
 
     if (current >= exam.questions.length) {
-
         finishExam();
         return;
     }
@@ -148,32 +148,42 @@ async function finishExam() {
             return;
         }
 
-        await fetch(
-            `${apiUrl}/api/students/qualification`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    module_id: moduleId,
-                    qualification: Number(result.average),
-                    student_id: studentId,
-                    state: result.approved ? "aprobado" : "fallo"
-                })
-            }
-        );
+        if (jobId) {
+            await fetch(
+                `${apiUrl}/api/students/job-qualification`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        student_id: studentId,
+                        qualification: Number(result.average),
+                        job_id: jobId
+                    })
+                }
+            );
+        } else {
+            await fetch(
+                `${apiUrl}/api/students/qualification`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        module_id: moduleId,
+                        qualification: Number(result.average),
+                        student_id: studentId,
+                        state: result.approved ? "aprobado" : "fallo"
+                    })
+                }
+            );
+        }
 
         if (!result.approved) {
-
-            await showError(`
-        Obtuviste ${result.score} de ${exam.questions.length}
-        <br>
-        Calificación: ${result.average.toFixed(1)}
-    `);
-
+            await showError(`Obtuviste ${result.score} de ${exam.questions.length}<br>Calificación: ${result.average.toFixed(1)}`);
         } else {
-
             // Obtener nuevamente el curso del alumno
             const courseResponse = await fetch(
                 `${apiUrl}/api/courses/student?student_id=${studentId}`

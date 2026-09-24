@@ -192,7 +192,7 @@ async function getModules(response) {
                     ${note?.state === "aprobado"
                     ? `<p class="course-state alert-success">✅ Aprobado</p>`
                     : response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_")
-                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}')">
+                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}', '')">
                                 Presentar Examen
                             </button>`
                         : ``
@@ -227,16 +227,18 @@ async function getClassesMediaSync(data, moduleId) {
             </div>
         `}).join("")
 
-        const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http"));
+        const classesJob = classesJson[0].jobs.filter(job => job.link.startsWith("http") || job.link.startsWith("EXA_"));
         const jobButtons = classesJob.map((job, index) => {
             const studentJob = data.student.jobs?.find(studentJob => studentJob.id === job.id);
             return `<div class="buttons-job-container">
-                <button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
-                    ${job.name ?? 'Trabajo' + (index + 1)} (${job.delivery_date ?? ''})
-                </button>
-                <label>
-                    Calificación: ${studentJob?.score ?? 'Sin calificar'}
-                </label>
+                ${job.link.startsWith("http")
+                    ? `<button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
+                        ${job.name ?? 'Trabajo' + (index + 1)} (${job.delivery_date ?? ''})
+                    </button>`
+                    : `<button onclick="showExam('${data.student.id}', '${data.course.id}', '', '${job.link}', '${job.id}')">
+                        Presentar Examen (${job.delivery_date ?? ''})
+                    </button>`
+                }                
                 ${studentJob && studentJob.link
                     ? `<button onclick="showVideo('${studentJob.link}')">
                         Ver
@@ -244,10 +246,15 @@ async function getClassesMediaSync(data, moduleId) {
                     <button onclick="deleteDocument('${data.student.id}','job','${job.id}',this)">
                         Eliminar
                     </button>`
-                    : `<button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
-                        Subir Evidencia
-                    </button>`
+                    : job.link.startsWith("http")
+                        ? `<button onclick="viewDocument('${data.student.id}', 'job', '${job.id}')">
+                            Subir Evidencia
+                        </button>`
+                        : ''
                 }
+                <label>
+                    Calificación: ${studentJob?.score ?? 'Sin calificar'}
+                </label>
             </div>
             <br>
         `}).join("");
@@ -300,8 +307,8 @@ function showVideo(url) {
 `;
 }
 
-function showExam(studentId, courseId, moduleId, examId) {
-    window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&module_id=${moduleId}&id=${examId}`;
+function showExam(studentId, courseId, moduleId, examId, job_id) {
+    window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&module_id=${moduleId}&id=${examId}&job_id=${job_id ?? ''}`;
 }
 
 async function paymentLink(studentId, moduleIndex, paymentType) {
