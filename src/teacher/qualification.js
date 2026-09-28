@@ -106,7 +106,7 @@ async function saveQualification(moduleId, umbral, index) {
         document.getElementById(`qualification-${index}`).value
     );
     if (qualification < 0 || qualification > 10) {
-        showError("La calificación debe estar entre 0 y 10.");
+        await showError("La calificación debe estar entre 0 y 10.");
         return;
     }
 
@@ -145,6 +145,10 @@ async function saveJobQualification(studentId, jobId) {
     const qualification = Number(
         document.getElementById(`score-${jobId}`).value
     );
+    if (qualification < 0 || qualification > 10) {
+        await showError("La calificación debe estar entre 0 y 10.");
+        return;
+    }
 
     try {
         const response = await fetch(
