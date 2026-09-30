@@ -232,7 +232,9 @@ function editStudent(studentId) {
 
     document.getElementById("editStudentId").value = student.id;
     document.getElementById("editUserId").value = student.user_id;
-    document.getElementById("editName").value = student.name;
+    document.getElementById("editFirstName").value = student.first_name;
+    document.getElementById("editLastName").value = student.last_name;
+    document.getElementById("editSecondLastName").value = student.second_last_name;
     document.getElementById("editCurp").value = student.curp;
     document.getElementById("editPhone").value = student.phone;
     document.getElementById("editSchoolId").value = student.school_id;
@@ -253,7 +255,9 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
     const userId = document.getElementById("editUserId").value;
 
     const userBody = {
-        name: document.getElementById("editName").value,
+        first_name: document.getElementById("editFirstName").value,
+        last_name: document.getElementById("editLastName").value,
+        second_last_name: document.getElementById("editSecondLastName").value,
         curp: document.getElementById("editCurp").value,
         phone: document.getElementById("editPhone").value
     };
