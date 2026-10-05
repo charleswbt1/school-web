@@ -219,7 +219,7 @@ async function getClassesMediaSync(data, moduleId) {
             </button>
         `).join("");
 
-        const materialButtons = classesJson[0].materials.map(material => {
+        const materialButtons = classesJson[0].materials?.map(material => {
             return `<div class="buttons-material-container">
                 <button onclick="showVideo('${material.link}')" alt="Trabajo ${material.description}">
                     Material ${material.name}
@@ -261,7 +261,7 @@ async function getClassesMediaSync(data, moduleId) {
         return `
             <div class="class-media-container">
                 ${mediaButtons}
-                ${materialButtons}
+                ${materialButtons || ''}
                 ${jobButtons}
             </div>
         `;
