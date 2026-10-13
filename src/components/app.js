@@ -101,6 +101,7 @@ function initializeLoginModal() {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify({
                         nick_name: nick_name.value.trim(),
                         password: password.value.trim()

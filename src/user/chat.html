@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Escolar</title>
+    <link rel="icon" type="image/x-icon" href="../components/favicon.ico">
+    <link rel="stylesheet" href="../components/styles.css">
+    <link rel="stylesheet" href="./chat.css">
+    <script src="../components/app.js" defer></script>
+    <script src="./chat.js" defer></script>
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+
+    <div class="main-container">
+
+        <div id="header-container"></div>
+
+        <main class="chat-page">
+            <div id="header-container"></div>
+
+            <section class="chat-layout" aria-label="Chat escolar">
+                <aside class="conversations-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <h1>Conversaciones</h1>
+                        </div>
+                        <button id="newConversationBtn" class="icon-button" type="button" title="Nueva conversación"
+                            aria-label="Nueva conversación">＋</button>
+                    </div>
+
+                    <label class="search-box" for="searchConversations">
+                        <span aria-hidden="true">⌕</span>
+                        <input id="searchConversations" type="search" placeholder="Buscar conversaciones..."
+                            autocomplete="off">
+                    </label>
+
+                    <div id="conversationsList" class="conversations-list">
+                        <div class="loading-state">Cargando conversaciones…</div>
+                    </div>
+                </aside>
+
+                <section class="messages-panel">
+                    <header id="chatHeader" class="chat-header">
+                        <div class="empty-avatar">✉</div>
+                        <div class="chat-header-copy">
+                            <h2 id="chatTitle">Chat Escolar</h2>
+                            <p id="chatSubtitle">Selecciona una conversación para comenzar</p>
+                        </div>
+                        <button id="refreshMessagesBtn" class="icon-button" type="button" title="Actualizar mensajes"
+                            aria-label="Actualizar mensajes">↻</button>
+                    </header>
+
+                    <div id="chatNotice" class="chat-notice" role="status" hidden></div>
+
+                    <div id="messagesList" class="messages-list">
+                        <div class="empty-chat">
+                            <div class="empty-chat-icon">✉</div>
+                            <h3>Tu espacio de comunicación</h3>
+                            <p>Selecciona una conversación de la lista o inicia una nueva.</p>
+                        </div>
+                    </div>
+
+                    <form id="messageForm" class="message-composer">
+                        <label class="sr-only" for="messageInput">Escribe un mensaje</label>
+                        <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Escribe un mensaje..."
+                            disabled></textarea>
+                        <div class="composer-footer">
+                            <span id="messageHint">Selecciona una conversación para enviar mensajes.</span>
+                            <button id="sendMessageBtn" type="submit" disabled>
+                                <span>Enviar</span><span aria-hidden="true">➤</span>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </main>
+
+        <dialog id="newConversationDialog" class="conversation-dialog">
+            <form id="newConversationForm" method="dialog">
+                <div class="dialog-heading">
+                    <div>
+                        <p class="eyebrow">CHAT ESCOLAR</p>
+                        <h2>Nueva conversación</h2>
+                    </div>
+                    <button id="closeDialogBtn" class="icon-button" type="button" aria-label="Cerrar">×</button>
+                </div>
+
+                <label for="conversationName">Nombre de la conversación</label>
+                <input id="conversationName" name="name" type="text" maxlength="100"
+                    placeholder="Ej. Grupo de Matemáticas" required>
+
+                <label for="participantIds">Participantes</label>
+                <input id="participantIds" name="participant_ids" type="text"
+                    placeholder="ID de usuarios separados por comas" required>
+                <p class="form-help">
+                    Introduce los identificadores de los usuarios que participarán.
+                    El backend debe validar que tengas permiso para agregarlos.
+                </p>
+
+                <div class="dialog-actions">
+                    <button id="cancelDialogBtn" class="button-secondary" type="button">Cancelar</button>
+                    <button class="button-primary" type="submit">Crear conversación</button>
+                </div>
+            </form>
+        </dialog>
+    </div>
+    <!-- MODAL LOGIN -->
+    <div id="modal-container"></div>
+</body>
+
+</html>
