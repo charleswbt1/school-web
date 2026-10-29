@@ -1,0 +1,141 @@
+.credential {
+
+    position: relative;
+    width: 200px;
+    height: 312px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+
+}
+
+/*========================*/
+
+.credential-left-decoration {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 100%;
+    background: #173b73;
+    border-radius: 10px 40px 40px 10px;
+
+}
+
+/*========================*/
+.credential-header {
+
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    z-index: 5;
+
+}
+
+.credential-logo {
+    width: 50px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 10px;
+    /* Esquinas redondeadas */
+    background: #fff;
+    padding: 4px;
+}
+
+.credential-school {
+
+    text-align: right;
+    color: #173b73;
+
+}
+
+.credential-school h3 {
+
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    text-shadow:
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
+
+}
+
+.credential-school h1 {
+
+    font-size: 18px;
+    margin-top: 2px;
+    font-weight: 800;
+
+    text-shadow:
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
+
+}
+
+/*========================*/
+
+.credential-photo {
+
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.credential-photo img {
+
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    border: 4px solid #173b73;
+
+}
+
+/*========================*/
+
+.credential-student {
+
+    position: absolute;
+    top: 190px;
+    width: 100%;
+    text-align: center;
+    padding: 0 10px;
+
+}
+
+.credential-student h2 {
+
+    color: #06023f;
+    font-size: 16px;
+    line-height: 1.2;
+    text-shadow:
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
+
+}
+
+.credential-student h4 {
+
+    color: #242222;
+    font-size: 10px;
+    margin-top: 5px;
+    text-shadow:
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
+
+}

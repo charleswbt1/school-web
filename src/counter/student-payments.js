@@ -1,7 +1,7 @@
 const courseId = new URLSearchParams(window.location.search).get("id");
 
 async function loadModals() {
-    const receiptModalFile = await fetch("../template/receipt.html");
+    const receiptModalFile = await fetch("../adviser/receipt.html");
     const receiptModalHtml = await receiptModalFile.text();
     document.getElementById("receiptModalTemplate").innerHTML = receiptModalHtml;
 }
@@ -25,7 +25,11 @@ function getMonths(dateInit, dateEnd) {
 
 async function loadStudents() {
     try {
-        const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
+        const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const data = await response.json();
         students = data.students;
         document.getElementById("course-name").textContent = data.course_name;
@@ -33,7 +37,11 @@ async function loadStudents() {
 
         let modules;
         if (data.model === 'async') {
-            const contentResponse = await fetch(`${apiUrl}/api/contents?id=${data.content_id}`);
+            const contentResponse = await fetch(`${apiUrl}/api/contents?id=${data.content_id}`,
+                {
+                    credentials: 'include'
+                }
+            );
             const contentData = await contentResponse.json();
             modules = contentData[0].modules;
         }
@@ -233,6 +241,7 @@ async function deletePayment(studentId, paymentId, button) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     student_id: studentId,
                     payment_id: paymentId

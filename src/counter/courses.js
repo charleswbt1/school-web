@@ -1,0 +1,97 @@
+async function loadCourses() {
+    try {
+        const response = await fetch(`${apiUrl}/api/courses`,
+            {
+                credentials: 'include'
+            }
+        );
+        if (!response.ok) {
+            throw new Error('Error al obtener cursos');
+        }
+        const courses = await response.json();
+        const tbody = document.getElementById('courses-table-body');
+        if (!courses.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7">No hay cursos registrados</td>
+                </tr>
+            `;
+            return;
+        }
+        const btnView = role != "coordinator" ? 'hidden' : '';
+        tbody.innerHTML = courses.map(course => `
+            <tr>
+                <td>${course.date_init}</td>
+                <td>${course.name}</td>
+                <td>${course.description}</td>                
+                
+                <td>
+                    <div class="button-container">
+                        <button
+                            onclick="viewPayments('${course.id}')">
+                            Pagos
+                        </button>
+                        <button
+                            onclick="viewStudents('${course.id}')" ${btnView}>
+                            Control
+                        </button>
+                        <button
+                            onclick="viewCount('${course.id}')" ${btnView}>
+                            Conteo
+                        </button>
+                        <button
+                            onclick="viewClass('${course.id}','${course.content_id}','${course.teacher_id}')" ${btnView}>
+                            Clases
+                        </button>
+                        <button
+                            onclick="update('${course.id}')" ${btnView}>
+                            Editar
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error('control courses: Error al cargar los cursos', error);
+        document.getElementById('courses-table-body').innerHTML = `
+            <tr>
+                <td colspan="7">
+                    Error al cargar los cursos
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadCourses();
+
+    const btnAdd = document.getElementById('btn-add-course');
+
+    if (btnAdd) {
+        btnAdd.addEventListener('click', () => {
+            window.location.href = '../coordinator/course-register.html';
+        });
+    }
+});
+
+function viewStudents(id) {
+    window.location.href = `../coordinator/control-students.html?id=${id}`;
+}
+
+function viewCount(id) {
+    window.location.href = `../coordinator/count-advisers.html?id=${id}`;
+}
+
+function viewPayments(id) {
+    window.location.href = `../counter/student-payments.html?id=${id}`;
+}
+
+function viewClass(courseId, contentId, teacherId) {
+    window.location.href = `../coordinator/class-register.html?course_id=${courseId}&content_id=${contentId}&teacher_id=${teacherId}`;
+}
+
+function update(id) {
+    window.location.href = `../coordinator/course-register.html?id=${id}`;
+}

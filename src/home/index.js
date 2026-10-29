@@ -1,147 +1,81 @@
+const apiUrl = "https://school-back-764239827508.us-east1.run.app";
 const showPrice = false;
-async function loadCourses() {
-    try {
-        const response = await fetch(`${apiUrl}/api/courses?available=true`);
-        const courses = await response.json();
 
-        const container = document.getElementById("coursesContainer");
-
-        const categorias = [
-            { nombre: "BACHILLERATO", icono: "📘" },
-            { nombre: "LICENCIATURA", icono: "🎓" },
-            { nombre: "ESPECIALIDAD", icono: "🏥" },
-            { nombre: "ESPECIALIDAD MAESTRÍA", icono: "🎖️" }
-        ];
-
-        container.innerHTML = "";
-
-        categorias.forEach(categoria => {
-            const cursos = courses.filter(course =>
-                course.type.toUpperCase() === categoria.nombre
-            );
-            if (cursos.length === 0) return;
-
-            container.innerHTML += `
-        <section class="category-section">
-            <h2 class="category-title">${categoria.icono} ${categoria.nombre}</h2>
-            <div class="category-grid" id="cat-${categoria.nombre}"></div>
-        </section>
-    `;
-
-            const grid = document.getElementById(`cat-${categoria.nombre}`);
-
-            cursos.forEach(course => {
-
-                grid.innerHTML += `
-            <div class="course-card">
-
-                <div class="course-image-container">
-                    <img src="${course.image}" class="course-image">
-                </div>
-
-                <h3>${course.name}</h3>
-
-                <p>${course.description}</p>
-                ${course.model === 'sync'
-                        ? `<p>Clases: ${course.date_init} - ${course.date_end}</p>`
-                        : ``
-                    }                
-                <p style="display: ${showPrice ? 'block' : 'none'};">
-                    Aprovecha de
-                    <span style="text-decoration: line-through; color: #999;">
-                        $${course.cost_quota}
-                    </span>
-                    a: 
-                    <strong>
-                        $${course.offer_cost_quota}
-                    </strong>
-                </p>
-                <div class="course-actions">
-                    <button 
-                        class="info-btn content-btn"
-                        data-content="${course.content_id}--${course.adviser_id}">
-                        Detalles
-                    </button>
-                </div>
-            </div>
-        `;
-            });
-
-        });
-    } catch (error) {
-        alert("Error loading courses:", error);
-    }
+function initializeMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const hamburger = document.getElementById("hamburger");
+    hamburger.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+    });
+    document.addEventListener("click", (e) => {
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !hamburger.contains(e.target)
+        ) {
+            sidebar.classList.remove("active");
+        }
+    });
 }
-
-loadCourses();
-
-/* ===================== EVENTS ===================== */
-
-document.addEventListener("click", async (event) => {
-    const button = event.target;
-
-    /* ===================== CONTENT ===================== */
-
-    if (button.classList.contains("content-btn")) {
-        const [contentId, adviserId] = button.dataset.content.split("--");
-
+function initializeSession() {
+    const loginModal = document.getElementById("loginModal");
+    const loginButton = document.getElementById("openLogin");
+    const nick_name = document.getElementById("nickname");
+    const password = document.getElementById("password");
+    const text_error = document.getElementById("loginError");
+    loginButton.addEventListener("click", () => {
+        nick_name.value = "";
+        password.value = "";
+        text_error.textContent = "";
+        loginModal.style.display = "flex";
+    });
+    loginModal.addEventListener("click", (e) => {
+        if (e.target === loginModal) {
+            loginModal.style.display = "none";
+        }
+    });
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch(
-                `${apiUrl}/api/contents?id=${contentId}`
+            const response = await fetch(`${apiUrl}/api/users/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        nick_name: nick_name.value.trim(),
+                        password: password.value.trim()
+                    })
+                }
             );
             const data = await response.json();
-
-            const adviserResponse = await fetch(
-                `${apiUrl}/api/users?id=${adviserId}`
-            );
-            const adviserData = await adviserResponse.json();
-
-            const modules = data[0].modules.map(module => {
-                const topics = module.topics.map(topic => `
-                    <li>${topic.name}</li>
-                `)
-                    .join("");
-                return `
-                    <div class="module-card">
-                    <h3>${module.name}</h3>
-                    <ul class="topics-list">${topics}</ul>
-                    </div>
-                    `;
-            })
-                .join("");
-
-            const adviserPhone = adviserData[0].phone.replace(/\D/g, '');
-            document.getElementById("contentData").innerHTML = `
-            <h2>Plan de estudios</h2>
-            <div class="modules-container">
-                ${modules}
-                <div class="module-card">
-                    <h3>Inscripción</h3>
-                    <p>Para poder incribirte es necesario que te pongas en contacto con el asesor:</p>
-                    <p><strong>${adviserPhone}</strong></p>
-                    <br>
-                    <button class="info-btn" onclick="openWhatsApp('${adviserPhone}')">
-                        Contactar por WhatsApp
-                    </button>
-                </div>
-            </div>
-            `;
-
-            document.getElementById("contentModal").style.display = "flex";
+            if (!response.ok) {
+                text_error.textContent = "Usuario o Contraseña Incorrectos";
+                return;
+            }
+            sessionStorage.setItem("role", data.role);
+            sessionStorage.setItem("userId", data.userId);
+            switch (data.role) {
+                case "admin":
+                    window.location.href = `../${data.role}/review.html`;
+                    break;
+                case "adviser":
+                    window.location.href = `../${data.role}/students.html`;
+                    break;
+                default:
+                    window.location.href = `../${data.role}/courses.html`;
+            }
         } catch (error) {
-            alert("Error loading content:", error);
+            console.error("Login error:", error);
+            showError("Error de conexión. Por favor, inténtalo de nuevo más tarde.");
         }
-    }
-    const modal = document.getElementById("contentModal");
-
-    modal.addEventListener("click", (e) => {
-
-        if (e.target === modal) {
-            modal.style.display = "none";
-        }
-
     });
-});
+}
+
+initializeMenu();
+initializeSession();
 
 /* =========================
    CARRUSEL DE EVENTOS

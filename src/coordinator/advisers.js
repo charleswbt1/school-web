@@ -1,6 +1,10 @@
 async function loadTable() {
     try {
-        const response = await fetch(`${apiUrl}/api/users?role=adviser`);
+        const response = await fetch(`${apiUrl}/api/users?role=adviser`,
+            {
+                credentials: 'include'
+            }
+        );
         if (!response.ok) {
             throw new Error('Error al obtener asesores');
         }
@@ -75,6 +79,7 @@ function addSwitchEvents() {
                                 headers: {
                                     "Content-Type": "application/json"
                                 },
+                                credentials: 'include',
                                 body: JSON.stringify({
                                     state: state
                                 })

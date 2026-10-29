@@ -170,7 +170,7 @@
 }
 
 /*INFORMES*/
-.modal {
+.modal-welcome {
     display: none;
     position: fixed;
     inset: 0;
@@ -180,7 +180,7 @@
     z-index: 9999;
 }
 
-.modal-content {
+.modal-content-welcome {
     width: 650px;
     background: #d2f5f3;
     border-radius: 12px;
@@ -188,24 +188,24 @@
     position: relative;
 }
 
-.modal-body {
+.modal-body-welcome {
     margin-top: 20px;
     text-align: center;
 }
 
-.modal-body h3 {
+.modal-body-welcome h3 {
     font-size: 30px;
     color: #173b73;
     margin-bottom: 20px;
     font-weight: bold;
 }
 
-.modal-body p {
+.modal-body-welcome p {
     font-size: 17px;
     margin-bottom: 20px;
 }
 
-.modal-body ul {
+.modal-body-welcome ul {
     display: inline-block;
     /* Centra el bloque de la lista */
     text-align: left;
@@ -216,15 +216,6 @@
     font-size: 17px;
 }
 
-.modal-body li {
+.modal-body-welcome li {
     margin-bottom: 12px;
-}
-
-.close {
-    position: absolute;
-    right: 18px;
-    top: 12px;
-    font-size: 30px;
-    cursor: pointer;
-    color: #173b73;
 }

@@ -1,5 +1,3 @@
-const userId = sessionStorage.getItem('userId');
-
 document.addEventListener('DOMContentLoaded', () => {
     loadContents();
 
@@ -10,7 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadContents() {
     try {
-        const response = await fetch(`${apiUrl}/api/contents?coordinator_id=${userId}`);
+        const response = await fetch(`${apiUrl}/api/contents`,
+            {
+                credentials: 'include'
+            }
+        );
 
         if (!response.ok) {
             throw new Error('Error al obtener contenidos');

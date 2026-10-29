@@ -1,12 +1,10 @@
 async function loadCourses() {
     try {
-        const userId = sessionStorage.getItem("userId");
-        const response = await fetch(`${apiUrl}/api/students/courses?user_id=${userId}`);
+        const response = await fetch(`${apiUrl}/api/students/courses`,
+            { credentials: 'include' }
+        );
         const courses = await response.json();
-        if (courses.length === 0) {
-            window.location.href = `../student/availablecourses.html`;
-        }
-        const container = document.getElementById("studentCoursesContainer");
+        const container = document.getElementById("coursesContainer");
         container.innerHTML = "";
         courses.forEach(course => {
             container.innerHTML += `
@@ -40,9 +38,6 @@ loadCourses();
 
 document.addEventListener("click", async (event) => {
     const button = event.target;
-
-    /* ===================== CONTENT ===================== */
-
     if (button.classList.contains("content-btn")) {
         const courseId = button.dataset.content;
         try {
@@ -51,5 +46,4 @@ document.addEventListener("click", async (event) => {
             alert("Error setting student ID:", error);
         }
     }
-
 });

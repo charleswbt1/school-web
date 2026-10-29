@@ -38,7 +38,6 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     const data = {
         name: document.getElementById('contentName').value,
         description: document.getElementById('contentDescription').value,
-        coordinator_id: sessionStorage.getItem("userId"),
         modules: []
     };
 
@@ -72,7 +71,6 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
         });
         await showSuccess("Registro Exitoso");
         document.getElementById("contentForm").reset();
-        window.location.href = '../coordinator/contents.html';
     } catch (error) {
         showError("Error al Registrar");
     } finally {

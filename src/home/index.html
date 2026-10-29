@@ -4,19 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
-    <link rel="stylesheet" href="../components/styles.css">
-    <link rel="stylesheet" href="../home/index.css">
+    <title>IUC</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="courses.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../iuc/app.css">
 </head>
 
 <body>
 
-    <div id="sidebar-container"></div>
+    <div id="sidebar-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>IUC Conecta</h2>
+            </div>
+            <ul><li><a href="#inicio">Inicio</a></li>
+                <li><a href="#programas">Oferta educativa</a></li>
+                <li><a href="#admision">Proceso</a></li>
+                <li><a href="#disponibles">Cursos Disponibles</a></li>
+                <li><a href="#nosotros">Conócenos</a></li>
+                <li><a href="#preguntas">Preguntas</a></li>
+            </ul>
+        </aside>
+    </div>
+    
 
     <div class="main-container">
 
-        <div id="header-container"></div>
+        <div id="header-container">
+            <header class="header">
+
+                <button class="hamburger" id="hamburger">
+                    ☰
+                </button>
+
+                <div class="top-banner">
+                    <img class="top-logo" src="https://storage.googleapis.com/school-source/web/logouniversidad.jpg"
+                        alt="Banner">
+
+                </div>
+
+                <button class="login-btn" id="openLogin">
+                    Iniciar Sesión
+                </button>
+
+            </header>
+        </div>
 
         <!-- CARRUSEL DE EVENTOS -->
         <section class="events-section" hidden>
@@ -38,25 +71,538 @@
             <div class="event-indicators" id="eventIndicators"></div>
         </section>
 
-        <section class="courses-section">
+        <!-- PORTADA -->
+        <section class="hero" id="inicio">
+            <div class="hero-background"></div>
+            <div class="container hero-container">
+                <div class="hero-content">
+
+                    <span class="eyebrow">
+                        TU FUTURO COMIENZA AQUÍ
+                    </span>
+
+                    <h1>
+                        El siguiente paso de tu vida
+                        <span>comienza con tu educación.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Descubre nuevas oportunidades, desarrolla tus
+                        habilidades y prepárate para alcanzar tus metas
+                        personales y profesionales.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#programas" class="button button-primary">
+                            Explorar programas
+                            <span aria-hidden="true">→</span>
+                        </a>
+
+                        <a href="#nosotros" class="button button-outline">
+                            Conoce nuestra institución
+                        </a>
+                    </div>
+
+                    <div class="hero-assurance">
+                        <span class="assurance-icon" aria-hidden="true">✓</span>
+
+                        <p>
+                            Información académica clara y acompañamiento
+                            durante tu proceso de admisión.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-image-frame">
+                        <img src="https://storage.googleapis.com/school-source/web/students.jpg?auto=format&fit=crop&w=1100&q=85"
+                            alt="Estudiantes en un entorno universitario" fetchpriority="high">
+
+                        <div class="image-caption">
+                            <span class="caption-mark"></span>
+
+                            <div>
+                                <strong>Construye tu futuro</strong>
+                                <p>Da hoy el primer paso.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-decoration hero-decoration-one"></div>
+                    <div class="hero-decoration hero-decoration-two"></div>
+                </div>
+            </div>
+
+            <div class="hero-bottom">
+                <div class="container hero-bottom-inner">
+                    <span>PREPÁRATE PARA LO QUE VIENE</span>
+                    <a href="#preguntas" aria-label="Descubrir programas educativos">
+                        Tienes dudas? ↓
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- OFERTA EDUCATIVA -->
+        <section class="programs-section section-padding" id="programas">
+            <div class="container">
+
+                <div class="section-heading centered-heading">
+                    <span class="eyebrow eyebrow-dark">
+                        OFERTA EDUCATIVA
+                    </span>
+
+                    <h2>
+                        Encuentra el camino
+                        <span>que va contigo.</span>
+                    </h2>
+
+                    <p>
+                        Explora nuestros programas académicos y encuentra
+                        una opción alineada con tus intereses y objetivos.
+                    </p>
+                </div>
+
+                <div class="programs-grid" id="programsGrid">
+
+                    <!-- Tarjetas de ejemplo.
+                         Sustituir por programas reales o cargarlos desde la API. -->
+
+                    <article class="program-card">
+                        <div class="program-card-icon" aria-hidden="true">
+                            <span>01</span>
+                        </div>
+
+                        <div class="program-card-content">
+                            <span class="program-category">FORMACIÓN PROFESIONAL</span>
+
+                            <h3>Nivelación</h3>
+
+                            <p>
+                                Desarrolla conocimientos y habilidades
+                                para avanzar hacia tus metas profesionales.
+                            </p>
+
+                            <a href="#LICENCIATURA" class="program-link" data-program="Licenciaturas">
+                                Solicitar información →
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="program-card">
+                        <div class="program-card-icon" aria-hidden="true">
+                            <span>02</span>
+                        </div>
+
+                        <div class="program-card-content">
+                            <span class="program-category">ESPECIALIZACIÓN</span>
+
+                            <h3>Especialidades</h3>
+
+                            <p>
+                                Profundiza tus conocimientos y fortalece
+                                tu preparación en un área específica.
+                            </p>
+
+                            <a href="#ESPECIALIDAD" class="program-link" data-program="Especialidades">
+                                Solicitar información →
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="program-card">
+                        <div class="program-card-icon" aria-hidden="true">
+                            <span>03</span>
+                        </div>
+
+                        <div class="program-card-content">
+                            <span class="program-category">CONTINUIDAD ACADÉMICA</span>
+
+                            <h3>Posgrado</h3>
+
+                            <p>
+                                Conoce las alternativas disponibles para
+                                continuar tu desarrollo académico.
+                            </p>
+
+                            <a href="#ESPECIALIDAD MAESTRÍA" class="program-link" data-program="Posgrado">
+                                Solicitar información →
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+                <p class="programs-note">
+                    Consulta con el área de admisiones los programas
+                    disponibles, sus requisitos y sus modalidades.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- PROCESO DE INSCRIPCIÓN -->
+        <section class="admission-section section-padding" id="admision">
+            <div class="container">
+
+                <div class="section-heading centered-heading">
+                    <span class="eyebrow eyebrow-dark">
+                        COMIENZA TU PROCESO
+                    </span>
+
+                    <h2>
+                        Tres pasos para
+                        <span>dar el primer paso.</span>
+                    </h2>
+
+                    <p>
+                        Te orientamos para que conozcas las opciones
+                        y sepas qué necesitas para iniciar tu proceso.
+                    </p>
+                </div>
+
+                <div class="admission-steps">
+
+                    <article class="admission-step">
+                        <span class="step-number">01</span>
+                        <h3>Solicita información</h3>
+                        <p>
+                            Cuéntanos qué te interesa estudiar y cómo
+                            podemos ayudarte.
+                        </p>
+                    </article>
+
+                    <article class="admission-step">
+                        <span class="step-number">02</span>
+                        <h3>Conoce los requisitos</h3>
+                        <p>
+                            Revisa el programa, los costos, la documentación
+                            y las fechas disponibles.
+                        </p>
+                    </article>
+
+                    <article class="admission-step">
+                        <span class="step-number">03</span>
+                        <h3>Inicia tu inscripción</h3>
+                        <p>
+                            Una vez resueltas tus dudas, sigue las indicaciones
+                            oficiales del área de admisiones.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!----------------
+        cursos disponibles
+        ---------------->
+        <section class="courses-section" id="disponibles">
             <h2>Cursos Disponibles</h2>
             <div class="courses-container" id="coursesContainer"></div>
         </section>
 
+        <!-- PROPUESTA DE VALOR -->
+        <section class="benefits-section section-padding" id="nosotros">
+            <div class="container benefits-grid">
+
+                <div class="benefits-content">
+                    <span class="eyebrow">
+                        IUC Conecta
+                    </span>
+
+                    <h2>
+                        Elige tu futuro
+                        <span>con información y confianza.</span>
+                    </h2>
+
+                    <p>
+                        Elegir dónde estudiar es una decisión importante.
+                        Por eso queremos que tengas acceso a información
+                        clara antes de comenzar tu proceso.
+                    </p>
+                </div>
+
+                <div class="benefits-list">
+
+                    <article class="benefit-item">
+                        <div class="benefit-number">01</div>
+
+                        <div>
+                            <h3>Orientación personalizada</h3>
+                            <p>
+                                Resuelve tus dudas sobre programas,
+                                requisitos y proceso de inscripción.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="benefit-item">
+                        <div class="benefit-number">02</div>
+
+                        <div>
+                            <h3>Información académica clara</h3>
+                            <p>
+                                Conoce los planes de estudio, la duración
+                                y las condiciones de cada programa.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="benefit-item">
+                        <div class="benefit-number">03</div>
+
+                        <div>
+                            <h3>Transparencia institucional</h3>
+                            <p>
+                                Consulta la información oficial disponible
+                                y verifica los datos relevantes antes de
+                                inscribirte.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MISION Y VISION -->
+        <section class="trust-section section-padding">
+            <div class="container">
+                <div class="section-heading centered-heading">
+                    <h2>
+                        IUC <span>Conecta</span>
+                    </h2>
+                </div>
+
+                <div class="trust-grid">
+
+                    <article class="trust-card">
+                        <h3>MISIÓN</h3>
+                        <p>
+                            Ser una institución educativa privada reconocida por su
+                            calidad académica, compromiso con la formación de líderes
+                            éticos y competentes, así como por su capacidad de
+                            adaptación a las demandas del entorno, consolidándose como
+                            una opción de prestigio en el ámbito educativo.
+                        </p>
+                    </article>
+
+                    <article class="trust-card">
+                        <h3>VISIÓN</h3>
+                        <p>
+                            Ser una institución educativa privada reconocida por su
+                            calidad académica, compromiso con la formación de líderes
+                            éticos y competentes, así como por su capacidad de
+                            adaptación a las demandas del entorno, consolidándose como
+                            una opción de prestigio en el ámbito educativo.
+                        </p>
+                    </article>
+                    <article class="trust-card">
+                        <h3>VALORES</h3>
+                        <p>
+                            <strong>Responsabilidad:</strong>
+                            Cumplimos con nuestros compromisos académicos y sociales
+                            con ética y profesionalismo.
+                            <br><strong>Respeto:</strong>
+                            Fomentamos un ambiente de convivencia armónica,
+                            inclusiva y tolerante.
+                            <br><strong>Honestidad:</strong>
+                            Actuamos con transparencia, integridad y coherencia en
+                            todas nuestras acciones.
+                            <br><strong>Compromiso:</strong>
+                            Nos dedicamos al desarrollo integral de nuestros
+                            estudiantes y al mejoramiento continuo.
+                            <br><strong>Excelencia:</strong>
+                            Buscamos la mejora constante en la calidad educativa y
+                            en nuestros procesos.
+                            <br><strong>Innovación:</strong>
+                            Impulsamos nuevas ideas, metodologías y tecnologías en
+                            la enseñanza.
+                            <br><strong>Trabajo en equipo:</strong>
+                            Promovemos la colaboración entre la comunidad educativa
+                            para alcanzar objetivos comunes.
+                            <br><strong>Responsabilidad social:</strong>
+                            Contribuimos activamente al bienestar y desarrollo de la
+                            sociedad.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="trust-notice">
+                    <span class="notice-icon" aria-hidden="true">i</span>
+                    <p>
+                        Los reconocimientos, autorizaciones y registros
+                        aplicables dependen de cada programa y de la
+                        situación jurídica de la institución. Solicita
+                        los datos específicos y comprueba su vigencia
+                        en las fuentes oficiales correspondientes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historico -->
+        <section class="contact-cta section-padding">
+            <div class="container">
+                <div class="cta-panel">
+                    <div class="cta-content">
+                        <span class="eyebrow">
+                            IUC Conecta
+                        </span>
+                        <h2>
+                            ESTUDIA UNA LICENCIATURA
+                            <span>Y TRANSFORMA TU MAÑANA</span>
+                        </h2>
+                    </div>
+                    <div class="cta-content">
+                        <li>Administración de Empresas.</li>
+                        <li>Ciencias de la Comunicación.</li>
+                        <li>Contabilidad y Finanzas.</li>
+                        <li>Criminología y Criminalística.</li>
+                        <li>Derecho.</li>
+                        <li>Ingeniería en Sistemas Computacionales.</li>
+                        <li>Ingeniería Industrial.</li>
+                        <li>Ingeniería Petrolera.</li>
+                        <li>Pedagogía.</li>
+                        <li>Seguridad Pública.</li>
+                        <li>Software e Inteligencia Artificial.</li>
+                        <li>Trabajo Social.</li>
+                        <li>Turismo.</li>
+                        <li>Diseño de Imagen.</li>
+                        <li>Licenciatura en Enfermería.</li>
+                        <li>Auxiliar en Enfermería</li>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-cta section-padding" id="preguntas">
+            <div class="container">
+                <div class="cta-panel">
+                    <div class="cta-content">
+                        <span class="eyebrow">
+                            IUC Conecta
+                        </span>
+                        <h2>
+                            PREGUNTANOS
+                            <span>ESTAMOS PARA AYUDAR</span>
+                        </h2>
+                    </div>
+                    <div class="cta-content">
+                        <strong>¿Por qué elegir IUC Conecta?</strong>
+                        <li>Ofrecemos procesos ágiles y tiempos de entrega más rápidos que muchas otras
+                            instituciones.</li>
+                        <li>Acompañandote en todo momento hasta tu titulación.</li>
+
+                        <br><strong>¿Qué beneficios obtengo?</strong>
+                        <li>Formación especializada</li>
+                        <li>Clases en línea en vivo</li>
+                        <li>Acceso a grabaciones (Clases en vivo)</li>
+                        <li>Flexibilidad para estudiar y trabajar</li>
+                        <li>Título y cédula electrónica con validez oficial en la SEP</li>
+
+                        <br><strong>¿Cómo se realiza la inscripción?</strong>
+                        <li>En compañia de un asesor</li>
+                        <li>Documentación en formato PDF</li>
+                        <li>Pago correspondiente</li>
+
+                        <br><strong>¿Qué documentos necesito para inscribirme?</strong>
+                        <li>INE</li>
+                        <li>Acta de nacimiento.</li>
+                        <li>CURP</li>
+                        <li>Comprobante de pago de inscripción y primera mensualidad.</li>
+                        <li>Título de Licenciatura (MAESTRIA)</li>
+                        <li>Cédula profesional (MAESTRIA)</li>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="site-footer" id="contacto">
+
+            <div class="container footer-grid">
+
+                <div class="footer-brand">
+                    <a href="#inicio" class="brand brand-footer">
+                        <div class="brand-symbol" aria-hidden="true">
+                            <span>IUC</span>
+                        </div>
+
+                        <div class="brand-text">
+                            <strong id="footerInstitutionName">
+                                IUC Conecta
+                            </strong>
+                            <span>Educación que transforma</span>
+                        </div>
+                    </a>
+
+                    <p>
+                        Acompañamos a quienes buscan nuevas oportunidades
+                        a través de la educación.
+                    </p>
+                </div>
+
+                <div class="visit">
+                    <h3>¡Visítanos!</h3>
+                    <div class="address">
+                        <div class="address-text">
+                            📍Calle La Paz #8, Obrera<br>
+                            Actopan Hidalgo<br>
+                            CP: 42505
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Explora</h3>
+                    <a href="#programas">Oferta educativa</a>
+                    <a href="#nosotros">Nuestra institución</a>
+                    <a href="#admision">Proceso de admisión</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container footer-bottom-inner">
+                    <p>
+                        © <span id="currentYear"></span>
+                        <span id="copyrightName">iuc-conecta</span>.
+                        Todos los derechos reservados.
+                    </p>
+
+                    <a href="#inicio">Volver al inicio ↑</a>
+                </div>
+            </div>
+
+        </footer>
+
     </div>
 
-    <!-- MODAL CONTENT -->
-    <div id="contentModal" class="modal">
-
-        <div class="modal-content" id="contentData">
-
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <input type="text" id="nickname" placeholder="NickName" required />
+                <input type="password" id="password" placeholder="Contraseña" required />
+                <button type="submit">
+                    Entrar
+                </button>
+                <p id="loginError" class="login-error"></p>
+            </form>
         </div>
-
     </div>
-    <!-- MODAL LOGIN -->
-    <div id="modal-container"></div>
-    <script src="../components/app.js"></script>
-    <script src="../home/index.js"></script>
+
+    <div id="contentModal" class="modal" style="display: none;">
+        <div class="modal-content" id="contentData"></div>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="courses.js"></script>
 
 </body>
 

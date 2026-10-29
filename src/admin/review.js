@@ -32,7 +32,10 @@ async function loadReview() {
     try {
 
         const response = await fetch(
-            `${apiUrl}/api/courses/review?year=${yearSelect.value}&month=${monthSelect.value}&team=${teamIdSession}`
+            `${apiUrl}/api/courses/review?year=${yearSelect.value}&month=${monthSelect.value}&team=${teamIdSession}`,
+            {
+                credentials: "include"
+            }
         );
 
         const reviews = await response.json();

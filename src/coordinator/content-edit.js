@@ -1,7 +1,11 @@
 const contentId = new URLSearchParams(window.location.search).get('id');
 
 async function loadContent() {
-    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`);
+    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
+        {
+            credentials: 'include'
+        }
+    );
     const jsonResponse = await response.json();
     const content = jsonResponse[0];
 
@@ -134,19 +138,17 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(data)
         });
 
         if (!response.ok) {
             throw new Error(await response.text());
         }
-
         await showSuccess("Actualización Exitosa");
-        window.location.href = '../coordinator/contents.html';
-
     } catch (error) {
-        alert(error);
-        showError("Error al Actualizar");
+        console.error(`content-edit: ${error}`)
+        showError(`Error al Actualizar: ${error}`);
     }
 
 });

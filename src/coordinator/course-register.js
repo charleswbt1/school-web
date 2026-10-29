@@ -1,9 +1,12 @@
-const userId = sessionStorage.getItem("userId");
 const courseId = new URLSearchParams(window.location.search).get('id');
 
 async function loadSquads() {
     try {
-        const response = await fetch(`${apiUrl}/api/squads?state=active`);
+        const response = await fetch(`${apiUrl}/api/squads?state=active`,
+            {
+                credentials: 'include'
+            }
+        );
         const squads = await response.json();
         const select = document.getElementById("squadId");
 
@@ -26,7 +29,11 @@ async function loadSquads() {
 
 async function loadContents() {
     try {
-        const response = await fetch(`${apiUrl}/api/contents?state=active&coordinator_id=${userId}`);
+        const response = await fetch(`${apiUrl}/api/contents?state=active`,
+            {
+                credentials: 'include'
+            }
+        );
         const contents = await response.json();
         const select = document.getElementById("contentId");
 
@@ -49,7 +56,11 @@ async function loadContents() {
 
 async function loadAdvisers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users?role=adviser&state=active`);
+        const response = await fetch(`${apiUrl}/api/users?role=adviser&state=active`,
+            {
+                credentials: 'include'
+            }
+        );
         const advisers = await response.json();
         const select = document.getElementById("adviserId");
 
@@ -72,7 +83,11 @@ async function loadAdvisers() {
 
 async function loadTeachers() {
     try {
-        const response = await fetch(`${apiUrl}/api/users?role=teacher&state=active`);
+        const response = await fetch(`${apiUrl}/api/users?role=teacher&state=active`,
+            {
+                credentials: 'include'
+            }
+        );
         const teachers = await response.json();
         const select = document.getElementById("teacherId");
 
@@ -112,7 +127,11 @@ async function loadCourse() {
         document.getElementById('costTitleText').style.display = 'block';
         document.getElementById('costTitleTwoText').style.display = 'block';
 
-        const response = await fetch(`${apiUrl}/api/courses?id=${courseId}`);
+        const response = await fetch(`${apiUrl}/api/courses?id=${courseId}`,
+            {
+                credentials: 'include'
+            }
+        );
         if (!response.ok) {
             throw new Error('Error al obtener el curso');
         }
@@ -173,7 +192,6 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         squad_id: document.getElementById("squadId").value,
         content_id: document.getElementById("contentId").value,
         adviser_id: document.getElementById("adviserId").value,
-        coordinator_id: userId,
         teacher_id: document.getElementById("teacherId").value,
         offer_cost_inscription: Number(document.getElementById("offerCostInscription").value),
         offer_cost_quota: Number(document.getElementById("offerCostQuota").value),
@@ -202,6 +220,7 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify(body)
             }
         );
@@ -211,7 +230,6 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         }
         await showSuccess("Registro Exitoso");
         document.getElementById("courseForm").reset();
-        window.location.href = '../control/periods.html';
     } catch (error) {
         showError("Error al Registrar");
     } finally {

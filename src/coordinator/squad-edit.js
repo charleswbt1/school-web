@@ -24,7 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadSquad() {
     try {
-        const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`);
+        const response = await fetch(`${apiUrl}/api/squads?id=${squadId}`,
+            {
+                credentials: 'include'
+            }
+        );
         if (!response.ok) {
             throw new Error('Error al obtener la escuela');
         }
@@ -75,6 +79,7 @@ async function updateSquad(event) {
                 `${apiUrl}/api/files`,
                 {
                     method: "POST",
+                    credentials: 'include',
                     body: formData
                 }
             );
@@ -89,6 +94,7 @@ async function updateSquad(event) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(request)
             }
         );

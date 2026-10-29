@@ -4,49 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
-    <link rel="stylesheet" href="../components/styles.css">
-    <link rel="stylesheet" href="../template/receipt.css">
+    <title>IUC</title>
+    <link rel="icon" type="image/x-icon" href="../home/favicon.ico" />
+    <link rel="stylesheet" href="../iuc/app.css">
+    <link rel="stylesheet" href="../adviser/receipt.css">
 </head>
 
 <body>
-
     <div id="sidebar-container"></div>
-
     <div class="main-container">
-
         <div id="header-container"></div>
-
-        <section class="info-section">
-
-            <div class="section-header">
-                <h2>Alumnos</h2> <button id="btn-add" class="btn-primary"> + Nuevo Alumno </button>
-            </div>
-            <div class="table-container">
-                <table class="style-table">
-                    <thead>
-                        <tr>
-                            <th>CURP</th>
-                            <th>Nombre</th>
-                            <th>Nombre Curso</th>
-                            <th>Telefono</th>
-                            <th>Asesor</th>
-                            <th>Pagos</th>
-                        </tr>
-                    </thead>
-                    <tbody id="students-table-body">
-                        <tr>
-                            <td colspan="7">Cargando alumnos...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </section>
-
+        <div class="body-container">
+            <section class="info-section">
+                <div class="section-header">
+                    <h2>Alumnos</h2> <button id="btn-add" class="btn-primary"> + Nuevo Alumno </button>
+                </div>
+                <div class="table-container">
+                    <table class="style-table">
+                        <thead>
+                            <tr>
+                                <th>CURP</th>
+                                <th>Nombre</th>
+                                <th>Nombre Curso</th>
+                                <th>Telefono</th>
+                                <th>Asesor</th>
+                                <th>Pagos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <tr>
+                                <td colspan="7">Cargando alumnos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
-
 </body>
 
 <div class="modal" id="contentModal">
@@ -85,8 +79,8 @@
 <div id="modal-container"></div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script src="../components/app.js"></script>
+<script src="../iuc/app.js"></script>
 <script src="students.js"></script>
-<script src="../template/student-payments.js"></script>
+<script src="../adviser/modal-payments.js"></script>
 
 </html>

@@ -5,7 +5,11 @@ const contentId = params.get("content_id");
 let classeId;
 
 async function loadModules() {
-    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`);
+    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
+            {
+                credentials: 'include'
+            }
+        );
     const content = (await response.json())[0];
     const select = document.getElementById("moduleSelect");
     select.innerHTML = '';
@@ -37,7 +41,11 @@ async function loadClasses() {
     const moduleId = document.getElementById("moduleSelect").value;
     if (!moduleId) return;
 
-    const response = await fetch(`${apiUrl}/api/classes?course_id=${courseId}&module_id=${moduleId}`);
+    const response = await fetch(`${apiUrl}/api/classes?course_id=${courseId}&module_id=${moduleId}`,
+            {
+                credentials: 'include'
+            }
+        );
     if (!response.ok) return;
 
     const data = await response.json();
@@ -128,6 +136,7 @@ function addMaterialClass(material = {}) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     url: material.link
                 })
@@ -221,6 +230,7 @@ function addClassJob(classJob = {}) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     url: classJob.link
                 })
@@ -290,6 +300,7 @@ async function saveClasses(e) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify(request)
             }
         );
@@ -336,6 +347,7 @@ async function updateFile(file, type) {
         `${apiUrl}/api/files`,
         {
             method: "POST",
+            credentials: 'include',
             body: formData
         }
     );

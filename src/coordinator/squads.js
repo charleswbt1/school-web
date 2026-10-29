@@ -1,6 +1,10 @@
 async function loadSquads() {
     try {
-        const response = await fetch(`${apiUrl}/api/squads`);
+        const response = await fetch(`${apiUrl}/api/squads`,
+            {
+                credentials: 'include'
+            }
+        );
 
         if (!response.ok) {
             throw new Error('Error al obtener escuelas');

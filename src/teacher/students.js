@@ -2,7 +2,11 @@ const courseId = new URLSearchParams(window.location.search).get('id');
 
 async function loadStudents() {
     try {
-        const response = await fetch(`${apiUrl}/api/students/data?course_id=${courseId}`);
+        const response = await fetch(`${apiUrl}/api/students/data?course_id=${courseId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const students = await response.json();
 
         const tbody = document.getElementById("studentsTableBody");

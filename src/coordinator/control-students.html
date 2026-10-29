@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="icon" type="image/x-icon" href="../components/favicon.ico" />
-    <link rel="stylesheet" href="../components/styles.css">
+    <title>IUC</title>
+    <link rel="icon" type="image/x-icon" href="../home/favicon.ico" />
+    <link rel="stylesheet" href="../iuc/app.css">
 </head>
 
 <body>
@@ -52,7 +52,6 @@
 
 <div id="editStudentModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeEditStudent()">&times;</span>
         <h2>Editar Alumno</h2>
         <form class="info-form" id="editStudentForm">
             <input type="hidden" id="editStudentId">
@@ -84,17 +83,13 @@
 </div>
 
 
-
-
-
 <div class="modal-image" id="imageModal" onclick="closeImage()">
     <img id="payImage">
 </div>
 
-<div id="modal-container"></div>
 
-<script src="../components/app.js"></script>
-<script src="../template/student-documents.js"></script>
+<script src="../iuc/app.js"></script>
+<script src="../student/student-documents.js"></script>
 <script src="control-students.js"></script>
 
 </html>

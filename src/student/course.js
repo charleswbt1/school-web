@@ -2,7 +2,11 @@ const studentId = new URLSearchParams(window.location.search).get('id');
 const students = [];
 async function loadPage() {
     try {
-        const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`);
+        const responseService = await fetch(`${apiUrl}/api/courses/student?student_id=${studentId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const response = await responseService.json();
 
         response.student.name = response.name;
@@ -99,7 +103,7 @@ function createDocumentTable(student) {
                     <td>
                         ${d.type.toUpperCase()}
                     </td>
-                    <td>
+                    <td><div class="iuc-actions">
                 ${document
                 ? `<span class="button-icon"
                         onclick="viewImage('${document.url}')"
@@ -117,7 +121,7 @@ function createDocumentTable(student) {
                         ⬆️
                     </span>`
             }
-                    </td>
+                    </div></td>
                     </tr>`;
     }).join("")}
             </tbody>
@@ -206,7 +210,11 @@ async function getModules(response) {
 
 async function getClassesMediaSync(data, moduleId) {
     if (data.student.state === "active") {
-        const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${data.course.id}&module_id=${moduleId}`);
+        const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${data.course.id}&module_id=${moduleId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const classesJson = await classesResponse.json();
         if (!classesResponse.ok || classesJson.length < 1) {
             return '';
@@ -324,6 +332,7 @@ async function paymentLink(studentId, moduleIndex, paymentType) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify({
                 student_id: studentId,
                 amount: cuota,

@@ -8,7 +8,11 @@ let theme = '';
 
 async function loadExam() {
     const response = await fetch(
-        `${apiUrl}/api/exams/questions?exam_id=${examId}`
+        `${apiUrl}/api/exams/questions?exam_id=${examId}`,
+        {
+            credentials: 'include'
+        }
+
     );
     const exam = await response.json();
     theme = exam.theme;
@@ -132,6 +136,7 @@ async function finishExam() {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
 
                     exam_id: examId,
@@ -156,6 +161,7 @@ async function finishExam() {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         student_id: studentId,
                         qualification: Number(result.average),
@@ -171,6 +177,7 @@ async function finishExam() {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         module_id: moduleId,
                         qualification: Number(result.average),
@@ -186,7 +193,11 @@ async function finishExam() {
         } else {
             // Obtener nuevamente el curso del alumno
             const courseResponse = await fetch(
-                `${apiUrl}/api/courses/student?student_id=${studentId}`
+                `${apiUrl}/api/courses/student?student_id=${studentId}`,
+                {
+                    credentials: 'include'
+                }
+
             );
 
             const courseInfo = await courseResponse.json();

@@ -1,7 +1,5 @@
-const userId = sessionStorage.getItem('userId');
-
 async function loadModals() {
-    const receiptModalFile = await fetch("../template/receipt.html");
+    const receiptModalFile = await fetch("../adviser/receipt.html");
     const receiptModalHtml = await receiptModalFile.text();
     document.getElementById("receiptModalTemplate").innerHTML = receiptModalHtml;
 }
@@ -10,23 +8,29 @@ loadModals();
 async function loadStudents() {
     try {
         const tbody = document.getElementById('students-table-body');
-        const result = await fetch(`${apiUrl}/api/students/data?adviser_id=${userId}`);
-        const response = await result.json();
+        const result = await fetch(`${apiUrl}/api/students/data`,
+            {
+                credentials: 'include'
+            }
+        );
         if (!result.ok) {
             throw new Error('Error al obtener alumnos');
         }
+        const response = await result.json();
         if (!response.length) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="7">No hay alumnos registrados</td>
-                </tr>
-            `;
+            tbody.innerHTML = `<tr>
+                <td colspan="7">No hay alumnos registrados</td>
+            </tr>`;
             return;
         }
 
-        students = response;
-        const advisersResponse = await fetch(`${apiUrl}/api/users?role=adviser`);
+        const advisersResponse = await fetch(`${apiUrl}/api/users?role=adviser`,
+            {
+                credentials: 'include'
+            }
+        );
         const advisers = await advisersResponse.json();
+        students = response;
 
         tbody.innerHTML = response.map(student => {
             let rowClass = '';
@@ -36,7 +40,6 @@ async function loadStudents() {
                 case 'pending': rowClass = 'row-pending'; break;
             }
             const adviser = advisers.find(adviser => adviser.id === student.adviser_id);
-
             const current = new Date(student.date_init);
             const year = String(current.getFullYear());
             const month = current.toLocaleString("es-MX", { month: "long" }).toUpperCase();
@@ -86,12 +89,10 @@ async function loadStudents() {
         }).join('');
 
     } catch (error) {
-        alert(error);
-
         document.getElementById('students-table-body').innerHTML = `
             <tr>
                 <td colspan="7">
-                    Error al cargar los alumnos
+                    Error al cargar los alumnos: ${error}
                 </td>
             </tr>
         `;
@@ -105,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-add');
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../user/register.html';
+            window.location.href = '../adviser/register.html';
         });
     }
 });

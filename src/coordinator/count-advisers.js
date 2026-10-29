@@ -2,9 +2,17 @@ const courseId = new URLSearchParams(window.location.search).get("id");
 
 async function loadTable() {
     try {
-        const usersResponse = await fetch(`${apiUrl}/api/users?role=adviser`);
+        const usersResponse = await fetch(`${apiUrl}/api/users?role=adviser`,
+            {
+                credentials: 'include'
+            }
+        );
         const advisers = await usersResponse.json();
-        const controlResponse = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
+        const controlResponse = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const control = await controlResponse.json();
 
         document.getElementById('title-course').textContent =

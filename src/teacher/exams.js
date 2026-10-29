@@ -1,8 +1,10 @@
-const userId = sessionStorage.getItem("userId");
-
 async function loadExams() {
     try {
-        const response = await fetch(`${apiUrl}/api/exams?teacher_id=${userId}`);
+        const response = await fetch(`${apiUrl}/api/exams`,
+            {
+                credentials: 'include'
+            }
+        );
         const exams = await response.json();
 
         const tbody = document.getElementById("examsTableBody");

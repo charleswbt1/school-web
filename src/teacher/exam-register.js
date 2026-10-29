@@ -1,7 +1,5 @@
 const examId = new URLSearchParams(window.location.search).get("id");
 const questionsContainer = document.getElementById("questionsContainer");
-const userId = sessionStorage.getItem("userId");
-const role = sessionStorage.getItem("role");
 
 async function loadExam() {
     document.getElementById("examTitle").textContent = examId ? "Editar Examen" : "Crear Examen";
@@ -10,7 +8,11 @@ async function loadExam() {
     if (!examId) {
         return;
     }
-    const response = await fetch(`${apiUrl}/api/exams?id=${examId}`);
+    const response = await fetch(`${apiUrl}/api/exams?id=${examId}`,
+            {
+                credentials: 'include'
+            }
+        );
     const exam = (await response.json())[0];
 
     document.getElementById("examName").value = exam.name;
@@ -75,8 +77,6 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
     submitButton.style.opacity = ".7";
 
     const exam = {
-        coordinator_id: role === "coordinator" ? sessionStorage.getItem("userId") : "",
-        teacher_id: role === "teacher" ? sessionStorage.getItem("userId") : "",
         name: document.getElementById("examName").value,
         description: document.getElementById("examDescription").value,
         theme: document.getElementById("theme").value,
@@ -109,6 +109,7 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(exam)
             }
         );
@@ -142,7 +143,8 @@ document.getElementById("deleteExamBtn").addEventListener("click", async (e) => 
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'                
             }
         );
         if (!response.ok) {

@@ -25,6 +25,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
             `${apiUrl}/api/files`,
             {
                 method: "POST",
+                credentials: 'include',
                 body: formData
             }
         );
@@ -39,6 +40,7 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     logo: imageUrl,
                     name,

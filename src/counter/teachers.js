@@ -1,11 +1,13 @@
-const roleSession = sessionStorage.getItem('role');
-
 async function loadTable() {
     try {
-        if (roleSession !== 'coordinator') {
+        if (role !== 'coordinator') {
             document.getElementById('btn-add').style.display = 'none';
         }
-        const response = await fetch(`${apiUrl}/api/courses/teachers`);
+        const response = await fetch(`${apiUrl}/api/users?role=teacher`,
+            {
+                credentials: 'include'
+            }
+        );
         if (!response.ok) {
             throw new Error('Error al obtener docentes');
         }
@@ -18,21 +20,16 @@ async function loadTable() {
                 <td>${element.first_name} ${element.last_name} ${element.second_last_name}</td>
                 <td>${element.phone}</td>
                 <td>${element.email}</td>
-                <td>${element.courses.map(course => `(${course.hours_week ?? 0}) ${course.name}`).join('<br>')}</td>
-                <td>${element.courses.reduce((total, course) => total + Number(course.hours_week ?? 0), 0)}</td>
-                <td>
-                    ${roleSession === 'coordinator'
-                ? `
-                                    <label class="switch">
-                                        <input
-                                            type="checkbox"
-                                            class="status-switch"
-                                            data-userid="${element.id}"
-                                            ${element.state === "active" ? "checked" : ""}
-                                        >
-                                        <span class="slider"></span>
-                                    </label>
-                                `
+                <td>${role === 'coordinator'
+                ? `<label class="switch">
+                        <input
+                            type="checkbox"
+                            class="status-switch"
+                            data-userid="${element.id}"
+                            ${element.state === "active" ? "checked" : ""}
+                        >
+                        <span class="slider"></span>
+                    </label>`
                 : element.state === 'active'
                     ? 'Activo'
                     : 'Inactivo'
@@ -67,6 +64,7 @@ function addSwitchEvents() {
                         headers: {
                             "Content-Type": "application/json"
                         },
+                        credentials: 'include',
                         body: JSON.stringify({
                             state: state
                         })

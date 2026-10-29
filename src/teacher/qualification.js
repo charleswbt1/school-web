@@ -3,11 +3,19 @@ const contentId = new URLSearchParams(window.location.search).get('content_id');
 
 async function loadQualifications() {
     try {
-        const response = await fetch(`${apiUrl}/api/students?id=${studentId}`);
+        const response = await fetch(`${apiUrl}/api/students?id=${studentId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const jsonResponse = await response.json();
         const student = jsonResponse[0];
 
-        const contentResponse = await fetch(`${apiUrl}/api/contents?id=${contentId}`);
+        const contentResponse = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const contentJsonResponse = await contentResponse.json();
         const content = contentJsonResponse[0];
 
@@ -44,7 +52,11 @@ async function loadQualifications() {
                 </tr>
             `;
 
-            const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${student.course_id}&module_id=${module.id}`);
+            const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${student.course_id}&module_id=${module.id}`,
+                {
+                    credentials: 'include'
+                }
+            );
             const classesData = await classesResponse.json();
             if (classesData.length > 0) {
                 classesData[0].jobs?.forEach(job => {
@@ -118,6 +130,7 @@ async function saveQualification(moduleId, umbral, index) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     module_id: moduleId,
                     qualification: Number(qualification),
@@ -158,6 +171,7 @@ async function saveJobQualification(studentId, jobId) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     student_id: studentId,
                     job_id: jobId,

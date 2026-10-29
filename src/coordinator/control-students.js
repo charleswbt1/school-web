@@ -15,7 +15,11 @@ let students;
 
 async function loadPage() {
     try {
-        const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`);
+        const response = await fetch(`${apiUrl}/api/students/control?course_id=${courseId}`,
+            {
+                credentials: 'include'
+            }
+        );
         const data = await response.json();
         students = data.students;
         const table = document.getElementById("studentsTable");
@@ -161,6 +165,7 @@ async function generateCredential(studentId, button) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     student_id: studentId,
                     type: "credential"
@@ -200,6 +205,7 @@ async function generateCertificate(studentId, button) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     student_id: studentId,
                     type: "constancy"
@@ -274,6 +280,7 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify(studentBody)
         }
     );
@@ -285,6 +292,7 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify(userBody)
         }
     );
