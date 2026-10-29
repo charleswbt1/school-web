@@ -9,20 +9,21 @@ async function loadCourses() {
         courses.forEach(course => {
             container.innerHTML += `
             <div class="course-card">
-                <img
-                    src="${course.image}"
-                    alt="${course.course_name}"
-                    class="course-image">
+                <div class="course-image-container">
+                    <img
+                        src="${course.image}"
+                        alt="${course.course_name}"
+                        class="course-image">
+                </div>
                 <div class="course-body">
                     <h3>${course.course_name}</h3>
-
-                    <div class="course-actions">
-                        <button 
-                            class="info-btn content-btn"
-                            data-content="${course.id}">
-                            Entrar
-                        </button>
-                    </div>
+                </div>
+                <div class="course-actions">
+                    <button 
+                        class="info-btn content-btn"
+                        data-content="${course.id}">
+                        Entrar
+                    </button>
                 </div>
             </div>
             `;
