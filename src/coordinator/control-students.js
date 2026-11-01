@@ -246,6 +246,13 @@ function editStudent(studentId) {
     document.getElementById("editSchoolId").value = student.school_id;
     document.getElementById("studentState").value = student.state;
     editStudentModal.style.display = "flex";
+
+    const buttonPassword = document.getElementById("button-password");
+    buttonPassword.addEventListener("click", (e) => {
+        if (e.target === buttonPassword) {
+            resetPassword(student.user_id, student.nick_name);
+        }
+    });
 }
 function closeEditStudent() {
     editStudentModal.style.display = "none";
@@ -304,3 +311,30 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
     closeEditStudent();
     loadPage();
 });
+async function resetPassword(userId, nickName) {
+    closeEditStudent();
+    if (!await showConfirm(`¿Deseas reiniciar la contraseña de ${nickName}?`)) {
+        return;
+    }
+    const requestBody = {
+        user_id: userId,
+        nick_name: nickName
+    }
+    const response = await fetch(
+        `${apiUrl}/api/users/reset-password`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: 'include',
+            body: JSON.stringify(requestBody)
+        }
+    );
+
+    if (!response.ok) {
+        await showError("No se pudo actualizar");
+        return;
+    }
+    await showSuccess("Se restauro contraseña");
+}

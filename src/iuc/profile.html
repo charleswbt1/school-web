@@ -19,14 +19,15 @@
             <div class="credential">
                 <div class="credential-left-decoration"></div>
                 <div class="credential-header">
-                    <img src="https://storage.googleapis.com/school-source/web/logo.jpg" alt="Instituto Universitario Conecta" class="credential-logo">
+                    <img src="https://storage.googleapis.com/school-source/web/logo.jpg"
+                        alt="Instituto Universitario Conecta" class="credential-logo">
                     <div class="credential-school">
                         <h3>INSTITUTO UNIVERSITARIO</h3>
                         <h1>CONECTA</h1>
                     </div>
                 </div>
                 <div class="credential-photo">
-                    <img src="" id = "credential-photo">
+                    <img src="" id="credential-photo">
                 </div>
                 <div class="credential-student">
                     <h2 id="credential-name"></h2>
@@ -36,6 +37,52 @@
                 </div>
             </div>
         </section>
+        <div class="info-section">
+            <button id="button-update" onclick="editStudent()">
+                Actualizar
+            </button>
+        </div>
+    </div>
+
+    <div id="editStudentModal" class="modal">
+        <div class="modal-content">
+            <h2>Actualizar</h2>
+            <form class="info-form" id="editStudentForm">
+                <input type="hidden" id="editStudentId">
+                <input type="hidden" id="editUserId">
+                <label>Nombre</label>
+                <input type="text" id="editFirstName" required>
+                <label>Apellido Paterno</label>
+                <input type="text" id="editLastName" required>
+                <label>Apellido Materno</label>
+                <input type="text" id="editSecondLastName" required>
+                <label>CURP</label>
+                <input type="text" id="editCurp" maxlength="18" required>
+                <label>Teléfono</label>
+                <input type="text" id="editPhone" required>
+                <button type="submit">
+                    Guardar
+                </button>
+            </form>
+            <button id="button-password">
+                Contraseña
+            </button>
+        </div>
+    </div>
+    <div id="editPasswordModal" class="modal">
+        <div class="modal-content">
+            <h2>Actualizar</h2>
+            <form class="info-form" id="editPasswordForm">
+                <label>Nueva contraseña</label>
+                <input type="text" id="password" required>
+                <label>Confirma contraseña</label>
+                <input type="text" id="confirmPassword" required>
+                <p id="passwordMessage" class="message-error"></p>
+                <button type="submit">
+                    Guardar
+                </button>
+            </form>
+        </div>
     </div>
 
     <script src="../iuc/app.js"></script>
