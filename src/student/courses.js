@@ -4,6 +4,9 @@ async function loadCourses() {
             { credentials: 'include' }
         );
         const courses = await response.json();
+        if (!response.ok) {
+            throw new Error(courses.message || "Error fetching courses");
+        }
         const container = document.getElementById("coursesContainer");
         container.innerHTML = "";
         courses.forEach(course => {
@@ -29,7 +32,8 @@ async function loadCourses() {
             `;
         });
     } catch (error) {
-        alert(error);
+        console.error("student courses - loading courses:", error);
+        await showError("Error al cargar los cursos. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 loadCourses();
