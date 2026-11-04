@@ -40,15 +40,10 @@ loadCourses();
 
 
 /* ===================== EVENTS ===================== */
-
 document.addEventListener("click", async (event) => {
     const button = event.target;
     if (button.classList.contains("content-btn")) {
         const courseId = button.dataset.content;
-        try {
-            window.location.href = `../student/course.html?id=${courseId}`;
-        } catch (error) {
-            alert("Error setting student ID:", error);
-        }
+        window.location.href = `../student/course.html?id=${courseId}`;
     }
 });

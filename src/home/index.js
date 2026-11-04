@@ -1,4 +1,4 @@
-const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+const apiUrl = "https://api.iuc-conecta.com";
 const showPrice = false;
 
 function initializeMenu() {
@@ -56,7 +56,7 @@ function initializeSession() {
                 return;
             }
             sessionStorage.setItem("role", data.role);
-            sessionStorage.setItem("userId", data.userId);
+            sessionStorage.setItem("userId", data.user_id);
             switch (data.role) {
                 case "admin":
                     window.location.href = `../${data.role}/review.html`;

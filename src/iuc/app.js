@@ -1,4 +1,4 @@
-const apiUrl = "https://school-back-764239827508.us-east1.run.app";
+const apiUrl = "https://api.iuc-conecta.com";
 const role = sessionStorage.getItem("role");
 const showPrice = false;
 
