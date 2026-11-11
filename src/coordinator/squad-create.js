@@ -53,7 +53,11 @@ document.getElementById("squadForm").addEventListener("submit", async (e) => {
         document.getElementById("squadForm").reset();
         window.location.href = "../coordinator/squads.html";
     } catch (error) {
-        showError("Error al Registrar");
+        console.error('Registrar escuela:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";

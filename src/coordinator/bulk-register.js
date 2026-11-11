@@ -31,7 +31,11 @@ async function loadCourses() {
             });
         }
     } catch (error) {
-        alert("Error cargando cursos:", error);
+        console.error('Error al cargar cursos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar cursos. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 loadCourses();
@@ -89,6 +93,10 @@ document.getElementById("csvForm").addEventListener("submit", async e => {
         }
         await showSuccess("Registro Exitoso");
     } catch (error) {
+        console.error('Error al registrar estudiantes:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         await showError(`Error al registrar ${error}`);
     } finally {
         submitButton.disabled = false;

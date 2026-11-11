@@ -241,6 +241,11 @@ async function loadReview() {
         tbody.innerHTML = html;
 
     } catch (error) {
+        console.error('Error al cargar la información:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+
 
         document.getElementById("review-table-body").innerHTML = `
             <tr>
@@ -249,8 +254,6 @@ async function loadReview() {
                 </td>
             </tr>
         `;
-
-        console.error(error);
     }
 }
 

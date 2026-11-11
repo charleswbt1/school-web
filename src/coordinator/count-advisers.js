@@ -65,6 +65,11 @@ async function loadTable() {
         `);
         tbody.innerHTML = rows.join('');
     } catch (error) {
+        console.error('cargar asesores:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los asesores. Por favor, inténtalo de nuevo más tarde.");
         document.getElementById('table-body').innerHTML = `
             <tr>
                 <td colspan="7">

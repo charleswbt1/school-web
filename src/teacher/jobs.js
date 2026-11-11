@@ -5,22 +5,30 @@ const contentId = params.get("content_id");
 let classeId;
 
 async function loadModules() {
-    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
+    try {
+        const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
             {
                 credentials: 'include'
             }
         );
-    const content = (await response.json())[0];
-    const select = document.getElementById("moduleSelect");
-    select.innerHTML = '';
-    content.modules.forEach((module, index) => {
-        select.innerHTML += `
+        const content = (await response.json())[0];
+        const select = document.getElementById("moduleSelect");
+        select.innerHTML = '';
+        content.modules.forEach((module, index) => {
+            select.innerHTML += `
             <option value="${module.id}" ${index === 0 ? "selected" : ""}>
                 ${module.name}
             </option>
         `;
-    });
-    loadClasses();
+        });
+        loadClasses();
+    } catch (error) {
+        console.error('Cargar módulos:', {
+            contentId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+    }
 }
 loadModules();
 
@@ -42,10 +50,10 @@ async function loadClasses() {
     if (!moduleId) return;
 
     const response = await fetch(`${apiUrl}/api/classes?course_id=${courseId}&module_id=${moduleId}`,
-            {
-                credentials: 'include'
-            }
-        );
+        {
+            credentials: 'include'
+        }
+    );
     if (!response.ok) return;
 
     const data = await response.json();
@@ -311,7 +319,12 @@ async function saveClasses(e) {
         await showSuccess("Clases guardadas correctamente.");
         loadClasses();
     } catch (error) {
-        showError(`Error al guardar clases - ${error.message}`);
+        console.error('Guardar clases:', {
+            courseId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al guardar clases - ${error.message}`);
     } finally {
         button.style.pointerEvents = "auto";
         button.style.opacity = "1";
@@ -352,6 +365,13 @@ async function updateFile(file, type) {
         }
     );
     if (!uploadResponse.ok) {
+        console.error('Subir documento:', {
+            file,
+            type,
+            courseId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         throw new Error("Fallo al subir documento");
     }
     const uploadData = await uploadResponse.json();

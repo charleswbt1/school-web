@@ -39,6 +39,11 @@ async function loadCourses() {
             </tr>
         `).join('');
     } catch (error) {
+        console.error('Obtener cursos:', {
+            teacher_id,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         document.getElementById('courses-table-body').innerHTML = `
             <tr>
                 <td colspan="7">

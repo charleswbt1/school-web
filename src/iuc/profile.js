@@ -18,8 +18,11 @@ async function loadPage() {
         document.getElementById('credential-email').textContent = userData.email;
         document.getElementById('credential-phone').textContent = userData.phone;
     } catch (error) {
-        alert('Error en el perfil');
-
+        console.error('Cargar perfil:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar el perfil. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 

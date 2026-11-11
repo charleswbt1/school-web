@@ -96,6 +96,13 @@ async function loadQualifications() {
             }
         });
     } catch (error) {
+        console.error('Cargar calificaciones:', {
+            studentId,
+            contentId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar calificaciones");
         document.getElementById('qualificationsTableBody').innerHTML = `
             <tr>
                 <td colspan="4">
@@ -145,7 +152,14 @@ async function saveQualification(moduleId, umbral, index) {
         }
         await showSuccess("Actualizacion exitosa");
     } catch (error) {
-        showError("No fue posible guardar la calificación");
+        console.error('Guardar calificación:', {
+            studentId,
+            moduleId,
+            qualification,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("No fue posible guardar la calificación");
     }
 }
 
@@ -185,7 +199,13 @@ async function saveJobQualification(studentId, jobId) {
         }
         await showSuccess("Actualizacion exitosa");
     } catch (error) {
-        showError("No fue posible guardar la calificación");
+        console.error('Guardar calificación de trabajo:', {
+            studentId,
+            jobId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("No fue posible guardar la calificación");
     }
 }
 

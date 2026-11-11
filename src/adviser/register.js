@@ -22,7 +22,11 @@ async function loadRoles() {
             btnBulk.style.display = "block";
         }
     } catch (error) {
-        alert("Error cargando: ", error);
+        console.error('Error al cargar roles:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar roles. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 loadRoles();
@@ -58,7 +62,11 @@ async function loadCourses() {
             });
         }
     } catch (error) {
-        alert("Error cargando cursos:", error);
+        console.error('Error al cargar cursos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar cursos. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 loadCourses();
@@ -88,7 +96,11 @@ async function loadAdvisers() {
             });
         }
     } catch (error) {
-        alert("Error cargando cursos:", error);
+        console.error('Error al cargar asesores:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar asesores. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 loadAdvisers();
@@ -114,6 +126,7 @@ toggleStudentFields();
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
+    const nick_name = document.getElementById("register_nick_name").value.trim();
     try {
         submitButton.disabled = true;
         submitButton.style.opacity = ".7";
@@ -130,7 +143,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         }
 
         const userRequest = {
-            nick_name: document.getElementById("register_nick_name").value.trim(),
+            nick_name,
             password: document.getElementById("register_password").value.trim(),
             first_name: document.getElementById("first_name").value,
             last_name: document.getElementById("last_name").value,
@@ -176,14 +189,23 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
             const studentData = await studentResponse.json();
 
             if (!studentResponse.ok) {
-                alert("Se registra usuario pero Error al registrar estudiante - " + studentData.message);
+                console.error('Error al registrar estudiante:', {
+                    message: studentData.message,
+                    stack: studentData.stack
+                });
+                await showError("Usuario registrado pero ERROR al registrar estudiante");
                 return;
             }
         }
         await showSuccess("Registro exitoso");
         registerForm.reset();
     } catch (error) {
-        showError(`Error al registrar ${error}`);
+        console.error('Error al registrar:', {
+            nick_name,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al registrar ${error}`);
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";

@@ -19,6 +19,9 @@ async function loadCourses() {
             return;
         }
         const btnView = role != "coordinator" ? 'hidden' : '';
+        if (role === "coordinator") {
+            document.getElementById('btn-add-course').removeAttribute('hidden');
+        }
         tbody.innerHTML = courses.map(course => `
             <tr>
                 <td>${course.date_init}</td>
@@ -52,7 +55,10 @@ async function loadCourses() {
             </tr>
         `).join('');
     } catch (error) {
-        console.error('control courses: Error al cargar los cursos', error);
+        console.error('cargar cursos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         document.getElementById('courses-table-body').innerHTML = `
             <tr>
                 <td colspan="7">

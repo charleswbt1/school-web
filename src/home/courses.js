@@ -68,7 +68,11 @@ async function loadCourses() {
 
         });
     } catch (error) {
-        alert("Error loading courses:", error);
+        console.error('Cargar cursos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los cursos. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -114,7 +118,12 @@ document.addEventListener("click", async (event) => {
             `;
             document.getElementById("contentModal").style.display = "flex";
         } catch (error) {
-            alert("Error loading content:", error);
+            console.error('Cargar detalles del curso:', {
+                courseId,
+                message: error?.message ?? String(error),
+                stack: error?.stack
+            });
+            await showError("Error al cargar los detalles del curso. Por favor, inténtalo de nuevo más tarde.");
         }
     }
     const modal = document.getElementById("contentModal");

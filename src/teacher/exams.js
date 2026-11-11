@@ -36,7 +36,10 @@ async function loadExams() {
             `;
         }).join('');
     } catch (error) {
-        console.error('teacher exams: Error al cargar examenes', error);
+        console.error('Cargar examenes:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         document.getElementById("examsTableBody").innerHTML = `
             <tr>
                 <td colspan="9">

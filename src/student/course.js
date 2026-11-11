@@ -69,7 +69,12 @@ async function loadPage() {
                 </button>`;
         }
     } catch (error) {
-        alert(error);
+        console.error('Cargar curso:', {
+            studentId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar el curso. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 

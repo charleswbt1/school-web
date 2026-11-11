@@ -41,8 +41,11 @@ async function loadTable() {
         `).join('');
         addSwitchEvents();
     } catch (error) {
-        console.error(error);
-
+        console.error('Error al cargar la tabla de asesores:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los asesores. Por favor, inténtalo de nuevo más tarde.");
         document.getElementById('table-body').innerHTML = `
             <tr>
                 <td colspan="7">
@@ -93,7 +96,11 @@ function addSwitchEvents() {
                         }
 
                     } catch (error) {
-                        showError("Error al Registrar");
+                        console.error('Error al actualizar estado del asesor:', {
+                            message: error?.message ?? String(error),
+                            stack: error?.stack
+                        });
+                        await showError("Error al actualizar estado del asesor");
                         switchBtn.checked = !switchBtn.checked;
                     }
                 }
@@ -109,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../user/register.html?roleRegister=adviser';
+            window.location.href = '../adviser/register.html?roleRegister=adviser';
         });
     }
 });

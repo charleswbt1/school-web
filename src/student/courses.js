@@ -32,7 +32,10 @@ async function loadCourses() {
             `;
         });
     } catch (error) {
-        console.error("student courses - loading courses:", error);
+        console.error('Cargar cursos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         await showError("Error al cargar los cursos. Por favor, inténtalo de nuevo más tarde.");
     }
 }

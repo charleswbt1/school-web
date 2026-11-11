@@ -221,7 +221,12 @@ async function loadStudents() {
             </tbody>
         `;
     } catch (error) {
-        alert(error);
+        console.error("student payments load:", {
+            courseId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Fallo al cargar los pagos de los estudiantes");
     }
 }
 loadStudents();

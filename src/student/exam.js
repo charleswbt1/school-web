@@ -7,18 +7,27 @@ const jobId = urlParams.get("job_id");
 let theme = '';
 
 async function loadExam() {
-    const response = await fetch(
-        `${apiUrl}/api/exams/questions?exam_id=${examId}`,
-        {
-            credentials: 'include'
-        }
+    try {
+        const response = await fetch(
+            `${apiUrl}/api/exams/questions?exam_id=${examId}`,
+            {
+                credentials: 'include'
+            }
 
-    );
-    const exam = await response.json();
-    theme = exam.theme;
+        );
+        const exam = await response.json();
+        theme = exam.theme;
 
-    document.getElementById("moduleName").innerHTML = exam.name;
-    return exam;
+        document.getElementById("moduleName").innerHTML = exam.name;
+        return exam;
+    } catch (error) {
+        console.error('Cargar examen:', {
+            examId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar el examen.");
+    }
 }
 
 function showQuestion() {

@@ -2,26 +2,35 @@ const examId = new URLSearchParams(window.location.search).get("id");
 const questionsContainer = document.getElementById("questionsContainer");
 
 async function loadExam() {
-    document.getElementById("examTitle").textContent = examId ? "Editar Examen" : "Crear Examen";
-    document.getElementById("examBtn").textContent = examId ? "Actualizar Examen" : "Guardar Examen";
-    document.getElementById("deleteExamBtn").style.display = examId ? "block" : "none";
-    if (!examId) {
-        return;
-    }
-    const response = await fetch(`${apiUrl}/api/exams?id=${examId}`,
+    try {
+        document.getElementById("examTitle").textContent = examId ? "Editar Examen" : "Crear Examen";
+        document.getElementById("examBtn").textContent = examId ? "Actualizar Examen" : "Guardar Examen";
+        document.getElementById("deleteExamBtn").style.display = examId ? "block" : "none";
+        if (!examId) {
+            return;
+        }
+        const response = await fetch(`${apiUrl}/api/exams?id=${examId}`,
             {
                 credentials: 'include'
             }
         );
-    const exam = (await response.json())[0];
+        const exam = (await response.json())[0];
 
-    document.getElementById("examName").value = exam.name;
-    document.getElementById("examDescription").value = exam.description;
-    document.getElementById("theme").value = exam.theme;
-    questionsContainer.innerHTML = "";
-    exam.questions.forEach(question => {
-        addQuestion(question);
-    });
+        document.getElementById("examName").value = exam.name;
+        document.getElementById("examDescription").value = exam.description;
+        document.getElementById("theme").value = exam.theme;
+        questionsContainer.innerHTML = "";
+        exam.questions.forEach(question => {
+            addQuestion(question);
+        });
+    } catch (error) {
+        console.error('Obtener examen:', {
+            examId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Fallo al cargar el examen");
+    }
 }
 
 function addQuestion(questionData = null) {
@@ -121,7 +130,10 @@ document.getElementById("examForm").addEventListener("submit", async (e) => {
         await showSuccess("Examen registrado correctamente");
         window.location.href = "exams.html";
     } catch (error) {
-        console.error("teacher exam-create: Error al registrar el examen:", error);
+        console.error('Guardar examen:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         showError("Fallo al registrar el examen");
     } finally {
         submitButton.disabled = false;
@@ -144,7 +156,7 @@ document.getElementById("deleteExamBtn").addEventListener("click", async (e) => 
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include'                
+                credentials: 'include'
             }
         );
         if (!response.ok) {
@@ -153,7 +165,11 @@ document.getElementById("deleteExamBtn").addEventListener("click", async (e) => 
         await showSuccess("Examen eliminado correctamente");
         window.location.href = "exams.html";
     } catch (error) {
-        console.error("teacher exam-delete: Error al eliminar el examen:", error);
+        console.error('Eliminar examen:', {
+            examId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         showError("Fallo al eliminar el examen");
     } finally {
         submitButton.disabled = false;

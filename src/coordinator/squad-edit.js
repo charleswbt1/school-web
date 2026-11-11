@@ -54,7 +54,11 @@ async function loadSquad() {
             `;
         }
     } catch (error) {
-        alert('Error al cargar la escuela');
+        console.error('cargar escuela:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar la escuela. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -106,6 +110,11 @@ async function updateSquad(event) {
         await showSuccess("Escuela actualizada correctamente");
         window.location.href = 'squads.html';
     } catch (error) {
-        showError("Error al actualizar la escuela");
+        console.error('Actualizar escuela:', {
+            squadId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al actualizar la escuela");
     }
 }

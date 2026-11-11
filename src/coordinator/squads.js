@@ -40,8 +40,10 @@ async function loadSquads() {
         `).join('');
 
     } catch (error) {
-        alert(error);
-
+        console.error('cargar escuelas:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         document.getElementById('squads-table-body').innerHTML = `
             <tr>
                 <td colspan="7">

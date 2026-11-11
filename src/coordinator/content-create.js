@@ -72,7 +72,11 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
         await showSuccess("Registro Exitoso");
         document.getElementById("contentForm").reset();
     } catch (error) {
-        showError("Error al Registrar");
+        console.error('Error al registrar contenido:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";

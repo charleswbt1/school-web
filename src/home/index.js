@@ -68,8 +68,12 @@ function initializeSession() {
                     window.location.href = `../${data.role}/courses.html`;
             }
         } catch (error) {
-            console.error("Login error:", error);
-            showError("Error de conexión. Por favor, inténtalo de nuevo más tarde.");
+            console.error('Login:', {
+                nick_name,
+                message: error?.message ?? String(error),
+                stack: error?.stack
+            });
+            await showError("Error de conexión. Por favor, inténtalo de nuevo más tarde.");
         }
     });
 }

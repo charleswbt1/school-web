@@ -1,63 +1,71 @@
 const contentId = new URLSearchParams(window.location.search).get('id');
 
 async function loadContent() {
-    const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
-        {
-            credentials: 'include'
-        }
-    );
-    const jsonResponse = await response.json();
-    const content = jsonResponse[0];
+    try {
+        const response = await fetch(`${apiUrl}/api/contents?id=${contentId}`,
+            {
+                credentials: 'include'
+            }
+        );
+        const jsonResponse = await response.json();
+        const content = jsonResponse[0];
 
-    document.getElementById('contentName').value = content.name;
-    document.getElementById('contentDescription').value = content.description;
+        document.getElementById('contentName').value = content.name;
+        document.getElementById('contentDescription').value = content.description;
 
-    const modulesContainer = document.getElementById('modulesContainer');
-    modulesContainer.innerHTML = '';
+        const modulesContainer = document.getElementById('modulesContainer');
+        modulesContainer.innerHTML = '';
 
-    content.modules.forEach(module => {
-        const moduleElement = document
-            .getElementById('moduleTemplate')
-            .content
-            .firstElementChild
-            .cloneNode(true);
-
-        moduleElement.dataset.id = module.id;
-
-        moduleElement.querySelector('.module-name').value = module.name;
-        moduleElement.querySelector('.module-description').value = module.description;
-        moduleElement.querySelector('.module-qualification').value = module.qualification;
-        moduleElement.querySelector('.module-link').value = module.link;
-
-        const topicsContainer = moduleElement.querySelector('.topics-container');
-
-        module.topics.forEach(topic => {
-            const topicElement = document
-                .getElementById('topicTemplate')
+        content.modules.forEach(module => {
+            const moduleElement = document
+                .getElementById('moduleTemplate')
                 .content
                 .firstElementChild
                 .cloneNode(true);
 
-            topicElement.dataset.id = topic.id;
+            moduleElement.dataset.id = module.id;
 
-            topicElement.querySelector('.topic-name').value = topic.name;
-            topicElement.querySelector('.topic-description').value = topic.description;
-            topicElement.querySelector('.topic-link').value = topic.link;
+            moduleElement.querySelector('.module-name').value = module.name;
+            moduleElement.querySelector('.module-description').value = module.description;
+            moduleElement.querySelector('.module-qualification').value = module.qualification;
+            moduleElement.querySelector('.module-link').value = module.link;
 
-            topicElement.querySelector('.remove-topic-btn')
-                .addEventListener('click', () => topicElement.remove());
+            const topicsContainer = moduleElement.querySelector('.topics-container');
 
-            topicsContainer.appendChild(topicElement);
+            module.topics.forEach(topic => {
+                const topicElement = document
+                    .getElementById('topicTemplate')
+                    .content
+                    .firstElementChild
+                    .cloneNode(true);
+
+                topicElement.dataset.id = topic.id;
+
+                topicElement.querySelector('.topic-name').value = topic.name;
+                topicElement.querySelector('.topic-description').value = topic.description;
+                topicElement.querySelector('.topic-link').value = topic.link;
+
+                topicElement.querySelector('.remove-topic-btn')
+                    .addEventListener('click', () => topicElement.remove());
+
+                topicsContainer.appendChild(topicElement);
+            });
+
+            moduleElement.querySelector('.add-topic-btn')
+                .addEventListener('click', () => addTopic(topicsContainer));
+
+            moduleElement.querySelector('.remove-module-btn')
+                .addEventListener('click', () => moduleElement.remove());
+
+            modulesContainer.appendChild(moduleElement);
         });
-
-        moduleElement.querySelector('.add-topic-btn')
-            .addEventListener('click', () => addTopic(topicsContainer));
-
-        moduleElement.querySelector('.remove-module-btn')
-            .addEventListener('click', () => moduleElement.remove());
-
-        modulesContainer.appendChild(moduleElement);
-    });
+    } catch (error) {
+        console.error('Error al cargar contenido:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar contenido. Por favor, inténtalo de nuevo más tarde.");
+    }
 }
 
 loadContent();
@@ -147,8 +155,11 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
         }
         await showSuccess("Actualización Exitosa");
     } catch (error) {
-        console.error(`content-edit: ${error}`)
-        showError(`Error al Actualizar: ${error}`);
+        console.error('Error al actualizar contenido:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al Actualizar: ${error}`);
     }
 
 });

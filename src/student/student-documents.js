@@ -53,6 +53,7 @@ const documentForm = document.getElementById("documentForm");
 documentForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
+    const studentId = document.getElementById("student-id").textContent;
     try {
         submitButton.disabled = true;
         submitButton.style.opacity = ".7";
@@ -60,7 +61,6 @@ documentForm.addEventListener("submit", async (e) => {
         if (!file) {
             throw new Error("Selecciona un documento.");
         }
-        const studentId = document.getElementById("student-id").textContent;
         const courseId = document.getElementById("course-id").textContent;
         const documentType = document.getElementById("document-type").textContent;
         const destiny = documentType === 'job' ? 'jobs' : 'document';
@@ -105,7 +105,12 @@ documentForm.addEventListener("submit", async (e) => {
         await showSuccess("Registro Exitoso");
         loadPage();
     } catch (error) {
-        showError(`Error al Registrar - ${error.message}`);
+        console.error('Registrar documento:', {
+            studentId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al Registrar - ${error.message}`);
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";
@@ -154,7 +159,12 @@ async function deleteDocument(studentId, type, jobId, button) {
         await showSuccess("Documento eliminado");
         loadPage();
     } catch (error) {
-        showError(error.message);
+        console.error('Eliminar documento:', {
+            jobId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(error.message);
     } finally {
         button.style.pointerEvents = "auto";
         button.style.opacity = "1";

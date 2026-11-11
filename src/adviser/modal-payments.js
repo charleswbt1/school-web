@@ -73,6 +73,7 @@ const payForm = document.getElementById("payForm");
 payForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const submitButton = e.target.querySelector('button[type="submit"]');
+    const studentId = document.getElementById("student-id-pay").textContent;
     try {
         submitButton.disabled = true;
         submitButton.style.opacity = ".7";
@@ -84,7 +85,7 @@ payForm.addEventListener("submit", async (e) => {
         if (!amount || amount <= 0) {
             throw new Error("Ingresa un monto válido.");
         }
-        const studentId = document.getElementById("student-id-pay").textContent;
+
         const courseId = document.getElementById("course-id").textContent;
 
         const formData = new FormData();
@@ -131,7 +132,12 @@ payForm.addEventListener("submit", async (e) => {
         await showSuccess("Registro Exitoso");
         await loadStudents();
     } catch (error) {
-        showError(`Error al Registrar - ${error.message}`);
+        console.error('Registrar pago:', {
+            studentId,
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al Registrar - ${error.message}`);
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";

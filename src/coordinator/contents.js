@@ -49,7 +49,11 @@ async function loadContents() {
         `).join('');
 
     } catch (error) {
-        alert('Error al cargar contenidos', error);
+        console.error('Error al cargar contenidos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar contenidos. Por favor, inténtalo de nuevo más tarde.");
         document.getElementById(
             'contentsTableBody'
         ).innerHTML = `

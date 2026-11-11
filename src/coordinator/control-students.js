@@ -148,7 +148,11 @@ async function loadPage() {
             </tbody>
         `;
     } catch (error) {
-        alert("Error al Registrar");
+        console.error('Error al cargar la página:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al cargar la página`);
     }
 }
 loadPage();
@@ -186,7 +190,11 @@ async function generateCredential(studentId, button) {
         URL.revokeObjectURL(url);
 
     } catch (error) {
-        showError(`Error al Generar Credencial - ${error.message}`);
+        console.error('Error al generar credencial:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al Generar Credencial - ${error.message}`);
     } finally {
         button.style.pointerEvents = "auto";
         button.style.opacity = "1";
@@ -224,7 +232,11 @@ async function generateCertificate(studentId, button) {
 
         URL.revokeObjectURL(url);
     } catch (error) {
-        showError(`Error al Generar Constancia - ${error.message}`);
+        console.error('Error al generar constancia:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError(`Error al Generar Constancia - ${error.message}`);
     } finally {
         button.style.pointerEvents = "auto";
         button.style.opacity = "1";
@@ -305,6 +317,10 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
     );
 
     if (!response.ok) {
+        console.error('Error al actualizar estudiante:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         await showError("No se pudo actualizar");
         return;
     }

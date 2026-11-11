@@ -23,7 +23,11 @@ async function loadSquads() {
             `;
         });
     } catch (error) {
-        alert("Error cargando escuelas:", error);
+        console.error('cargar escuelas:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar las escuelas. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -50,7 +54,11 @@ async function loadContents() {
             `;
         });
     } catch (error) {
-        alert("Error cargando contenidos:", error);
+        console.error('cargar contenidos:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los contenidos. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -77,7 +85,11 @@ async function loadAdvisers() {
             `;
         });
     } catch (error) {
-        alert("Error cargando asesores:", error);
+        console.error('cargar asesores:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los asesores. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -104,7 +116,11 @@ async function loadTeachers() {
             `;
         });
     } catch (error) {
-        alert("Error cargando docentes:", error);
+        console.error('cargar docentes:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar los docentes. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -164,7 +180,11 @@ async function loadCourse() {
         document.getElementById("call_link").value = course.call_link
 
     } catch (error) {
-        alert('Error al cargar la escuela', error);
+        console.error('cargar curso:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al cargar el curso. Por favor, inténtalo de nuevo más tarde.");
     }
 }
 
@@ -231,7 +251,11 @@ document.getElementById("courseForm").addEventListener("submit", async (e) => {
         await showSuccess("Registro Exitoso");
         document.getElementById("courseForm").reset();
     } catch (error) {
-        showError("Error al Registrar");
+        console.error('Registrar curso:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
+        await showError("Error al Registrar");
     } finally {
         submitButton.disabled = false;
         submitButton.style.opacity = "1";

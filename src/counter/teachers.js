@@ -39,7 +39,10 @@ async function loadTable() {
         `).join('');
         addSwitchEvents();
     } catch (error) {
-        alert(error);
+        console.error('cargar docentes:', {
+            message: error?.message ?? String(error),
+            stack: error?.stack
+        });
         document.getElementById('table-body').innerHTML = `
             <tr>
                 <td colspan="7">
@@ -75,7 +78,12 @@ function addSwitchEvents() {
                     throw new Error("Error al actualizar estado");
                 }
             } catch (error) {
-                alert("Error al actualizar el estado");
+                console.error('Actualizar estado docente:', {
+                    userId,
+                    state,
+                    message: error?.message ?? String(error),
+                    stack: error?.stack
+                });
                 switchBtn.checked = !switchBtn.checked;
             }
         });
