@@ -111,7 +111,7 @@ function createDocumentTable(student) {
                     <td><div class="iuc-actions">
                 ${document
                 ? `<span class="button-icon"
-                        onclick="viewImage('${document.url}')"
+                        onclick="showVideo('${document.url}')"
                         title="Ver Documento ${d.type}">
                         🔍
                     </span>
@@ -294,16 +294,14 @@ infoModal.addEventListener("click", (e) => {
 
 
 function showVideo(url) {
-    if (url.includes(".pdf")) {
-        window.open(url, "_blank");
-        return;
-    }
     let videoId = "";
-
     if (url.includes("youtube.com/watch?v=")) {
         videoId = new URL(url).searchParams.get("v");
     } else if (url.includes("youtu.be/")) {
         videoId = url.split("youtu.be/")[1].split("?")[0];
+    } else {
+        viewImage(url);
+        return;
     }
     videoId = `https://www.youtube.com/embed/${videoId}`;
 
