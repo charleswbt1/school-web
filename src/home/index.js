@@ -58,7 +58,7 @@ function initializeSession() {
             sessionStorage.setItem("role", data.role);
             sessionStorage.setItem("userId", data.user_id);
             switch (data.role) {
-                case "admin":
+                case "director":
                     window.location.href = `../${data.role}/review.html`;
                     break;
                 case "adviser":

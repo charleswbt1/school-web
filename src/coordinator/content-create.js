@@ -62,13 +62,18 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     });
 
     try {
-        fetch(`${apiUrl}/api/contents`, {
+        const response = await fetch(`${apiUrl}/api/contents`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(data)
         });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al registrar contenido');
+        }
         await showSuccess("Registro Exitoso");
         document.getElementById("contentForm").reset();
     } catch (error) {
