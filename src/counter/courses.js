@@ -8,6 +8,10 @@ async function loadCourses() {
         if (!response.ok) {
             throw new Error('Error al obtener cursos');
         }
+        const btnView = role != "coordinator" ? 'hidden' : '';
+        if (role === "coordinator") {
+            document.getElementById('btn-add-course').removeAttribute('hidden');
+        }
         const courses = await response.json();
         const tbody = document.getElementById('courses-table-body');
         if (!courses.length) {
@@ -17,10 +21,6 @@ async function loadCourses() {
                 </tr>
             `;
             return;
-        }
-        const btnView = role != "coordinator" ? 'hidden' : '';
-        if (role === "coordinator") {
-            document.getElementById('btn-add-course').removeAttribute('hidden');
         }
         tbody.innerHTML = courses.map(course => `
             <tr>

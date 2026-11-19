@@ -316,7 +316,7 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
         }
     );
 
-    if (!response.ok) {
+    if (!response.ok || !userResponse.ok) {
         console.error('Error al actualizar estudiante:', {
             message: error?.message ?? String(error),
             stack: error?.stack
@@ -325,6 +325,7 @@ document.getElementById("editStudentForm").addEventListener("submit", async (e) 
         return;
     }
     closeEditStudent();
+    await showSuccess("Se actualizó correctamente");
     loadPage();
 });
 async function resetPassword(userId, nickName) {
