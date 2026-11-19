@@ -94,13 +94,6 @@ async function loadStudents() {
             stack: error?.stack
         });
         await showError("Error al cargar alumnos. Por favor, inténtalo de nuevo más tarde.");
-        document.getElementById('students-table-body').innerHTML = `
-            <tr>
-                <td colspan="7">
-                    Error al cargar los alumnos: ${error}
-                </td>
-            </tr>
-        `;
     }
 }
 

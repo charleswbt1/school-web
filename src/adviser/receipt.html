@@ -48,13 +48,24 @@
                 <th>Importe</th>
             </tr>
         </thead>
-        <tbody id="paymentTable"></tbody>
+        <tbody id="paymentTable">
+            <tr>
+                <td id="paymentTableConcept"></td>
+                <td id="paymentTableAmount"></td>
+            </tr>
+        </tbody>
     </table>
     <div class="receipt-footer">
         <div id="status">PAGADO</div>
     </div>
 </div>
 <div class="button-container">
+    <select id="typeReceipt">
+        <option value="Colegiatura">Colegiatura</option>
+        <option value="Inscripción">Inscripción</option>
+        <option value="Reinscripción">Reinscripción</option>
+        <option value="Documento">Documento</option>
+    </select>
     <button id="downloadReceipt" onclick="downloadReceipt()">
         📄 Descargar Recibo
     </button>

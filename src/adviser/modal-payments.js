@@ -164,23 +164,24 @@ modalReceipt.addEventListener("click", (e) => {
 function viewReceipt(studentId, paymentId, courseName) {
     const student = students.find(student => student.id === studentId);
     const payment = student.payments.find(payment => payment.id === paymentId);
+    const concept = payment.type === 'cuota' ? 'Colegiatura' : 'Documento';
+    const paymentFormat = `$${Number(payment.amount).toLocaleString()}`
     document.getElementById("receiptNumber").textContent = payment.id.replace('PAY_', '') ?? "000000";
     document.getElementById("date").textContent = formatDate(payment.date);
-    document.getElementById("total").textContent = `$${Number(payment.amount).toLocaleString()}`;
+    document.getElementById("total").textContent = paymentFormat;
     document.getElementById("customer").textContent = student.name;
     document.getElementById("document").textContent = student.curp;
     document.getElementById("code").textContent = student.school_id ?? '';
-    document.getElementById("concept").textContent = payment.type === 'cuota' ? 'Colegiatura' : 'Documento'
+    document.getElementById("concept").textContent = concept;
     document.getElementById("program").textContent = courseName;
-    document.getElementById("paymentTable").innerHTML = `
-            <tr>
-                <td>Colegiatura</td>
-                <td>$${Number(payment.amount).toLocaleString()}</td>
-            </tr>
-            `;
+    document.getElementById("paymentTableConcept").textContent = concept;
+    document.getElementById("paymentTableAmount").textContent = paymentFormat;
     modalReceipt.style.display = "flex";
 }
 function downloadReceipt() {
+    const concept = document.getElementById("typeReceipt").value;
+    document.getElementById("concept").textContent = concept;
+    document.getElementById("paymentTableConcept").textContent = concept;
     const receipt = document.getElementById("receiptContainer");
     html2canvas(receipt, {
         scale: 3,
