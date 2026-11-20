@@ -123,6 +123,8 @@ button:hover {
 
 .style-select {
     padding: 12px;
+    margin-top: 10px;
+    height: 60px;
 }
 
 /*VIEW-IMAGE*/
