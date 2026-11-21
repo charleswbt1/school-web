@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAdd = document.getElementById('btn-add');
     if (btnAdd) {
         btnAdd.addEventListener('click', () => {
-            window.location.href = '../user/register.html?roleRegister=teacher';
+            window.location.href = '../adviser/register.html?roleRegister=teacher';
         });
     }
 });

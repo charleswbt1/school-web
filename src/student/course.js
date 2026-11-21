@@ -162,52 +162,26 @@ async function getModules(response) {
     const modules = await Promise.all(
         response.content.modules.map(async (module, index) => {
             const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
-            return `
-                <div class="module-card">
-                    <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
-                    <ul>
-                        ${module.topics.map(topic => `
-                        <li>
-                            <strong>${topic.name}</strong>
-                            <br>
-                            ${topic.description}
-                            <br>
-                            ${response.student.state === "active" && topic.link && topic.link.startsWith("http")
-                    ? `<button onclick="showVideo('${topic.link}')">Ver contenido</button>`
-                    : ""
-                }
-                        </li>
-                        `).join("")}
-                    </ul>
-                    ${await getClassesMediaSync(response, module.id)}
-                    ${(() => {
-                    const showButton =
-                        !paymentButtonShown &&
-                        (response.student.state !== "active" || !module.available) &&
-                        module.link &&
-                        module.link.startsWith("EXA_");
-
-                    if (showButton) {
-                        paymentButtonShown = true;
-                        return `
-                                <button onclick="paymentLink('${response.student.id}', '${index}', 'couta')">
-                                    Realizar Pago
-                                </button>
-                            `;
-                    }
-
-                    return "";
-                })()}                 
-                    ${note?.state === "aprobado"
+            return `<div class="module-card">
+                <h4>Módulo ${index + 1}: ${module.name} (${note?.value ?? 0})</h4>
+                <ul>
+                    ${module.topics.map(topic => `
+                    <li>
+                        <strong>${topic.name}</strong>
+                        <br>${topic.description}
+                    </li>
+                    `).join("")}
+                </ul>
+                ${await getClassesMediaSync(response, module.id)}                                   
+                ${note?.state === "aprobado"
                     ? `<p class="course-state alert-success">✅ Aprobado</p>`
-                    : response.student.state === "active" && module.available && module.link && module.link.startsWith("EXA_")
-                        ? `<button onclick="showExam('${response.student.id}', '${response.course.id}', '${module.id}', '${module.link}', '')">
-                                Presentar Examen
+                    : response.student.state === "active" && !module.available
+                        ? `<button onclick="paymentLink('${response.student.id}', '${index}', 'couta')">
+                                Realizar Pago
                             </button>`
                         : ``
                 }
-                </div>
-            `;
+            </div>`;
         })
     );
     return modules.join("");
@@ -216,9 +190,7 @@ async function getModules(response) {
 async function getClassesMediaSync(data, moduleId) {
     if (data.student.state === "active") {
         const classesResponse = await fetch(`${apiUrl}/api/classes?course_id=${data.course.id}&module_id=${moduleId}`,
-            {
-                credentials: 'include'
-            }
+            { credentials: 'include' }
         );
         const classesJson = await classesResponse.json();
         if (!classesResponse.ok || classesJson.length < 1) {
@@ -235,7 +207,7 @@ async function getClassesMediaSync(data, moduleId) {
         const materialButtons = classesJson[0].materials?.map(material => {
             return `<div class="buttons-material-container">
                 <button onclick="showVideo('${material.link}')" alt="Trabajo ${material.description}">
-                    Material ${material.name}
+                    Material: ${material.name}
                 </button>
             </div>
         `}).join("")
@@ -248,8 +220,8 @@ async function getClassesMediaSync(data, moduleId) {
                     ? `<button onclick="showVideo('${job.link}')" alt="Trabajo ${job.description}">
                         ${job.name ?? 'Trabajo' + (index + 1)} (${job.delivery_date ?? ''})
                     </button>`
-                    : `<button onclick="showExam('${data.student.id}', '${data.course.id}', '', '${job.link}', '${job.id}')">
-                        Presentar Examen (${job.delivery_date ?? ''})
+                    : `<button onclick="showExam('${data.student.id}', '${data.course.id}', '${job.link}', '${job.id}')">
+                        Presentar Examen
                     </button>`
                 }                
                 ${studentJob && studentJob.link
@@ -318,8 +290,8 @@ function showVideo(url) {
 `;
 }
 
-function showExam(studentId, courseId, moduleId, examId, job_id) {
-    window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&module_id=${moduleId}&id=${examId}&job_id=${job_id ?? ''}`;
+function showExam(studentId, courseId, examId, job_id) {
+    window.location.href = `exam.html?student_id=${studentId}&course_id=${courseId}&id=${examId}&job_id=${job_id}`;
 }
 
 async function paymentLink(studentId, moduleIndex, paymentType) {

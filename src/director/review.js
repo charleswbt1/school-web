@@ -1,4 +1,3 @@
-const teamIdSession = sessionStorage.getItem("team_id");
 const yearSelect = document.getElementById("reviewYear");
 const monthSelect = document.getElementById("reviewMonth");
 
@@ -32,10 +31,8 @@ async function loadReview() {
     try {
 
         const response = await fetch(
-            `${apiUrl}/api/courses/review?year=${yearSelect.value}&month=${monthSelect.value}&team=${teamIdSession}`,
-            {
-                credentials: "include"
-            }
+            `${apiUrl}/api/courses/review?year=${yearSelect.value}&month=${monthSelect.value}`,
+            { credentials: "include" }
         );
 
         const reviews = await response.json();
