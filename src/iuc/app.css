@@ -129,6 +129,11 @@ button:hover {
 
 /*VIEW-IMAGE*/
 
+.preview-image {
+    max-width: 100px;
+    cursor: pointer;
+}
+
 .view-image-container {
     width: 180px;
     height: 180px;

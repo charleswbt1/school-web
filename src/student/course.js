@@ -158,7 +158,6 @@ function animateProgressBar(finalProgress) {
 }
 
 async function getModules(response) {
-    let paymentButtonShown = false;
     const modules = await Promise.all(
         response.content.modules.map(async (module, index) => {
             const note = response.student.notes?.find(note => (note.module_id === module.id || note.module === module.name));
@@ -175,11 +174,7 @@ async function getModules(response) {
                 ${await getClassesMediaSync(response, module.id)}                                   
                 ${note?.state === "aprobado"
                     ? `<p class="course-state alert-success">✅ Aprobado</p>`
-                    : response.student.state === "active" && !module.available
-                        ? `<button onclick="paymentLink('${response.student.id}', '${index}', 'couta')">
-                                Realizar Pago
-                            </button>`
-                        : ``
+                    : ``
                 }
             </div>`;
         })

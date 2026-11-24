@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IUC</title>
+  <link rel="icon" type="image/x-icon" href="../home/favicon.ico" />
+  <link rel="stylesheet" href="../iuc/app.css">
+  <link rel="stylesheet" href="./attendance.css">
+</head>
+
+<body>
+  <div id="sidebar-container"></div>
+  <div class="main-container">
+
+    <div id="header-container"></div>
+
+    <section class="info-section">
+      <main class="container">
+        <header class="page-header">
+          <h1>Asistencias</h1>
+        </header>
+        <section class="panel filters" aria-label="Filtros">
+          <label>Curso
+            <select id="courseSelect">
+              <option value="">Selecciona un curso</option>
+            </select>
+          </label>
+          <label>Fecha
+            <input id="dateInput" type="date">
+          </label>
+          <button id="reloadBtn" class="button secondary" type="button">Actualizar</button>
+        </section>
+        <section class="stats" aria-label="Resumen de asistencias">
+          <div class="stat"><span>Total</span><strong id="totalCount">0</strong></div>
+          <div class="stat present"><span>Presentes</span><strong id="presentCount">0</strong></div>
+          <div class="stat late"><span>Retardos</span><strong id="lateCount">0</strong></div>
+          <div class="stat absent"><span>Faltas</span><strong id="absentCount">0</strong></div>
+          <div class="stat justified"><span>Justificados</span><strong id="justifiedCount">0</strong></div>
+          <div class="stat pending"><span>Pendientes</span><strong id="pendingCount">0</strong></div>
+        </section>
+        <section class="panel list-panel">
+          <div class="list-header">
+            <div>
+              <h2>Estudiantes</h2>
+              <p id="listDescription">Selecciona un curso para comenzar.</p>
+            </div>
+            <label class="search">
+              <span class="sr-only">Buscar estudiante</span>
+              <input id="searchInput" type="search" placeholder="Buscar estudiante" autocomplete="off">
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Estudiante</th>
+                  <th scope="col">Asistencia</th>
+                </tr>
+              </thead>
+              <tbody id="studentsBody">
+                <tr>
+                  <td colspan="2" class="empty">Selecciona un curso y una fecha.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer">
+            <span id="feedback" role="status" aria-live="polite"></span>
+            <button id="saveBtn" class="button primary" type="button" disabled>Guardar asistencias</button>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+  <script src="../iuc/app.js"></script>
+  <script src="./attendance.js"></script>
+</body>
+
+</html>
