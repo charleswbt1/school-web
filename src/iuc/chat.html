@@ -14,14 +14,9 @@
 
 <body>
     <div id="sidebar-container"></div>
-
     <div class="main-container">
-
         <div id="header-container"></div>
-
         <main class="chat-page">
-            <div id="header-container"></div>
-
             <section class="chat-layout" aria-label="Chat escolar">
                 <aside class="conversations-panel">
                     <div class="panel-heading">
@@ -29,20 +24,22 @@
                             <h1>Conversaciones</h1>
                         </div>
                         <button id="newConversationBtn" class="icon-button" type="button" title="Nueva conversación"
-                            aria-label="Nueva conversación">＋</button>
+                            aria-label="Nueva conversación">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                                <path d="M12 5v14 M5 12h14" />
+                            </svg>
+                        </button>
                     </div>
-
                     <label class="search-box" for="searchConversations">
                         <span aria-hidden="true">⌕</span>
                         <input id="searchConversations" type="search" placeholder="Buscar conversaciones..."
                             autocomplete="off">
                     </label>
-
                     <div id="conversationsList" class="conversations-list">
                         <div class="loading-state">Cargando conversaciones…</div>
                     </div>
                 </aside>
-
                 <section class="messages-panel">
                     <header id="chatHeader" class="chat-header">
                         <div class="empty-avatar">✉</div>
@@ -51,11 +48,14 @@
                             <p id="chatSubtitle">Selecciona una conversación para comenzar</p>
                         </div>
                         <button id="refreshMessagesBtn" class="icon-button" type="button" title="Actualizar mensajes"
-                            aria-label="Actualizar mensajes">↻</button>
+                            aria-label="Actualizar mensajes">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M20 11a8 8 0 1 0-2 6 M20 4v7h-7" />
+                            </svg>
+                        </button>
                     </header>
-
                     <div id="chatNotice" class="chat-notice" role="status" hidden></div>
-
                     <div id="messagesList" class="messages-list">
                         <div class="empty-chat">
                             <div class="empty-chat-icon">✉</div>
@@ -63,48 +63,48 @@
                             <p>Selecciona una conversación de la lista o inicia una nueva.</p>
                         </div>
                     </div>
-
                     <form id="messageForm" class="message-composer">
                         <label class="sr-only" for="messageInput">Escribe un mensaje</label>
                         <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Escribe un mensaje..."
                             disabled></textarea>
-                        <div class="composer-footer">
-                            <span id="messageHint">Selecciona una conversación para enviar mensajes.</span>
-                            <button id="sendMessageBtn" type="submit" disabled>
-                                <span>Enviar</span><span aria-hidden="true">➤</span>
-                            </button>
-                        </div>
+                        <div class="composer-footer"><span id="messageHint">Selecciona una conversación para enviar
+                                mensajes.</span><button id="sendMessageBtn" type="submit"
+                                disabled><span>Enviar</span><span aria-hidden="true">➤</span></button></div>
                     </form>
                 </section>
             </section>
         </main>
-
-        <dialog id="newConversationDialog" class="conversation-dialog">
+        <dialog id="newConversationDialog" class="conversation-dialog" aria-labelledby="newConversationTitle">
             <form id="newConversationForm" method="dialog">
                 <div class="dialog-heading">
                     <div>
                         <p class="eyebrow">CHAT ESCOLAR</p>
-                        <h2>Nueva conversación</h2>
-                    </div>
-                    <button id="closeDialogBtn" class="icon-button" type="button" aria-label="Cerrar">×</button>
+                        <h2 id="newConversationTitle">Nueva conversación</h2>
+                    </div><button id="closeDialogBtn" class="icon-button" type="button" aria-label="Cerrar">×</button>
                 </div>
-
-                <label for="conversationName">Nombre de la conversación</label>
-                <input id="conversationName" name="name" type="text" maxlength="100"
-                    placeholder="Ej. Grupo de Matemáticas" required>
-
-                <label for="participantIds">Participantes</label>
-                <input id="participantIds" name="participant_ids" type="text"
-                    placeholder="ID de usuarios separados por comas" required>
-                <p class="form-help">
-                    Introduce los identificadores de los usuarios que participarán.
-                    El backend debe validar que tengas permiso para agregarlos.
+                <label>Tipo de conversación</label>
+                <div class="conversation-types">
+                    <label class="conversation-type-option"><input type="radio" name="conversationType" value="direct"
+                            checked><span>Individual</span></label>
+                    <label class="conversation-type-option"><input type="radio" name="conversationType"
+                            value="group"><span>Grupal</span></label>
+                </div>
+                <div id="conversationNameContainer" hidden><label for="conversationName">Nombre del grupo</label><input
+                        id="conversationName" name="name" type="text" maxlength="100"
+                        placeholder="Ej. Grupo de Computación"></div>
+                <label>Seleccionar participantes</label>
+                <p class="form-help">Los grupos deben pertenecer al mismo curso. Puedes seleccionar hasta 29 contactos.
                 </p>
-
-                <div class="dialog-actions">
-                    <button id="cancelDialogBtn" class="button-secondary" type="button">Cancelar</button>
-                    <button class="button-primary" type="submit">Crear conversación</button>
+                <div id="userSearchResults" class="user-search-results" aria-live="polite">
+                    <div class="user-search-empty">Cargando participantes...</div>
                 </div>
+                <div class="selected-participants-header"><label>Participantes seleccionados</label><span
+                        id="selectedParticipantsCount">0</span></div>
+                <div id="selectedParticipants" class="selected-participants"></div>
+                <p id="conversationDialogNotice" class="dialog-notice" role="status" hidden></p>
+                <div class="dialog-actions"><button id="cancelDialogBtn" class="button-secondary"
+                        type="button">Cancelar</button><button id="createConversationBtn" class="button-primary"
+                        type="submit" disabled>Iniciar chat</button></div>
             </form>
         </dialog>
     </div>
